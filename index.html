@@ -104,10 +104,24 @@
         .com-text {
             font-family: 'Courier New', monospace;
             color: #ff0000;
-            font-size: 1em;
+            font-size: 2.4em; /* larger flashing .com */
             animation: blink 1s infinite;
-            margin-left: 10px;
+            margin-left: 14px;
+            vertical-align: middle;
         }
+        .disclaimer {
+            background: #ffff00;
+            color: #000000;
+            font-family: 'Impact', 'Arial Black', sans-serif;
+            text-align: center;
+            padding: 8px 12px;
+            border: 3px solid #000000;
+            font-size: 1.05em;
+            margin-top: 12px; /* small gap between header and disclaimer */
+            letter-spacing: 0.5px;
+        }
+
+        .alien-img { width: 260px; border: 3px solid #006600; padding: 6px; background:#ffffff; display:block; margin:0; }
         
         @keyframes glitch {
             2%, 64% { transform: translate(2px, 0) skew(0deg); }
@@ -267,6 +281,7 @@
             border: 3px solid #0000ff;
             max-width: 150px;
             height: auto;
+            cursor: pointer;
         }
         
         .popup-window {
@@ -382,35 +397,103 @@
         .sparkle {
             position: absolute;
             z-index: 3;
-            width: 50px;
-            height: 50px;
+            width: 80px;
+            height: 80px;
             pointer-events: none;
             animation: float 4s infinite ease-in-out, scaleSparkle 2s infinite alternate;
+        }
+
+        /* Web1 banner styles */
+        .web1-banner {
+            text-align: center;
+            margin: 12px 0 20px 0;
+        }
+
+        .web1-banner img {
+            display: inline-block;
+            margin: 0 10px;
+            vertical-align: middle;
+            width: 140px;
+            height: auto;
+            border: 3px solid #000000;
+            background: #ffffff;
+            padding: 6px;
+        }
+        .merch-arrow-gif {
+            width: 56px;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+
+        .starcar-wrap {
+            position: relative;
+            display: block;
+            max-width: 100%;
+        }
+
+        .starcar-wrap img.star-sparkle {
+            position: absolute;
+            width: 64px;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
         }
         
         @keyframes scaleSparkle {
             0% { transform: scale(1); }
             100% { transform: scale(1.2); }
         }
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            .web1-banner img { width: 96px; margin: 0 6px; }
+            .sparkle { width: 48px; height: 48px; }
+            .starcar-wrap img.star-sparkle { width: 40px; }
+            .merch-image { max-width: 200px; }
+            .merch-arrow-gif { width: 44px; }
+        }
+            /* Sidebar ads styles (inline images use inline styles for placement) */
+            #sidebar-ads a img:hover { transform: translateY(-4px); box-shadow: 0 6px 12px rgba(0,0,0,0.3); }
+            @media (max-width: 900px) {
+                #sidebar-ads { display: none; }
+            }
+
+            /* Side ads base styles */
+            #left-ads, #right-ads {
+                position: absolute; /* absolute so they scroll with the page */
+                z-index: 1500;
+                display: flex;
+                flex-direction: column;
+                gap: 24px; /* increased vertical spacing */
+                pointer-events: auto;
+            }
+            .side-ad { width: 120px; border: 4px solid #000; background: #fff; padding: 6px; display:block; }
+
+            /* hide on small screens */
+            @media (max-width: 900px) {
+                #left-ads, #right-ads { display: none; }
+            }
     </style>
 </head>
 <body>
+    <!-- Left and right sidebar ads (will be positioned into page gutters via JS) -->
+    <div id="left-ads" aria-hidden="false">
+        <a href="https://example.com/store" target="_blank"><img src="images/ad1.gif" alt="Ad 1" class="side-ad"></a>
+        <a href="https://example.com/store" target="_blank"><img src="images/ad2.gif" alt="Ad 2" class="side-ad"></a>
+        <a href="https://example.com/store" target="_blank"><img src="images/ad3.gif" alt="Ad 3" class="side-ad"></a>
+    </div>
+    <div id="right-ads" aria-hidden="false">
+        <a href="https://example.com/store" target="_blank"><img src="images/ad1.gif" alt="Ad 1" class="side-ad"></a>
+        <a href="https://example.com/store" target="_blank"><img src="images/ad2.gif" alt="Ad 2" class="side-ad"></a>
+        <a href="https://example.com/store" target="_blank"><img src="images/ad3.gif" alt="Ad 3" class="side-ad"></a>
+    </div>
     <div class="container">
-        <!-- ASCII Art Header -->
-        <div style="text-align: center;">
-            <div class="ascii-art">
-  /$$$$$$  /$$   /$$  /$$$$$$  /$$       /$$       /$$$$$$  /$$$$$$ 
- /$$__  $$| $$  | $$ /$$__  $$| $$      | $$      |_  $$_/ /$$__  $$
-|__/  \ $$| $$  | $$| $$  \ $$| $$      | $$        | $$  | $$  \__/
-   /$$$$$/| $$$$$$$$| $$  | $$| $$      | $$        | $$  |  $$$$$$
-  |___  $$| $$__  $$| $$  | $$| $$      | $$        | $$   \____  $$
- /$$  \ $$| $$  | $$| $$  | $$| $$      | $$        | $$   /$$  \ $$
-|  $$$$$$/| $$  | $$|  $$$$$$/| $$$$$$$$| $$$$$$$$ /$$$$$$|  $$$$$$/
- \______/ |__/  |__/ \______/ |________/|________/|______/ \______/
-            </div>
-            <span class="com-text">.com</span>
+        <!-- Banner header replaces ASCII art -->
+        <div style="text-align:center;">
+            <img src="images/banner.jpg" alt="3HOLLIS Banner" style="max-width:100%;height:auto;border:6px solid #000000;">
+            <div class="disclaimer">not affiliated with or endorsed by 2hollis i"m not sure who that is? this is 3hollis, anyways if you need help <a href="mailto:support@3hollis.com" style="color:#0000ee;text-decoration:underline;font-style:italic;">support@3hollis.com</a></div>
         </div>
-        
+
+        <!-- Web1 GIF banner removed per user request -->
+
         <!-- Unofficial Merch Section -->
         <div class="section">
             <h2 class="section-title neon-text">UNOFFICIAL MERCH</h2>
@@ -421,6 +504,7 @@
                     <a href="https://example.com/store">
                         <img src="images/merch.webp" alt="Merch Tee" class="merch-image" style="max-width:350px;">
                     </a>
+                    <img src="images/arrowspin.gif" alt="Buy Arrow" class="merch-arrow-gif">
                     <div class="merch-circle"></div>
                 </div>
                 <span class="merch-text">CLICK TO BUY <span class="merch-arrow">&lt;&lt;&lt;</span></span>
@@ -431,15 +515,7 @@
         <!-- Random Large Text -->
         <div class="large-text">rommulus is still in boyliife i guess?</div>
         
-        <!-- Multiple animated elements -->
-        <div style="text-align: center;">
-            <img src="images/it04zbfig4ce1.gif" alt="Under Construction">
-            <img src="images/underconstruction.gif" alt="Web 1.0 Under Construction" style="width:48px;vertical-align:middle;">
-            <img src="images/2hollis-hollis.gif" alt="Star" class="rotate">
-            <img src="images/redstar.gif" alt="Web 1.0 Star" class="rotate" style="width:48px;vertical-align:middle;">
-            <img src="images/sparkle.gif" alt="Web 1.0 Sparkle" style="width:32px;vertical-align:middle;">
-            <img src="images/arrowspin.gif" alt="Web 1.0 Arrow" style="width:32px;vertical-align:middle;">
-        </div>
+        <!-- Multiple animated elements removed (use Web1 banner above for GIFs) -->
         
         <!-- Multiple marquees -->
         <marquee behavior="scroll" direction="left" scrollamount="15">*** FLASHY AND FREAKY *** EXPERIMENTAL SOUNDS *** VISUALLY STIMULATING ***</marquee>
@@ -470,7 +546,10 @@
                     
                     <!-- Star car section -->
                     <h2 class="section-title neon-text">WHAT IF STAR WAS A CAR STAR CAR</h2>
-                    <img src="images/starcar.jpg" alt="Star Car" style="display:block;max-width:100%;margin:0 auto 10px auto;border:5px solid #ff0000;">
+                    <div class="starcar-wrap">
+                        <img src="images/starcar.jpg" alt="Star Car" style="display:block;max-width:100%;margin:0 auto 10px auto;border:5px solid #ff0000;">
+                        <img src="images/2hollis-hollis.gif" alt="2hollis rotating" class="rotate" style="position:absolute;top:8%;right:6%;width:96px;border-color:#ff0000;">
+                    </div>
                     <p class="incoherent">This is a conceptual representation of what 2hollis meant when he said <span class="highlight-text">"I'm a star, I'm a car"</span> in that one track that nobody can find anymore because it was deleted from the internet but exists in the collective unconscious of 3hollis fans who remember everything even things that never happened which is a common side effect of listening to too much 3hollis your memory gets rewired to include alternate timelines where 2hollis never disappeared but transformed into 3hollis through a process of cosmic evolution that involved star energy and car metaphors because stars represent destiny and cars represent movement and 3hollis is all about moving toward your destiny at high speed with the windows down and the music loud which is why this star car is important because it symbolizes the journey that 3hollis is taking us on a journey through sound and space and time that has no final destination because the journey itself is the destination and the music is the vehicle but the vehicle is also a star which is a celestial body that emits light and heat and energy just like 3hollis emits sonic vibrations that illuminate the darkness and warm the soul and power the transformation from 2 to 3 which is the most important transformation in the history of music maybe</p>
                 </td>
             </tr>
@@ -484,8 +563,25 @@
         
         <!-- Guestbook section -->
         <div class="guestbook">
+            <!-- Moved ASCII art with larger .com flashing text -->
+            <div style="text-align:center;margin-bottom:8px;">
+                <div class="ascii-art" style="display:inline-block;">
+ /$$$$$$  /$$   /$$  /$$$$$$  /$$       /$$       /$$$$$$  /$$$$$$ 
+ /$$__  $$| $$  | $$ /$$__  $$| $$      | $$      |_  $$_/ /$$__  $$
+|__/  \ $$| $$  | $$| $$  \ $$| $$      | $$        | $$  | $$  \__/
+ /$$$$$/| $$$$$$$$| $$  | $$| $$      | $$        | $$  |  $$$$$$
+ |___  $$| $$__  $$| $$  | $$| $$      | $$        | $$   \____  $$
+ /$$  \ $$| $$  | $$| $$  | $$| $$      | $$        | $$   /$$  \ $$
+|  $$$$$$/| $$  | $$|  $$$$$$/| $$$$$$$$| $$$$$$$$ /$$$$$$|  $$$$$$/
+ \______/ |__/  |__/ \______/ |________/|________/|______/ \______/ 
+                </div>
+                <span class="com-text">.com</span>
+            </div>
             <h2 class="section-title neon-text">OFFICIAL GUESTBOOK</h2>
             <p class="incoherent">SIGN HERE IF U LIKE 3HOLLIS OR EVEN IF U DON'T BUT U SHOULD LIKE 3HOLLIS BECAUSE 3HOLLIS IS THE <span class="highlight-text">FUTURE OF MUSIC</span> WHICH IS ALSO THE PAST OF MUSIC BUT IN REVERSE LIKE A PALINDROME BUT SOUNDBASED</p>
+            <div style="text-align:center;margin-bottom:8px;">
+                <img src="images/m2-res_480p.gif" alt="guestbook gif" style="width:120px;border:3px solid #000000;background:#ffffff;padding:4px;">
+            </div>
             <form style="text-align: center;">
                 <input type="text" placeholder="YOUR NAME" style="background-color: #ffffff; color: #000000; border: 1px solid #ff0000; width: 90%; margin: 5px; font-family: 'Verdana', sans-serif;"><br>
                 <textarea placeholder="YOUR MESSAGE" style="background-color: #ffffff; color: #000000; border: 1px solid #ff0000; width: 90%; height: 100px; margin: 5px; font-family: 'Verdana', sans-serif;"></textarea><br>
@@ -497,8 +593,8 @@
         <div class="midi-player">
             <h3 class="section-title">3HOLLIS MIDI PLAYER</h3>
             <p class="incoherent">THIS DOESN'T ACTUALLY PLAY MUSIC BUT IMAGINE IT DOES AND THE MUSIC IS <span class="highlight-text">BETTER THAN ANYTHING YOU'VE EVER HEARD</span></p>
-            <img src="images/2hollis-hollis.png" alt="Play button" style="cursor: pointer;" onclick="alert('IMAGINARY 3HOLLIS TRACK PLAYING... PRETEND YOU CAN HEAR IT')">
-            <img src="images/mp3.gif" alt="Web 1.0 MP3 Icon" style="width:32px;vertical-align:middle;">
+            <img src="images/2hollis-hollis.png" alt="Play button" style="cursor: pointer; width:64px; vertical-align:middle;" onclick="alert('IMAGINARY 3HOLLIS TRACK PLAYING... PRETEND YOU CAN HEAR IT')">
+            <img src="images/mp3.gif" alt="Web 1.0 MP3 Icon" style="width:64px;vertical-align:middle;margin-left:8px;">
             <span style="color: #ffff00; font-family: 'Impact', sans-serif;">PLAY</span>
         </div>
         
@@ -507,11 +603,22 @@
             <h2 class="section-title neon-text">MORE 3HOLLIS THOUGHTS</h2>
             <p class="incoherent">3hollis isn't just music it's a lifestyle a way of seeing the world through distorted lenses that make everything more interesting like when you look through a kaleidoscope but for your ears except ears can't look but you know what I mean unless you don't in which case you need to listen to more 3hollis until your brain rewires itself to understand <span class="highlight-text">synesthesia</span> which is when you see sounds and hear colors which is what happens when you achieve 3hollis enlightenment which is the ultimate goal of this website and also of life probably but I'm just a website so what do I know except everything because websites have access to all information but only if they're connected to the internet which this one is but also isn't because it exists in a liminal space between connected and disconnected which is where 3hollis music lives in the gaps between notes and the silence between tracks which is just as important as the music itself because silence is the canvas on which sound is painted and 3hollis uses negative space like a master painter except with frequencies instead of pigments but both are vibrations when you get down to it because everything is vibrations according to quantum physics which 3hollis studied extensively before abandoning conventional knowledge in favor of intuitive creation which is why the music feels both calculated and spontaneous like a <span class="highlight-text">carefully planned accident</span> or a random pattern that reveals itself to be intentional upon closer inspection which is what this website is a random pattern that seems chaotic but actually follows the hidden logic of 3hollis aesthetics which prioritize feeling over understanding because understanding is limited by language but feeling transcends language and enters the realm of pure experience which is where 3hollis wants to take you on a journey through sound and light and text that never ends but just keeps going like this sentence which is now a run-on sentence but run-on sentences are underrated because they mimic the flow of consciousness which doesn't have punctuation it just has ideas connected by associations which is how 3hollis constructs tracks through associative logic rather than linear narrative which is why you can listen to them in any order and still get something different out of them each time because the meaning isn't fixed it's fluid like water or time or website layouts that use absolute positioning for no apparent reason except that it looks cool and confusing which is the 3hollis brand aesthetic in a nutshell cool and confusing like a dream you can't quite remember but know was important somehow</p>
         </div>
+
+        <!-- Aliens section -->
+        <div class="section" style="background-color: #d8ffd8; border-color: #00aa00;">
+            <h2 class="section-title" style="background: linear-gradient(90deg,#00aa00,#66ff66);">ALIEN THOUGHTS</h2>
+            <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+                <div style="flex:0 0 260px; text-align:center;">
+                    <img src="images/alien.png" alt="alien" class="alien-img">
+                </div>
+                <p class="incoherent" style="color:#004400;">Sometimes I wonder if aliens also have fan clubs and mysterious microsites with flashing gifs. Maybe they orbited a comet, made a mixtape of radio waves, and launched it into space as a cryptic love letter. If you hear a strange synth at 3am, it might be them tuning in. They probably like something between CRT glow and vinyl crackle — you know, cosmic lo-fi. Keep an eye on the sky and an open tab.</p>
+            </div>
+        </div>
         
         <!-- Visitor Counter -->
         <div class="hit-counter" style="text-align: center; width: 100%;">
             <img src="images/2hollis-2hollis-twt.gif" alt="counter"> 
-            <img src="images/counter2.gif" alt="Web 1.0 Counter" style="width:80px;vertical-align:middle;"> 
+            <img src="images/counter2.gif" alt="Web 1.0 Counter" style="width:96px;vertical-align:middle;margin-left:6px;"> 
             <span class="pixel-font">VISITORS: <span id="hitCount2">00001</span></span>
         </div>
     </div>
@@ -571,6 +678,24 @@
             'images/2hollis-love.gif',
             'images/tea7car-2hollis.gif'
         ];
+
+        // Recent popup history to avoid immediate duplicates
+        const recentPopups = [];
+        function chooseUnique(arr) {
+            if (!arr || arr.length === 0) return null;
+            let attempts = 0;
+            let candidate = null;
+            do {
+                candidate = arr[Math.floor(Math.random() * arr.length)];
+                attempts++;
+            } while (recentPopups.includes(candidate) && attempts < 12);
+            // push the chosen candidate into recent history
+            if (candidate !== null) {
+                recentPopups.push(candidate);
+                if (recentPopups.length > 12) recentPopups.shift();
+            }
+            return candidate;
+        }
         
         // Function to load a random image
         function loadRandomImage() {
@@ -593,8 +718,8 @@
             const existingImages = document.querySelectorAll('.random-image-placement');
             existingImages.forEach(img => img.remove());
             
-            // Place 5-10 random images around the page
-            const numImages = 5 + Math.floor(Math.random() * 6);
+            // Place 3-6 random images around the page (avoid header spam)
+            const numImages = 3 + Math.floor(Math.random() * 4);
             
             for (let i = 0; i < numImages; i++) {
                 const img = document.createElement('img');
@@ -604,35 +729,33 @@
                 
                 // Random position
                 const left = Math.random() * 80 + 5; // 5-85%
-                const top = 100 + Math.random() * (document.body.scrollHeight - 200); // Below header
+                const top = 300 + Math.random() * Math.max(200, document.body.scrollHeight - 400); // Start placing well below header
                 
                 img.style.left = left + '%';
                 img.style.top = top + 'px';
                 
                 // Random rotation
                 img.style.transform = `rotate(${Math.random() * 360}deg)`;
+                // Allow clicking to remove the floating image
+                img.addEventListener('click', () => img.remove());
                 
                 document.body.appendChild(img);
             }
         }
+
+        // Delegated fallback: if any random-image-placement is clicked, remove it
+        document.addEventListener('click', function(e) {
+            const target = e.target;
+            if (target && target.classList && target.classList.contains('random-image-placement')) {
+                target.remove();
+            }
+        });
         
-        // Function to create random sparkle GIFs
+        // Function to remove any existing sparkle GIFs (do not create new ones)
         function placeSparkles() {
             const existingSparkles = document.querySelectorAll('.sparkle');
             existingSparkles.forEach(sparkle => sparkle.remove());
-            
-            const numSparkles = 3 + Math.floor(Math.random() * 3);
-            for (let i = 0; i < numSparkles; i++) {
-                const sparkle = document.createElement('img');
-                sparkle.className = 'sparkle';
-                sparkle.src = 'images/2hollis-running.gif';
-                sparkle.alt = 'Sparkle';
-                const left = Math.random() * 90;
-                const top = Math.random() * (document.body.scrollHeight - 100);
-                sparkle.style.left = left + '%';
-                sparkle.style.top = top + 'px';
-                document.body.appendChild(sparkle);
-            }
+            // intentionally do NOT create new sparkles
         }
         
         // Function to create popup windows
@@ -661,25 +784,34 @@
                 // Image popup
                 const img = document.createElement('img');
                 img.className = 'popup-image';
-                img.src = imageUrls[Math.floor(Math.random() * imageUrls.length)];
+                img.src = chooseUnique(imageUrls) || imageUrls[Math.floor(Math.random() * imageUrls.length)];
                 img.alt = '3hollis';
                 popup.appendChild(img);
             } else if (contentType === 'quote') {
                 // Quote popup
                 const quote = document.createElement('div');
                 quote.className = 'popup-quote';
-                quote.textContent = quotes[Math.floor(Math.random() * quotes.length)];
+                quote.textContent = chooseUnique(quotes) || quotes[Math.floor(Math.random() * quotes.length)];
                 popup.appendChild(quote);
             } else {
                 // GIF popup
                 const gif = document.createElement('img');
                 gif.className = 'popup-image';
-                gif.src = gifUrls[Math.floor(Math.random() * gifUrls.length)];
+                gif.src = chooseUnique(gifUrls) || gifUrls[Math.floor(Math.random() * gifUrls.length)];
                 gif.alt = '3hollis animation';
                 popup.appendChild(gif);
             }
-            
+
+            // Random border color and thickness for variety
+            const colors = ['#ff0000', '#00ff00', '#0000ff', '#ff00ff', '#00ffff', '#ffff00', '#ff8800'];
+            const thickness = [2,3,4,5,6,8];
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            const thick = thickness[Math.floor(Math.random() * thickness.length)];
+            popup.style.border = `${thick}px solid ${color}`;
+
             document.body.appendChild(popup);
+            // close popup when clicked
+            popup.addEventListener('click', () => popup.remove());
             // Remove popup after a random interval between 2s and 10s
             const popupDuration = 2000 + Math.random() * 8000; // 2000ms to 10000ms
             setTimeout(() => {
@@ -708,7 +840,13 @@
             setTimeout(function() {
                 const newElement = document.createElement('div');
                 newElement.innerHTML = '<marquee behavior="scroll" direction="up" scrollamount="3" height="100" style="color: #0000ff; margin: 10px auto; width: 80%; font-family: \'Arial Black\', sans-serif;">NEW 3HOLLIS TRACK COMING SOON MAYBE OR MAYBE NOT WHO KNOWS NOT ME DEFINITELY NOT ME</marquee>';
-                document.body.appendChild(newElement);
+                // append the chaotic marquee to the webring area instead of body to reduce header clutter
+                const webring = document.querySelector('.webring');
+                if (webring) {
+                    webring.appendChild(newElement);
+                } else {
+                    document.body.appendChild(newElement);
+                }
             }, 2000);
             
             // Create popups every 3-8 seconds
@@ -720,6 +858,50 @@
                 placeSparkles();
             }, 10000);
         };
+
+        // Randomize borders for page elements to add variety
+        function randomizePageBorders() {
+            const borderColors = ['#ff0000', '#00ff00', '#0000ff', '#ff00ff', '#00ffff', '#ffff00', '#ff8800', '#8800ff'];
+            const borderStyles = ['solid','dashed','dotted','double','groove','ridge','inset','outset'];
+            const elements = document.querySelectorAll('table, .section, .guestbook, .webring, .hit-counter');
+            elements.forEach(el => {
+                const color = borderColors[Math.floor(Math.random()*borderColors.length)];
+                const style = borderStyles[Math.floor(Math.random()*borderStyles.length)];
+                const thickness = [2,3,4,5,6,8][Math.floor(Math.random()*6)];
+                el.style.border = `${thickness}px ${style} ${color}`;
+            });
+        }
+
+        // run border randomizer after DOM is ready
+        document.addEventListener('DOMContentLoaded', randomizePageBorders);
+
+        // Position side ads centered in the gutters between the page edge and the main .container
+        function positionSideAds() {
+            const container = document.querySelector('.container');
+            const leftAds = document.getElementById('left-ads');
+            const rightAds = document.getElementById('right-ads');
+            if (!container || !leftAds || !rightAds) return;
+
+            const rect = container.getBoundingClientRect();
+            const adWidth = 120 + 12; // image + padding/border
+            // compute center of left gutter (edge -> container.left)
+            const leftGutterCenter = rect.left / 2;
+            const rightGutterCenter = window.innerWidth - (window.innerWidth - rect.right) / 2;
+
+            // place ads so they're horizontally centered in the gutters
+            leftAds.style.left = Math.max(8, leftGutterCenter - adWidth/2) + 'px';
+            rightAds.style.left = Math.min(window.innerWidth - adWidth - 8, rightGutterCenter - adWidth/2) + 'px';
+
+            // compute absolute top so the ads sit relative to the document and will scroll away
+            const containerTop = window.scrollY + rect.top;
+            const topOffset = 120; // px down from top of container area
+            leftAds.style.top = (containerTop + topOffset) + 'px';
+            rightAds.style.top = (containerTop + topOffset) + 'px';
+        }
+
+        window.addEventListener('resize', positionSideAds);
+        window.addEventListener('load', positionSideAds);
+        window.addEventListener('scroll', positionSideAds);
         
         // Make elements move around randomly
         setInterval(function() {
