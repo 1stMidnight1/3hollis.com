@@ -159,6 +159,17 @@
             background-color: #ffffff;
             font-family: 'Courier New', monospace;
         }
+
+        /* Large Impact-style eaten counter (updates live) */
+        .eaten-counter {
+            font-family: 'Impact', 'Arial Black', sans-serif;
+            font-size: 2.6em;
+            color: #00ff00;
+            text-shadow: 0 0 6px #000000;
+            display: inline-block;
+            margin-left: 12px;
+            vertical-align: middle;
+        }
         
         .floating {
             animation: float 3s infinite ease-in-out;
@@ -467,6 +478,27 @@
             }
             .side-ad { width: 120px; border: 4px solid #000; background: #fff; padding: 6px; display:block; }
 
+            /* Inline rotating banner ads that appear between sections */
+            .inline-banner-ad {
+                text-align: center;
+                margin: 18px auto;
+                width: 100%;
+                display: block;
+            }
+            .inline-banner-ad a { display:inline-block; }
+            .inline-banner-ad img.banner-ad-img {
+                max-width: 920px;
+                width: 90%;
+                height: auto;
+                border: 4px solid #000000;
+                box-shadow: 0 6px 12px rgba(0,0,0,0.25);
+                background: #ffffff;
+                display:block;
+            }
+            @media (max-width: 900px) {
+                .inline-banner-ad img.banner-ad-img { width: 96%; max-width: 480px; }
+            }
+
             /* hide on small screens */
             @media (max-width: 900px) {
                 #left-ads, #right-ads { display: none; }
@@ -512,8 +544,8 @@
             <p class="incoherent">hollister cropped boxy tee <span class="highlight-text">100% cotton</span> super soft so cozy wow and its heavy quality not that thin gildan garbage DTG printing looks good lasts 4ever</p>
         </div>
         
-        <!-- Random Large Text -->
-        <div class="large-text">rommulus is still in boyliife i guess?</div>
+    <!-- Random Large Text (updated per request) -->
+    <div class="large-text" id="rommulusText">is rommulas still in boylife?: <img src="images/checkmark.gif" id="rommulasCheck" alt="check"></div>
         
         <!-- Multiple animated elements removed (use Web1 banner above for GIFs) -->
         
@@ -607,19 +639,25 @@
         <!-- Aliens section -->
         <div class="section" style="background-color: #d8ffd8; border-color: #00aa00;">
             <h2 class="section-title" style="background: linear-gradient(90deg,#00aa00,#66ff66);">ALIEN THOUGHTS</h2>
-            <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+            <div style="display:flex;align-items:flex-start;gap:18px;flex-wrap:wrap;">
                 <div style="flex:0 0 260px; text-align:center;">
                     <img src="images/alien.png" alt="alien" class="alien-img">
                 </div>
-                <p class="incoherent" style="color:#004400;">Sometimes I wonder if aliens also have fan clubs and mysterious microsites with flashing gifs. Maybe they orbited a comet, made a mixtape of radio waves, and launched it into space as a cryptic love letter. If you hear a strange synth at 3am, it might be them tuning in. They probably like something between CRT glow and vinyl crackle — you know, cosmic lo-fi. Keep an eye on the sky and an open tab.</p>
+                <div style="flex:1; min-width:200px;">
+                    <p class="incoherent" style="color:#004400; margin:0;">gleeb gleeb vorp ouwawaeaw</p>
+                </div>
             </div>
         </div>
         
-        <!-- Visitor Counter -->
-        <div class="hit-counter" style="text-align: center; width: 100%;">
-            <img src="images/2hollis-2hollis-twt.gif" alt="counter"> 
-            <img src="images/counter2.gif" alt="Web 1.0 Counter" style="width:96px;vertical-align:middle;margin-left:6px;"> 
-            <span class="pixel-font">VISITORS: <span id="hitCount2">00001</span></span>
+        <!-- Eaten counter (now above the visitor counter) -->
+        <div style="text-align:center; width:100%;">
+            <div class="eaten-counter" id="eatenCounter" style="display:block; margin: 0 auto 12px auto;">3hollisses eaten: <span id="eatenCount">0</span></div>
+            <!-- Visitor Counter -->
+            <div class="hit-counter" style="text-align: center; width: 100%;">
+                <img src="images/2hollis-2hollis-twt.gif" alt="counter"> 
+                <img src="images/counter2.gif" alt="Web 1.0 Counter" style="width:96px;vertical-align:middle;margin-left:6px;"> 
+                <span class="pixel-font">VISITORS: <span id="hitCount2">00001</span></span>
+            </div>
         </div>
     </div>
 
@@ -736,20 +774,103 @@
                 
                 // Random rotation
                 img.style.transform = `rotate(${Math.random() * 360}deg)`;
-                // Allow clicking to remove the floating image
-                img.addEventListener('click', () => img.remove());
+                // Allow clicking to remove the floating image (and track clicks for discount)
+                img.addEventListener('click', (e) => {
+                    // prevent the event from bubbling to the document-level delegated handler
+                    e.stopPropagation();
+                    img.remove();
+                    incrementRemoveCounter();
+                });
                 
                 document.body.appendChild(img);
             }
         }
 
-        // Delegated fallback: if any random-image-placement is clicked, remove it
+        // Delegated fallback: if any random-image-placement is clicked, remove it (and track)
         document.addEventListener('click', function(e) {
             const target = e.target;
             if (target && target.classList && target.classList.contains('random-image-placement')) {
-                target.remove();
+                // ensure the element is still in the document (defensive) before removing
+                if (document.body.contains(target)) {
+                    target.remove();
+                    incrementRemoveCounter();
+                }
             }
         });
+
+        // Discount tracking and popup (in-memory, resets on refresh)
+        // Clear any previously persisted discount keys to ensure reset behavior
+        try { localStorage.removeItem('three33_remove_count'); localStorage.removeItem('three33_discount_shown'); } catch (e) {}
+        let removeCount = 0;
+        let discountShown = false;
+        // timestamp of last increment (ms) to avoid accidental double-counts
+        let lastIncrementAt = 0;
+        function incrementRemoveCounter() {
+            const now = Date.now();
+            if (now - lastIncrementAt < 150) {
+                // ignore duplicate/double events within 150ms window
+                return;
+            }
+            lastIncrementAt = now;
+            removeCount = (removeCount || 0) + 1;
+            // Update the visible eaten counter whenever a floating image is removed
+            updateEatenCounterDisplay();
+            // when hits 13 show popup once per page load
+            if (removeCount >= 13 && !discountShown) {
+                discountShown = true;
+                showDiscountPopup();
+            }
+        }
+
+        function showDiscountPopup() {
+            // overlay
+            const overlay = document.createElement('div');
+            overlay.id = 'discount-overlay';
+            overlay.style.position = 'fixed';
+            overlay.style.left = 0;
+            overlay.style.top = 0;
+            overlay.style.width = '100%';
+            overlay.style.height = '100%';
+            overlay.style.background = 'rgba(0,0,0,0.6)';
+            overlay.style.zIndex = 3000;
+            overlay.style.display = 'flex';
+            overlay.style.alignItems = 'center';
+            overlay.style.justifyContent = 'center';
+
+            const popup = document.createElement('div');
+            popup.className = 'discount-popup';
+            popup.style.width = '520px';
+            popup.style.maxWidth = '92%';
+            popup.style.background = '#000000';
+            popup.style.color = '#ffff00';
+            popup.style.border = '6px double #ffff00';
+            popup.style.padding = '22px';
+            popup.style.textAlign = 'center';
+            popup.style.boxShadow = '0 12px 40px rgba(0,0,0,0.8)';
+            popup.style.cursor = 'pointer';
+
+            popup.innerHTML = `
+                <div style="font-family: 'Impact', 'Arial Black', sans-serif; font-size:2em;">CONGRATS</div>
+                <div style="margin-top:12px;font-size:1.2em;">You removed 13 floating images — here's 3% off</div>
+                <div style="margin-top:14px;font-weight:bold;font-size:1.6em;">CODE: <span style='color:#00ff00'>333hollisoff</span></div>
+                <div style="margin-top:14px;font-size:1.1em;font-weight:bold;">claim now</div>
+                <div style="margin-top:18px;"><button id='close-discount' style='padding:10px 16px;font-weight:bold;font-size:1em;'>CLOSE</button></div>
+            `;
+
+            overlay.appendChild(popup);
+            document.body.appendChild(overlay);
+
+            // Only remove when the popup (or the close button) is clicked — do not auto-dismiss or close on overlay click
+            document.getElementById('close-discount').addEventListener('click', () => overlay.remove());
+            popup.addEventListener('click', () => overlay.remove());
+        }
+
+        // Update the big Impact-style eaten counter in the UI
+        function updateEatenCounterDisplay() {
+            const el = document.getElementById('eatenCount');
+            if (!el) return;
+            el.textContent = (removeCount || 0).toString();
+        }
         
         // Function to remove any existing sparkle GIFs (do not create new ones)
         function placeSparkles() {
@@ -786,6 +907,12 @@
                 img.className = 'popup-image';
                 img.src = chooseUnique(imageUrls) || imageUrls[Math.floor(Math.random() * imageUrls.length)];
                 img.alt = '3hollis';
+                // clicking the popup image should count as a removal
+                img.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    popup.remove();
+                    incrementRemoveCounter();
+                });
                 popup.appendChild(img);
             } else if (contentType === 'quote') {
                 // Quote popup
@@ -799,6 +926,12 @@
                 gif.className = 'popup-image';
                 gif.src = chooseUnique(gifUrls) || gifUrls[Math.floor(Math.random() * gifUrls.length)];
                 gif.alt = '3hollis animation';
+                // clicking the popup gif counts as a removal
+                gif.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    popup.remove();
+                    incrementRemoveCounter();
+                });
                 popup.appendChild(gif);
             }
 
@@ -810,12 +943,12 @@
             popup.style.border = `${thick}px solid ${color}`;
 
             document.body.appendChild(popup);
-            // close popup when clicked
+            // close popup when clicked (non-image clicks)
             popup.addEventListener('click', () => popup.remove());
-            // Remove popup after a random interval between 2s and 10s
+            // Remove popup after a random interval between 2s and 10s (do not count timeouts as removals)
             const popupDuration = 2000 + Math.random() * 8000; // 2000ms to 10000ms
             setTimeout(() => {
-                popup.remove();
+                if (document.body.contains(popup)) popup.remove();
             }, popupDuration);
         }
         
@@ -835,6 +968,10 @@
             localStorage.setItem('hitCount', count);
             document.getElementById('hitCount').textContent = count.toString().padStart(5, '0');
             document.getElementById('hitCount2').textContent = count.toString().padStart(5, '0');
+            // Initialize eaten counter display on load (reset on refresh per design)
+            updateEatenCounterDisplay();
+            // size the rommulas checkmark to match the next element's height
+            try { sizeCheckmark(); } catch(e) {}
             
             // Add more chaotic elements after page load
             setTimeout(function() {
@@ -859,6 +996,28 @@
             }, 10000);
         };
 
+        // Size the checkmark gif to match the height of the element that follows the rommulus text
+        function sizeCheckmark() {
+            const rom = document.getElementById('rommulusText');
+            if (!rom) return;
+            const check = document.getElementById('rommulasCheck');
+            if (!check) return;
+            // the next sibling element (skip text nodes)
+            let next = rom.nextElementSibling;
+            if (!next) {
+                // fallback - pick the first marquee if present
+                next = document.querySelector('marquee');
+            }
+            if (!next) return;
+            let targetHeight = next.offsetHeight || 32; // fallback height
+            // make checkmark 30% larger than the target element's height
+            targetHeight = Math.round(targetHeight * 1.3);
+            check.style.height = targetHeight + 'px';
+            check.style.verticalAlign = 'middle';
+        }
+
+        window.addEventListener('resize', function() { try { sizeCheckmark(); } catch(e) {} });
+
         // Randomize borders for page elements to add variety
         function randomizePageBorders() {
             const borderColors = ['#ff0000', '#00ff00', '#0000ff', '#ff00ff', '#00ffff', '#ffff00', '#ff8800', '#8800ff'];
@@ -874,6 +1033,101 @@
 
         // run border randomizer after DOM is ready
         document.addEventListener('DOMContentLoaded', randomizePageBorders);
+
+        /* ------------------ Rotating inline banner ads (banad1/2/3) ------------------ */
+        const banadFiles = ['images/banad1.gif','images/banad2.gif','images/banad3.gif'];
+        let currentBannerAds = []; // track created ad nodes
+        let bannerRotateIntervalId = null;
+
+        function pickRandom(arr, n) {
+            const copy = arr.slice();
+            const out = [];
+            for (let i=0;i<Math.min(n, copy.length);i++) {
+                const idx = Math.floor(Math.random()*copy.length);
+                out.push(copy.splice(idx,1)[0]);
+            }
+            return out;
+        }
+
+        function clearBannerAds() {
+            currentBannerAds.forEach(item => {
+                if (item && item.node && item.node.parentNode) item.node.parentNode.removeChild(item.node);
+            });
+            currentBannerAds = [];
+        }
+
+        let bannerPlacementLock = false;
+        function placeBannerAds() {
+            if (bannerPlacementLock) return; // prevent re-entrancy
+            bannerPlacementLock = true;
+            clearBannerAds();
+            // potential insertion points: after each .section element
+            const sections = Array.from(document.querySelectorAll('.section'));
+            // always create exactly 3 banner slots
+            const slots = 3;
+
+            // choose up to 3 distinct sections at random for placement
+            const chosenSections = pickRandom(sections, Math.min(slots, sections.length));
+
+            // choose exactly 3 distinct ad images by shuffling and taking first 3
+            function shuffle(arr) {
+                const a = arr.slice();
+                for (let i = a.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [a[i], a[j]] = [a[j], a[i]];
+                }
+                return a;
+            }
+            const chosenImages = shuffle(banadFiles).slice(0, slots);
+
+            for (let i = 0; i < slots; i++) {
+                const sec = chosenSections[i] || document.querySelector('.container');
+                const imgSrc = chosenImages[i] || banadFiles[i % banadFiles.length];
+
+                const adImg = document.createElement('img');
+                adImg.className = 'banner-ad-img';
+                adImg.src = imgSrc;
+                adImg.alt = 'banner ad';
+
+                const link = document.createElement('a');
+                // clicking redirects to merch placeholder in same tab
+                link.href = 'https://example.com/store';
+                link.appendChild(adImg);
+
+                const wrapper = document.createElement('div');
+                wrapper.className = 'inline-banner-ad';
+                wrapper.appendChild(link);
+
+                // insert after the chosen section (or append to container if no section)
+                if (sec && sec.parentNode) {
+                    sec.parentNode.insertBefore(wrapper, sec.nextSibling);
+                } else {
+                    const container = document.querySelector('.container') || document.body;
+                    container.appendChild(wrapper);
+                }
+
+                // track the node so we can remove later
+                currentBannerAds.push({ node: wrapper, section: sec });
+            }
+            bannerPlacementLock = false;
+        }
+
+        function startBannerRotation() {
+            // initial placement
+            placeBannerAds();
+            // rotate every 30s
+            if (bannerRotateIntervalId) clearInterval(bannerRotateIntervalId);
+            bannerRotateIntervalId = setInterval(() => {
+                placeBannerAds();
+            }, 30000);
+        }
+
+        // start rotating on DOMContentLoaded (after sections exist)
+        document.addEventListener('DOMContentLoaded', function(){
+            try { startBannerRotation(); } catch(e){}
+        });
+        // also restart on window.load to be safe
+        window.addEventListener('load', function(){ try { startBannerRotation(); } catch(e){} });
 
         // Position side ads centered in the gutters between the page edge and the main .container
         function positionSideAds() {
