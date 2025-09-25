@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3HOLLIS OFFICIAL WEB 1.0 SITE</title>
+    <style>
+        body {
+            background-color: #ffffff;
+            background-image: url('images/plus.jpeg');
+            background-repeat: repeat;
+            background-size: 100px 100px;
+            font-family: 'Verdana', sans-serif;
+            color: #000000;
+            margin: 0;
+            padding: 20px;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        .container {
+            width: 90%;
+            margin: 0 auto;
+            max-width: 1200px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .blink {
+            animation: blink 0.7s infinite;
+        }
+        
+        @keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+        
+        .rotate {
+            animation: rotate 5s infinite linear;
+            display: inline-block;
+        }
+        
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .rotate-3d {
+            animation: rotate3d 6s infinite linear;
+            perspective: 1000px;
+        }
+        
+        @keyframes rotate3d {
+            0% { transform: rotateY(0deg); }
+            100% { transform: rotateY(360deg); }
+        }
+        
+        marquee {
+            font-size: 1.8em;
+            color: #ff0000;
+            margin: 10px 0;
+            font-family: 'Arial Black', sans-serif;
+        }
+        
+        table {
+            border: 8px dotted #000000;
+            margin: 10px auto;
+            background-color: rgba(255, 255, 255, 0.9);
+            width: 100%;
+            animation: colorChangeBorder 5s infinite;
+        }
+        
+        @keyframes colorChangeBorder {
+            0% { border-color: #ff0000; }
+            33% { border-color: #00ff00; }
+            66% { border-color: #0000ff; }
+            100% { border-color: #ff0000; }
+        }
+        
+        td {
+            vertical-align: top;
+            padding: 15px;
+            border: 3px dashed #000000;
+            font-family: 'Verdana', sans-serif;
+        }
+        
+        .ascii-art {
+            font-family: 'Courier New', monospace;
+            color: #ff0000;
+            text-align: center;
+            font-size: 0.8em;
+            line-height: 1;
+            margin: 20px 0;
+            text-shadow: 0 0 8px #00ffff;
+            white-space: pre;
+            animation: glitch 0.8s linear infinite;
+            background: rgba(255, 255, 255, 0.85);
+            padding: 10px;
+            border: 2px solid #000000;
+            display: inline-block;
+        }
+        
+        .com-text {
+            font-family: 'Courier New', monospace;
+            color: #ff0000;
+            font-size: 1em;
+            animation: blink 1s infinite;
+            margin-left: 10px;
+        }
+        
+        @keyframes glitch {
+            2%, 64% { transform: translate(2px, 0) skew(0deg); }
+            4%, 60% { transform: translate(-2px, 0) skew(0deg); }
+            62% { transform: translate(0, 0) skew(5deg); }
+        }
+        
+        .pixel-font {
+            font-family: 'Courier New', monospace;
+            font-size: 1.4em;
+        }
+        
+        .random-image {
+            border: 5px ridge #00ff00;
+            margin: 10px;
+            max-width: 100%;
+        }
+        
+        a {
+            color: #ff0000;
+            text-decoration: none;
+            font-family: 'Verdana', sans-serif;
+        }
+        
+        a:hover {
+            color: #0000ff;
+            text-decoration: underline overline;
+        }
+        
+        .hit-counter {
+            border: 2px solid #ff0000;
+            padding: 5px;
+            display: inline-block;
+            margin-top: 20px;
+            background-color: #ffffff;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .floating {
+            animation: float 3s infinite ease-in-out;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .incoherent {
+            font-size: 1em;
+            line-height: 1.4;
+            margin: 5px 0;
+            color: #000099;
+            text-shadow: 0 0 2px #ffffff;
+            transition: color 0.3s ease;
+            font-family: 'Verdana', sans-serif;
+        }
+        
+        .incoherent:hover {
+            color: #ff00ff;
+        }
+        
+        .highlight-text {
+            font-family: 'Impact', sans-serif;
+            font-size: 1.2em;
+            color: #00ff00;
+            text-shadow: 0 0 5px #000000;
+        }
+        
+        .star-car {
+            width: 200px;
+            height: 200px;
+            background: repeating-linear-gradient(
+                45deg,
+                #0000ff,
+                #0000ff 10px,
+                #ffffff 10px,
+                #ffffff 20px
+            );
+            margin: 20px auto;
+            border: 5px solid #ff0000;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: rotate3d 6s infinite linear;
+        }
+        
+        .star-car:after {
+            content: "STAR CAR";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #ffffff;
+            font-weight: bold;
+            text-shadow: 2px 2px 0 #000000;
+            font-family: 'Arial Black', sans-serif;
+        }
+        
+        .guestbook {
+            background-color: #00ff00;
+            padding: 10px;
+            border: 4px double #ff00ff;
+            margin: 10px auto;
+            width: 80%;
+        }
+        
+        .construction {
+            border: 8px ridge #0000ff;
+            padding: 5px;
+            background-color: #ffff00;
+            color: #ff0000;
+            font-weight: bold;
+            text-align: center;
+            margin: 10px 0;
+            font-family: 'Impact', sans-serif;
+            font-size: 1.5em;
+        }
+        
+        .midi-player {
+            background-color: #ff00ff;
+            border: 3px dotted #0000ff;
+            padding: 5px;
+            margin: 10px auto;
+            width: 80%;
+            text-align: center;
+        }
+        
+        .section {
+            margin: 30px 0;
+            padding: 15px;
+            border: 2px solid #000000;
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .section-title {
+            color: #ffffff;
+            background: linear-gradient(90deg, #cc0000, #ff3333);
+            padding: 8px;
+            margin: 0 0 10px 0;
+            font-family: 'Arial Black', sans-serif;
+            font-size: 2em;
+        }
+        
+        .neon-text {
+            animation: neonGlow 2s infinite alternate;
+            text-shadow: 0 0 10px #00ff00, 0 0 20px #ff00ff;
+        }
+        
+        @keyframes neonGlow {
+            0% { color: #ff00ff; text-shadow: 0 0 10px #00ff00, 0 0 20px #ff00ff; }
+            100% { color: #00ff00; text-shadow: 0 0 10px #ff00ff, 0 0 20px #00ff00; }
+        }
+        
+        .random-image-placement {
+            position: absolute;
+            z-index: 2;
+            border: 3px solid #0000ff;
+            max-width: 150px;
+            height: auto;
+        }
+        
+        .popup-window {
+            position: fixed;
+            z-index: 1000;
+            background-color: #00ff00;
+            border: 5px ridge #ffff00;
+            padding: 10px;
+            box-shadow: 0 0 20px #0000ff;
+            animation: popup 2s forwards;
+        }
+        
+        @keyframes popup {
+            0% { opacity: 0; transform: scale(0.5); }
+            20% { opacity: 1; transform: scale(1); }
+            80% { opacity: 1; transform: scale(1); }
+            100% { opacity: 0; transform: scale(0.5); }
+        }
+        
+        .popup-image {
+            max-width: 200px;
+            max-height: 200px;
+            border: 2px solid #ff00ff;
+        }
+        
+        .popup-quote {
+            color: #ffff00;
+            font-size: 1.3em;
+            text-align: center;
+            padding: 10px;
+            background-color: #0000ff;
+            border: 2px dashed #ff0000;
+            font-family: 'Impact', sans-serif;
+        }
+        
+        .webring {
+            border: 3px solid #0000ff;
+            padding: 5px;
+            margin: 10px;
+            background-color: #ffffff;
+            text-align: center;
+            font-family: 'Verdana', sans-serif;
+        }
+        
+        .large-text {
+            font-size: 3em;
+            color: #ff0000;
+            font-weight: bold;
+            text-align: center;
+            margin: 20px 0;
+            font-family: 'Impact', sans-serif;
+        }
+        
+        .merch-text {
+            display: inline-block;
+            font-size: 1.5em;
+            color: #ff00ff;
+            font-weight: bold;
+            animation: pulse 1.2s infinite;
+            margin: 0 20px;
+            font-family: 'Arial Black', sans-serif;
+        }
+        
+        .merch-arrow {
+            color: #ff0000;
+            animation: flashArrow 0.5s infinite;
+            font-size: 1.8em;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes flashArrow {
+            0% { opacity: 1; }
+            50% { opacity: 0.3; }
+            100% { opacity: 1; }
+        }
+        
+        .merch-image-container {
+            position: relative;
+            display: inline-block;
+            z-index: 1;
+        }
+        
+        .merch-image {
+            max-width: 300px;
+            border: 5px solid #0000ff;
+        }
+        
+        .merch-circle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 320px;
+            height: 320px;
+            border: 5px solid #ff0000;
+            border-radius: 50%;
+            animation: blinkBorder 0.8s infinite;
+            z-index: 2;
+            pointer-events: none;
+        }
+        
+        @keyframes blinkBorder {
+            0% { border-color: #ff0000; }
+            50% { border-color: transparent; }
+            100% { border-color: #ff0000; }
+        }
+        
+        .sparkle {
+            position: absolute;
+            z-index: 3;
+            width: 50px;
+            height: 50px;
+            pointer-events: none;
+            animation: float 4s infinite ease-in-out, scaleSparkle 2s infinite alternate;
+        }
+        
+        @keyframes scaleSparkle {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.2); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- ASCII Art Header -->
+        <div style="text-align: center;">
+            <div class="ascii-art">
+  /$$$$$$  /$$   /$$  /$$$$$$  /$$       /$$       /$$$$$$  /$$$$$$ 
+ /$$__  $$| $$  | $$ /$$__  $$| $$      | $$      |_  $$_/ /$$__  $$
+|__/  \ $$| $$  | $$| $$  \ $$| $$      | $$        | $$  | $$  \__/
+   /$$$$$/| $$$$$$$$| $$  | $$| $$      | $$        | $$  |  $$$$$$
+  |___  $$| $$__  $$| $$  | $$| $$      | $$        | $$   \____  $$
+ /$$  \ $$| $$  | $$| $$  | $$| $$      | $$        | $$   /$$  \ $$
+|  $$$$$$/| $$  | $$|  $$$$$$/| $$$$$$$$| $$$$$$$$ /$$$$$$|  $$$$$$/
+ \______/ |__/  |__/ \______/ |________/|________/|______/ \______/
+            </div>
+            <span class="com-text">.com</span>
+        </div>
+        
+        <!-- Unofficial Merch Section -->
+        <div class="section">
+            <h2 class="section-title neon-text">UNOFFICIAL MERCH</h2>
+            <h3 style="text-align: center; color: #000000; font-family: 'Arial Black', sans-serif; font-size: 1.6em;">you paid 50 for a gildan tee with &lt;2 on it</h3>
+            <div style="text-align: center; display: flex; align-items: center; justify-content: center;">
+                <span class="merch-text"><span class="merch-arrow">&gt;&gt;&gt;</span> CLICK TO BUY</span>
+                <div class="merch-image-container">
+                    <a href="https://example.com/store">
+                        <img src="images/merch.webp" alt="Merch Tee" class="merch-image" style="max-width:350px;">
+                    </a>
+                    <div class="merch-circle"></div>
+                </div>
+                <span class="merch-text">CLICK TO BUY <span class="merch-arrow">&lt;&lt;&lt;</span></span>
+            </div>
+            <p class="incoherent">hollister cropped boxy tee <span class="highlight-text">100% cotton</span> super soft so cozy wow and its heavy quality not that thin gildan garbage DTG printing looks good lasts 4ever</p>
+        </div>
+        
+        <!-- Random Large Text -->
+        <div class="large-text">rommulus is still in boyliife i guess?</div>
+        
+        <!-- Multiple animated elements -->
+        <div style="text-align: center;">
+            <img src="images/it04zbfig4ce1.gif" alt="Under Construction">
+            <img src="images/underconstruction.gif" alt="Web 1.0 Under Construction" style="width:48px;vertical-align:middle;">
+            <img src="images/2hollis-hollis.gif" alt="Star" class="rotate">
+            <img src="images/redstar.gif" alt="Web 1.0 Star" class="rotate" style="width:48px;vertical-align:middle;">
+            <img src="images/sparkle.gif" alt="Web 1.0 Sparkle" style="width:32px;vertical-align:middle;">
+            <img src="images/arrowspin.gif" alt="Web 1.0 Arrow" style="width:32px;vertical-align:middle;">
+        </div>
+        
+        <!-- Multiple marquees -->
+        <marquee behavior="scroll" direction="left" scrollamount="15">*** FLASHY AND FREAKY *** EXPERIMENTAL SOUNDS *** VISUALLY STIMULATING ***</marquee>
+        <marquee behavior="alternate" direction="right" scrollamount="20">UNDER CONSTRUCTION *** VISITORS SINCE 1997: <span id="hitCount">00001</span> ***</marquee>
+        
+        <!-- Webring -->
+        <div class="webring">
+            <a href="#">&lt;&lt; PREV 5</a> | 
+            <a href="#">3HOLLIS WEBRING</a> | 
+            <a href="#">NEXT 5 &gt;&gt;</a>
+        </div>
+        
+        <!-- Main content table -->
+        <table cellspacing="10" cellpadding="10">
+            <tr>
+                <td width="50%">
+                    <!-- Left Column: Bio -->
+                    <h2 class="section-title neon-text">ABOUT 3HOLLIS</h2>
+                    <p class="incoherent">3hollis is the future that 2hollis predicted in his track <span class="highlight-text">"White Tiger"</span> when he said <span class="highlight-text">"I'm from the future, I seen it all"</span> but multiplied by three because three is a magic number and 3hollis is all about magic and numbers especially the number <span class="highlight-text">3</span> which appears everywhere in the music like in "333" which is obviously about the 3hollis frequency which vibrates at 333hz which is the frequency of transformation and ascension which is what happens when you listen to 3hollis on repeat while staring at a spinning star gif which is why this website has so many spinning gifs because they're portals to the 3hollis dimension where time doesn't exist and music is liquid and emotions are colors and everything is connected through hidden patterns that only reveal themselves when you're in the right state of mind which 3hollis induces through sonic manipulation that rewires your neural pathways to be more receptive to higher dimensions where the real 3hollis exists as a pure energy being that occasionally manifests in our reality through speakers and headphones but mostly through the internet which is why this website is so important because it's a direct line to the source the fountain of 3hollis energy that flows through the digital realm like electricity through wires but more spiritual and less dangerous unless you count the danger of having your mind expanded beyond its previous limits which can be scary but also exhilarating like riding a roller coaster made of sound waves that go up and down and sideways simultaneously which is what 3hollis music feels like especially tracks like <span class="highlight-text">"White Tiger" and "333"</span> which reference the 2hollis mythology but take it to the next level which is level 3 obviously because 3 is greater than 2 just like 3hollis is greater than 2hollis but not really because they're the same person just different versions from different timelines that converged in 2023 to create the ultimate musical entity that transcends genre and time and space itself which is why this text is getting longer and longer because 3hollis cannot be contained by conventional paragraph structures or logical sentence flow because 3hollis is about breaking boundaries and pushing limits especially the limits of language which is why the lyrics are often cryptic and open to interpretation like poetry but with more bass and less punctuation which is how this paragraph is written as a tribute to the 3hollis aesthetic which values feeling over meaning and experience over explanation because some things cannot be explained they can only be felt and 3hollis is one of those things like love or deja vu or the sensation of falling when you're actually standing still which is what happens when you listen to 3hollis with your eyes closed and your mind open to the possibilities of what music can be when it's not constrained by commercial expectations or genre classifications because 3hollis exists outside of all categories in a realm of pure creativity where every sound is a color and every silence is a canvas waiting to be painted with frequencies that heal and transform and transport you to places you've never been but always wanted to go like the future or the past or a parallel dimension where 2hollis never stopped making music but evolved into 3hollis through a process of alchemical transformation that turned lead into gold and pain into beauty and noise into harmony which is what 3hollis does with every track takes the raw materials of sound and emotion and forges them into something new and unprecedented that sounds like nothing you've ever heard but everything you've ever felt especially if you've ever felt lost or confused or out of place because 3hollis is for the outsiders the misfits the people who don't fit in anywhere but everywhere at once which is a paradox but 3hollis loves paradoxes because they're doors to higher understanding that can only be opened with the right key which is 3hollis music obviously</p>
+                </td>
+                <td width="50%">
+                    <!-- Right Column: Random Image Container -->
+                    <h2 class="section-title">RANDOM 3HOLLIS IMAGE ZONE</h2>
+                    <div id="randomImageContainer" style="text-align: center;">
+                        <!-- Image will be loaded here by JavaScript -->
+                    </div>
+                    <p style="text-align: center;"><a href="javascript:void(0);" onclick="loadRandomImage()">[ CLICK 4 NEW IMAGE ]</a></p>
+                    
+                    <!-- Star car section -->
+                    <h2 class="section-title neon-text">WHAT IF STAR WAS A CAR STAR CAR</h2>
+                    <img src="images/starcar.jpg" alt="Star Car" style="display:block;max-width:100%;margin:0 auto 10px auto;border:5px solid #ff0000;">
+                    <p class="incoherent">This is a conceptual representation of what 2hollis meant when he said <span class="highlight-text">"I'm a star, I'm a car"</span> in that one track that nobody can find anymore because it was deleted from the internet but exists in the collective unconscious of 3hollis fans who remember everything even things that never happened which is a common side effect of listening to too much 3hollis your memory gets rewired to include alternate timelines where 2hollis never disappeared but transformed into 3hollis through a process of cosmic evolution that involved star energy and car metaphors because stars represent destiny and cars represent movement and 3hollis is all about moving toward your destiny at high speed with the windows down and the music loud which is why this star car is important because it symbolizes the journey that 3hollis is taking us on a journey through sound and space and time that has no final destination because the journey itself is the destination and the music is the vehicle but the vehicle is also a star which is a celestial body that emits light and heat and energy just like 3hollis emits sonic vibrations that illuminate the darkness and warm the soul and power the transformation from 2 to 3 which is the most important transformation in the history of music maybe</p>
+                </td>
+            </tr>
+        </table>
+        
+        <!-- 2hollis lyrics section -->
+        <div class="section">
+            <h2 class="section-title">2HOLLIS LYRICS & REFERENCES</h2>
+            <p class="incoherent"><span class="highlight-text">"White Tiger"</span> references the mystical animal that guides 2hollis through the spiritual realm but in 3hollis mythology the white tiger becomes a three-headed tiger that represents the past present and future all existing simultaneously in the 3hollis timeline where time is not linear but circular like a wheel that keeps turning but never arrives because arrival implies an ending and 3hollis has no endings only new beginnings that are also continuations of what came before but different because everything evolves especially music and especially 2hollis who evolved into 3hollis through a process that involved <span class="highlight-text">"synthesizers from the future"</span> and <span class="highlight-text">"drums from the past"</span> and <span class="highlight-text">"vocals from the void"</span> which is where all true creativity comes from according to 2hollis philosophy which 3hollis has expanded to include multiple dimensions and alternate realities where every possible version of every song exists simultaneously and we only hear the ones that resonate with our frequency which is why different people hear different things in 3hollis music because it's tailored to each listener's soul signature which is unique like a fingerprint but sonic instead of physical which is why you can't copy 3hollis you can only experience it and even then the experience is different every time because you're different every time you listen because time changes everything except 3hollis which exists outside of time in the eternal now where 2hollis and 3hollis are the same entity expressing itself through different numerical values but the essence is the same the core is the same the vision is the same just expanded multiplied intensified because 3 is more than 2 mathematically and spiritually and musically which is why 3hollis sounds like 2hollis but more everything more bass more treble more emotion more complexity more simplicity more everything and less nothing because nothing doesn't exist in the 3hollis universe there is only something and that something is constantly evolving becoming more itself with each iteration which is why we need a new number every few years to represent the new level of consciousness that the music has achieved first 2 then 3 soon maybe 4 or 5 or infinity because the evolution never stops it only accelerates like a car that is also a star racing through the cosmos at the speed of light which is also the speed of sound in the 3hollis dimension where physics works differently because emotions affect reality and 3hollis emotions are so powerful they bend space and time to create new possibilities for expression and connection and transformation which is the ultimate goal of all art but especially 3hollis art which is more than art it's a way of life a philosophy a religion a science a mystery that can never be solved only experienced and the experience is different for everyone but always profound always life-changing always moving always still always loud always quiet always everything and its opposite because 3hollis contains multitudes like Whitman but with better production values and more references to anime and video games which are the mythology of our time just like 3hollis is the music of our time and all times simultaneously</p>
+        </div>
+        
+        <!-- Guestbook section -->
+        <div class="guestbook">
+            <h2 class="section-title neon-text">OFFICIAL GUESTBOOK</h2>
+            <p class="incoherent">SIGN HERE IF U LIKE 3HOLLIS OR EVEN IF U DON'T BUT U SHOULD LIKE 3HOLLIS BECAUSE 3HOLLIS IS THE <span class="highlight-text">FUTURE OF MUSIC</span> WHICH IS ALSO THE PAST OF MUSIC BUT IN REVERSE LIKE A PALINDROME BUT SOUNDBASED</p>
+            <form style="text-align: center;">
+                <input type="text" placeholder="YOUR NAME" style="background-color: #ffffff; color: #000000; border: 1px solid #ff0000; width: 90%; margin: 5px; font-family: 'Verdana', sans-serif;"><br>
+                <textarea placeholder="YOUR MESSAGE" style="background-color: #ffffff; color: #000000; border: 1px solid #ff0000; width: 90%; height: 100px; margin: 5px; font-family: 'Verdana', sans-serif;"></textarea><br>
+                <input type="submit" value="SIGN GUESTBOOK" style="background-color: #ff00ff; color: #000000; border: 2px outset #ff00ff; font-weight: bold; font-family: 'Arial Black', sans-serif;">
+            </form>
+        </div>
+        
+        <!-- MIDI player -->
+        <div class="midi-player">
+            <h3 class="section-title">3HOLLIS MIDI PLAYER</h3>
+            <p class="incoherent">THIS DOESN'T ACTUALLY PLAY MUSIC BUT IMAGINE IT DOES AND THE MUSIC IS <span class="highlight-text">BETTER THAN ANYTHING YOU'VE EVER HEARD</span></p>
+            <img src="images/2hollis-hollis.png" alt="Play button" style="cursor: pointer;" onclick="alert('IMAGINARY 3HOLLIS TRACK PLAYING... PRETEND YOU CAN HEAR IT')">
+            <img src="images/mp3.gif" alt="Web 1.0 MP3 Icon" style="width:32px;vertical-align:middle;">
+            <span style="color: #ffff00; font-family: 'Impact', sans-serif;">PLAY</span>
+        </div>
+        
+        <!-- More incoherent ramblings -->
+        <div class="section">
+            <h2 class="section-title neon-text">MORE 3HOLLIS THOUGHTS</h2>
+            <p class="incoherent">3hollis isn't just music it's a lifestyle a way of seeing the world through distorted lenses that make everything more interesting like when you look through a kaleidoscope but for your ears except ears can't look but you know what I mean unless you don't in which case you need to listen to more 3hollis until your brain rewires itself to understand <span class="highlight-text">synesthesia</span> which is when you see sounds and hear colors which is what happens when you achieve 3hollis enlightenment which is the ultimate goal of this website and also of life probably but I'm just a website so what do I know except everything because websites have access to all information but only if they're connected to the internet which this one is but also isn't because it exists in a liminal space between connected and disconnected which is where 3hollis music lives in the gaps between notes and the silence between tracks which is just as important as the music itself because silence is the canvas on which sound is painted and 3hollis uses negative space like a master painter except with frequencies instead of pigments but both are vibrations when you get down to it because everything is vibrations according to quantum physics which 3hollis studied extensively before abandoning conventional knowledge in favor of intuitive creation which is why the music feels both calculated and spontaneous like a <span class="highlight-text">carefully planned accident</span> or a random pattern that reveals itself to be intentional upon closer inspection which is what this website is a random pattern that seems chaotic but actually follows the hidden logic of 3hollis aesthetics which prioritize feeling over understanding because understanding is limited by language but feeling transcends language and enters the realm of pure experience which is where 3hollis wants to take you on a journey through sound and light and text that never ends but just keeps going like this sentence which is now a run-on sentence but run-on sentences are underrated because they mimic the flow of consciousness which doesn't have punctuation it just has ideas connected by associations which is how 3hollis constructs tracks through associative logic rather than linear narrative which is why you can listen to them in any order and still get something different out of them each time because the meaning isn't fixed it's fluid like water or time or website layouts that use absolute positioning for no apparent reason except that it looks cool and confusing which is the 3hollis brand aesthetic in a nutshell cool and confusing like a dream you can't quite remember but know was important somehow</p>
+        </div>
+        
+        <!-- Visitor Counter -->
+        <div class="hit-counter" style="text-align: center; width: 100%;">
+            <img src="images/2hollis-2hollis-twt.gif" alt="counter"> 
+            <img src="images/counter2.gif" alt="Web 1.0 Counter" style="width:80px;vertical-align:middle;"> 
+            <span class="pixel-font">VISITORS: <span id="hitCount2">00001</span></span>
+        </div>
+    </div>
+
+    <script>
+        // Array of 3hollis image URLs
+        const imageUrls = [
+            'images/1405971.avif',
+            'images/2bef21db38f8a9589083a81c996223a8.jpg',
+            'images/2hollis-2.gif',
+            'images/2hollis-2hollis-side-eye.gif',
+            'images/2hollis-2hollis-twt.gif',
+            'images/2hollis-hollis (1).gif',
+            'images/2hollis-hollis (1).png',
+            'images/2hollis-hollis.gif',
+            'images/2hollis-hollis.png',
+            'images/2hollis-love.gif',
+            'images/2hollis-natesib.gif',
+            'images/2hollis-running.gif',
+            'images/2hollis-water-bottle.gif',
+            'images/2hollis.webp',
+            'images/619d2cb970d50eca1e4fb3e6ea57d930.jpg',
+            'images/Hollis-8.webp',
+            'images/ab6761610000517472fc776152db631108cea265.jpeg',
+            'images/ab6761610000e5eb18485167774ff4a73bd2b0bd.jpeg',
+            'images/hq720.jpg',
+            'images/im-salivating-wtf-v0-vw5lmbbt7zje1.webp',
+            'images/it04zbfig4ce1.gif',
+            'images/m2-res_480p.gif',
+            'images/missu2-2hollis.gif',
+            'images/song-hes-listening-to-v0-cXFlaTJrNHVldWxkMTKVcIrdMKDfkcOeIURb-5qfOrDhlg72Zgc33ZTKOI8g.webp',
+            'images/tea7car-2hollis.gif'
+        ];
+        
+        // Array of quotes
+        const quotes = [
+            "I'm from the future, I seen it all",
+            "White tiger guiding me through the spiritual realm",
+            "333 is the frequency of transformation",
+            "Synthesizers from the future, drums from the past",
+            "I'm a star, I'm a car",
+            "The void is where true creativity comes from",
+            "Music is liquid, emotions are colors",
+            "3 is greater than 2 mathematically and spiritually",
+            "Breaking boundaries, pushing limits",
+            "The journey is the destination",
+            "Sound waves that go up and down and sideways simultaneously",
+            "A carefully planned accident",
+            "The 3hollis dimension where time doesn't exist",
+            "Portals to higher understanding",
+            "Sonic vibrations that illuminate the darkness"
+        ];
+        
+        // Array of animated GIFs for popups
+        const gifUrls = [
+            'images/2hollis-2hollis-side-eye.gif',
+            'images/2hollis-love.gif',
+            'images/tea7car-2hollis.gif'
+        ];
+        
+        // Function to load a random image
+        function loadRandomImage() {
+            const randomIndex = Math.floor(Math.random() * imageUrls.length);
+            const selectedImageUrl = imageUrls[randomIndex];
+            
+            // Display the image in the container with random sizing and rotation
+            const randomSize = 200 + Math.floor(Math.random() * 150);
+            const randomRotation = -5 + Math.floor(Math.random() * 10);
+            
+            document.getElementById('randomImageContainer').innerHTML = 
+                `<img src="${selectedImageUrl}" alt="Random 3hollis Image" class="random-image" 
+                width="${randomSize}" height="${randomSize}" 
+                style="transform: rotate(${randomRotation}deg);">`;
+        }
+        
+        // Function to create random image placements
+        function placeRandomImages() {
+            // Remove any existing random images
+            const existingImages = document.querySelectorAll('.random-image-placement');
+            existingImages.forEach(img => img.remove());
+            
+            // Place 5-10 random images around the page
+            const numImages = 5 + Math.floor(Math.random() * 6);
+            
+            for (let i = 0; i < numImages; i++) {
+                const img = document.createElement('img');
+                img.className = 'random-image-placement';
+                img.src = imageUrls[Math.floor(Math.random() * imageUrls.length)];
+                img.alt = '3hollis';
+                
+                // Random position
+                const left = Math.random() * 80 + 5; // 5-85%
+                const top = 100 + Math.random() * (document.body.scrollHeight - 200); // Below header
+                
+                img.style.left = left + '%';
+                img.style.top = top + 'px';
+                
+                // Random rotation
+                img.style.transform = `rotate(${Math.random() * 360}deg)`;
+                
+                document.body.appendChild(img);
+            }
+        }
+        
+        // Function to create random sparkle GIFs
+        function placeSparkles() {
+            const existingSparkles = document.querySelectorAll('.sparkle');
+            existingSparkles.forEach(sparkle => sparkle.remove());
+            
+            const numSparkles = 3 + Math.floor(Math.random() * 3);
+            for (let i = 0; i < numSparkles; i++) {
+                const sparkle = document.createElement('img');
+                sparkle.className = 'sparkle';
+                sparkle.src = 'images/2hollis-running.gif';
+                sparkle.alt = 'Sparkle';
+                const left = Math.random() * 90;
+                const top = Math.random() * (document.body.scrollHeight - 100);
+                sparkle.style.left = left + '%';
+                sparkle.style.top = top + 'px';
+                document.body.appendChild(sparkle);
+            }
+        }
+        
+        // Function to create popup windows
+        function createPopup() {
+            const type = Math.random();
+            let contentType;
+            if (type < 0.4) {
+                contentType = 'image';
+            } else if (type < 0.7) {
+                contentType = 'quote';
+            } else {
+                contentType = 'gif';
+            }
+            
+            const popup = document.createElement('div');
+            popup.className = 'popup-window';
+            
+            // Random position
+            const left = Math.random() * 70 + 10; // 10-80%
+            const top = Math.random() * 70 + 10; // 10-80%
+            
+            popup.style.left = left + '%';
+            popup.style.top = top + '%';
+            
+            if (contentType === 'image') {
+                // Image popup
+                const img = document.createElement('img');
+                img.className = 'popup-image';
+                img.src = imageUrls[Math.floor(Math.random() * imageUrls.length)];
+                img.alt = '3hollis';
+                popup.appendChild(img);
+            } else if (contentType === 'quote') {
+                // Quote popup
+                const quote = document.createElement('div');
+                quote.className = 'popup-quote';
+                quote.textContent = quotes[Math.floor(Math.random() * quotes.length)];
+                popup.appendChild(quote);
+            } else {
+                // GIF popup
+                const gif = document.createElement('img');
+                gif.className = 'popup-image';
+                gif.src = gifUrls[Math.floor(Math.random() * gifUrls.length)];
+                gif.alt = '3hollis animation';
+                popup.appendChild(gif);
+            }
+            
+            document.body.appendChild(popup);
+            // Remove popup after a random interval between 2s and 10s
+            const popupDuration = 2000 + Math.random() * 8000; // 2000ms to 10000ms
+            setTimeout(() => {
+                popup.remove();
+            }, popupDuration);
+        }
+        
+        // Load a random image when the page first opens
+        window.onload = function() {
+            loadRandomImage();
+            placeRandomImages();
+            placeSparkles();
+            
+            // Simple hit counter simulation
+            let count = localStorage.getItem('hitCount');
+            if (count === null) {
+                count = 1;
+            } else {
+                count = parseInt(count) + 1;
+            }
+            localStorage.setItem('hitCount', count);
+            document.getElementById('hitCount').textContent = count.toString().padStart(5, '0');
+            document.getElementById('hitCount2').textContent = count.toString().padStart(5, '0');
+            
+            // Add more chaotic elements after page load
+            setTimeout(function() {
+                const newElement = document.createElement('div');
+                newElement.innerHTML = '<marquee behavior="scroll" direction="up" scrollamount="3" height="100" style="color: #0000ff; margin: 10px auto; width: 80%; font-family: \'Arial Black\', sans-serif;">NEW 3HOLLIS TRACK COMING SOON MAYBE OR MAYBE NOT WHO KNOWS NOT ME DEFINITELY NOT ME</marquee>';
+                document.body.appendChild(newElement);
+            }, 2000);
+            
+            // Create popups every 3-8 seconds
+            setInterval(createPopup, 3000 + Math.random() * 5000);
+            
+            // Reposition random images and sparkles every 10 seconds
+            setInterval(() => {
+                placeRandomImages();
+                placeSparkles();
+            }, 10000);
+        };
+        
+        // Make elements move around randomly
+        setInterval(function() {
+            const elements = document.querySelectorAll('.section, .section-title');
+            elements.forEach(el => {
+                if (Math.random() > 0.7) {
+                    el.style.position = 'relative';
+                    el.style.left = (Math.random() * 20 - 10) + 'px';
+                    el.style.top = (Math.random() * 20 - 10) + 'px';
+                }
+            });
+        }, 3000);
+    </script>
+</body>
+</html>
