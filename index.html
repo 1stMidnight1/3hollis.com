@@ -252,7 +252,7 @@
         }
         
         .midi-player {
-            background-color: #ff00ff;
+            background-color: #ffffff; /* background forced to white */
             border: 3px dotted #0000ff;
             padding: 5px;
             margin: 10px auto;
@@ -390,12 +390,29 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
+            /* size will be clamped relative to the merch image to keep it centered */
             width: 320px;
             height: 320px;
             border: 10px solid #ff0000; /* doubled thickness */
             border-radius: 50%;
             animation: blinkBorder 0.8s infinite;
             z-index: 2;
+            pointer-events: none;
+        }
+
+        /* Ensure the merch-circle scales down on small merch images and doesn't push layout */
+        .merch-image-container a .merch-circle {
+            /* match circle to image size with a max cap */
+            width: calc(min(320px, 1.15 * var(--merch-image-width, 300px)));
+            height: calc(min(320px, 1.15 * var(--merch-image-width, 300px)));
+        }
+
+        .merch-arrow-gif {
+            position: relative;
+            z-index: 3;
+            width: 56px;
+            margin-left: 10px;
+            vertical-align: middle;
             pointer-events: none;
         }
         
@@ -427,11 +444,11 @@
             top: 12px;
             width: 120px;
             height: 120px;
-            background: #00cc44; /* green by default */
+            background: #00ff00; /* pure green */
             color: #ffffff;
             font-family: 'Impact', 'Arial Black', sans-serif;
             font-size: 22px; /* larger text */
-            border: 4px solid #004400;
+            border: 4px solid #00aa00;
             border-radius: 0; /* square corners */
             z-index: 4000;
             cursor: pointer;
@@ -442,25 +459,40 @@
             padding: 6px;
         }
         .mode-toggle.boring {
-            background: #cc2222; /* red when boring */
-            border-color: #440000;
+            background: #ffffff; /* pure white when boring */
+            color: #00ff00; /* green text */
+            border-color: #00ff00;
         }
 
-        /* boring-mode helper: stop animations and hide hover highlights */
+        /* boring-mode helper: pause animations/transitions but keep site content visible and images colored */
         .boring-mode * {
-            animation: none !important;
             transition: none !important;
         }
+
+        /* Pause common CSS animations by overriding animation properties for known animated classes */
+        .boring-mode .neon-text,
+        .boring-mode .blink,
+        .boring-mode .rotate,
+        .boring-mode .rotate-3d,
+        .boring-mode .floating,
+        .boring-mode .merch-text,
+        .boring-mode .merch-arrow,
+        .boring-mode .merch-arrow-gif,
+        .boring-mode .merch-circle,
         .boring-mode .popup-window,
-        .boring-mode .random-image-placement,
         .boring-mode .inline-banner-ad,
-        .boring-mode #left-ads,
-        .boring-mode #right-ads {
-            display: none !important;
+        .boring-mode .random-image-placement {
+            animation-play-state: paused !important;
+            animation: none !important;
         }
+
+    /* When boring mode is active, remove inline banners and vertical side ads */
+    .boring-mode .inline-banner-ad { display: none !important; }
+    .boring-mode #left-ads, .boring-mode #right-ads { display: none !important; }
+
         .boring-mode a:hover { text-decoration: none !important; }
 
-        /* darken the tiled background with an overlay when boring mode is active */
+        /* Darken only the tiled background: add an overlay underneath the page content while keeping boxes white and opaque */
         body.boring-mode::before {
             content: '';
             position: fixed;
@@ -469,20 +501,55 @@
             width: 100%;
             height: 100%;
             background: rgba(0,0,0,0.55);
-            z-index: 3499; /* below the toggle button */
+            z-index: 1000; /* underneath the main content */
             pointer-events: none;
+            mix-blend-mode: multiply;
         }
 
-        /* hide animated gifs and marquees explicitly */
-        .boring-mode img[src$=".gif"],
-        .boring-mode img[src*=".gif"] {
-            visibility: hidden !important;
-            opacity: 0 !important;
+        /* Ensure main content boxes are above the overlay and remain opaque white */
+        body.boring-mode .container,
+        body.boring-mode .section,
+        body.boring-mode table,
+        body.boring-mode .guestbook,
+        body.boring-mode .webring,
+        body.boring-mode .hit-counter {
+            position: relative;
+            z-index: 1100;
+            background-color: #ffffff !important;
+            opacity: 1 !important;
         }
-        .boring-mode marquee { display: none !important; }
 
-        /* grayscale borders and force black text */
-        .boring-mode * { filter: grayscale(100%) !important; color: #000000 !important; border-color: #000000 !important; }
+        /* Keep images colored and visible (do not grayscale or hide gifs) */
+        .boring-mode img { filter: none !important; opacity: 1 !important; visibility: visible !important; }
+
+        /* Desaturate borders and force black text for non-image elements (images keep color) */
+        body.boring-mode :not(img) { color: #000000 !important; border-color: #000000 !important; }
+
+        /* Strip most text effects while in boring mode: remove text-shadow, neon glow and blinking for plain readability.
+           Allow bold (<b>), italic (<i>) and underline (<u>) to remain as semantic emphasis. */
+        .boring-mode .ascii-art, .boring-mode .large-text, .boring-mode .incoherent, .boring-mode .section-title, .boring-mode .highlight-text, .boring-mode marquee {
+            text-shadow: none !important;
+            color: #000000 !important;
+            background: transparent !important;
+            animation: none !important;
+        }
+        /* General stripping of decorative typography in boring-mode */
+        .boring-mode * {
+            text-shadow: none !important;
+            letter-spacing: normal !important;
+            font-family: Arial, Helvetica, sans-serif !important;
+        }
+        /* Preserve typographic emphasis for bold/italic/underline */
+        .boring-mode b, .boring-mode strong { font-weight: bold !important; }
+        .boring-mode i, .boring-mode em { font-style: italic !important; }
+        .boring-mode u { text-decoration: underline !important; }
+
+        /* Hide merch circle and merch CTA text in boring mode */
+        .boring-mode .merch-circle { display: none !important; }
+        .boring-mode .merch-text { display: none !important; }
+
+    /* Hide the eaten counter in boring mode (matches JS id "eatenCount") */
+    .boring-mode #eatenCount, .boring-mode .eaten-counter { display: none !important; }
 
         .web1-banner img {
             display: inline-block;
@@ -540,7 +607,7 @@
                 gap: 24px; /* increased vertical spacing */
                 pointer-events: auto;
             }
-            .side-ad { width: 120px; border: 4px solid #000; background: #fff; padding: 6px; display:block; }
+            .side-ad { width: 120px; border: none; background: #fff; padding: 6px; display:block; }
 
             /* Inline rotating banner ads that appear between sections */
             .inline-banner-ad {
@@ -571,7 +638,7 @@
 </head>
 <body>
     <!-- Mode toggle button: left of header -->
-    <button id="modeToggle" class="mode-toggle" aria-pressed="false">headache mode: on</button>
+    <button id="modeToggle" class="mode-toggle" aria-pressed="false">awesome mode: on :3</button>
 
     <!-- Left and right sidebar ads (will be positioned into page gutters via JS) -->
     <div id="left-ads" aria-hidden="false">
@@ -600,11 +667,11 @@
             <div style="text-align: center; display: flex; align-items: center; justify-content: center;">
                 <span class="merch-text">CLICK TO BUY <span class="merch-arrow">&gt;&gt;&gt;</span></span>
                 <div class="merch-image-container">
-                    <a href="https://example.com/store">
-                        <img src="images/merch.webp" alt="Merch Tee" class="merch-image" style="max-width:350px;">
+                    <a href="https://example.com/store" style="display:inline-block; position:relative;">
+                        <img src="images/merch.webp" alt="Merch Tee" class="merch-image" style="max-width:350px; display:block;">
+                        <div class="merch-circle"></div>
                     </a>
-                    <img src="images/arrowspin.gif" alt="Buy Arrow" class="merch-arrow-gif">
-                    <div class="merch-circle"></div>
+                    <img src="images/arrowspin.gif" alt="Buy Arrow" class="merch-arrow-gif" style="position:relative; left:6px; top:0;">
                 </div>
                 <span class="merch-text"><span class="merch-arrow">&lt;&lt;&lt;</span> CLICK TO BUY</span>
             </div>
@@ -718,7 +785,10 @@
         
         <!-- Eaten counter (now above the visitor counter) -->
         <div style="text-align:center; width:100%;">
-            <div class="eaten-counter" id="eatenCounter" style="display:block; margin: 0 auto 12px auto;">3hollisses eaten: <span id="eatenCount">0</span></div>
+            <!-- Eaten Counter (live, updated when floating images are removed) -->
+            <div style="margin-bottom:10px;">
+                <span class="eaten-counter">3HOLLISES EATEN: <span id="eatenCount">0</span></span>
+            </div>
             <!-- Visitor Counter -->
             <div class="hit-counter" style="text-align: center; width: 100%;">
                 <img src="images/2hollis-2hollis-twt.gif" alt="counter"> 
@@ -1061,6 +1131,20 @@
                 placeRandomImages();
                 placeSparkles();
             }, 10000);
+
+            // Measure merch image width and expose as CSS variable for merch-circle sizing
+            try {
+                const merchImg = document.querySelector('.merch-image');
+                const merchContainer = document.querySelector('.merch-image-container');
+                if (merchImg && merchContainer) {
+                    const setVar = () => {
+                        const w = merchImg.offsetWidth || merchImg.naturalWidth || 300;
+                        merchContainer.style.setProperty('--merch-image-width', w + 'px');
+                    };
+                    setVar();
+                    window.addEventListener('resize', setVar);
+                }
+            } catch (e) {}
         };
 
     // Track interval ids so we can toggle them on/off for boring mode
@@ -1072,33 +1156,20 @@
             const body = document.body;
             const toggle = document.getElementById('modeToggle');
             if (on) {
-                // add class to body to disable animations via CSS
+                // add class to body to apply boring-mode CSS (pauses animations, hides merch CTA and eaten counter)
                 body.classList.add('boring-mode');
                 if (toggle) { toggle.classList.add('boring'); toggle.textContent = 'boring mode on :/'; toggle.setAttribute('aria-pressed','true'); }
-                // clear intervals
+                // clear intervals to freeze dynamic JS behavior (popups, random image re-placement, banner rotation)
                 if (popupIntervalId) { clearInterval(popupIntervalId); popupIntervalId = null; }
                 if (randomImagesIntervalId) { clearInterval(randomImagesIntervalId); randomImagesIntervalId = null; }
                 if (bannerRotateIntervalId) { clearInterval(bannerRotateIntervalId); bannerRotateIntervalId = null; }
-                // remove any existing popups and random images immediately
-                document.querySelectorAll('.popup-window, .random-image-placement, .inline-banner-ad').forEach(el => el.remove());
-                // hide side ads
-                const left = document.getElementById('left-ads');
-                const right = document.getElementById('right-ads');
-                if (left) left.style.display = 'none';
-                if (right) right.style.display = 'none';
-                // remove hover effects by disabling pointer events where appropriate
-                document.querySelectorAll('a').forEach(a => a.style.pointerEvents = 'none');
+                // Do NOT remove GIFs or hide side ads; CSS ensures visuals are preserved but animations are paused.
+                try { localStorage.setItem('boringMode', '1'); } catch(e) {}
             } else {
-                // exit boring mode
+                // exit boring mode: remove class and restart intervals
                 body.classList.remove('boring-mode');
-                if (toggle) { toggle.classList.remove('boring'); toggle.textContent = 'headache mode: on'; toggle.setAttribute('aria-pressed','false'); }
-                // restore side ads
-                const left = document.getElementById('left-ads');
-                const right = document.getElementById('right-ads');
-                if (left) left.style.display = '';
-                if (right) right.style.display = '';
-                // restore pointer events
-                document.querySelectorAll('a').forEach(a => a.style.pointerEvents = '');
+                if (toggle) { toggle.classList.remove('boring'); toggle.textContent = 'awesome mode: on :3'; toggle.setAttribute('aria-pressed','false'); }
+                try { localStorage.setItem('boringMode', '0'); } catch(e) {}
                 // restart intervals
                 if (!popupIntervalId) popupIntervalId = setInterval(createPopup, 3000 + Math.random() * 5000);
                 if (!randomImagesIntervalId) randomImagesIntervalId = setInterval(() => { placeRandomImages(); placeSparkles(); }, 10000);
@@ -1106,14 +1177,26 @@
             }
         }
 
-        // Wire up the toggle button
+        // Wire up the toggle button and persist preference in localStorage
         document.addEventListener('DOMContentLoaded', function(){
             const toggle = document.getElementById('modeToggle');
             if (!toggle) return;
-            // default: headache mode on (boring mode off)
+            // Apply stored preference (if present) BEFORE starting banner rotation/intervals
+            try {
+                const stored = localStorage.getItem('boringMode');
+                if (stored === '1') {
+                    setBoringMode(true);
+                } else {
+                    setBoringMode(false);
+                }
+            } catch (e) {}
+
+            // Listen for user toggle and persist preference
             toggle.addEventListener('click', function(){
                 const isBoring = document.body.classList.contains('boring-mode');
-                setBoringMode(!isBoring);
+                const next = !isBoring;
+                setBoringMode(next);
+                try { localStorage.setItem('boringMode', next ? '1' : '0'); } catch(e) {}
             });
         });
 
@@ -1152,20 +1235,62 @@
             });
         }
 
-        // run border randomizer after DOM is ready
-        document.addEventListener('DOMContentLoaded', randomizePageBorders);
+        // run border randomizer after DOM is ready, then preserve any red boxes so boring-mode won't neutralize them
+        document.addEventListener('DOMContentLoaded', function() {
+            randomizePageBorders();
+            try { preserveRedBoxes(); } catch(e) {}
+        });
+
+        // Detect elements with red backgrounds or red borders and lock their colors
+        // by applying inline styles with the computed color using !important. This
+        // prevents the boring-mode CSS (which uses !important) from neutralizing
+        // intentionally red boxes behind text.
+        function preserveRedBoxes() {
+            const isRedRgb = (s) => {
+                if (!s) return false;
+                s = s.replace(/\s+/g,'');
+                if (s.indexOf('rgb(255,0,0)') !== -1 || s.indexOf('rgba(255,0,0,1)') !== -1) return true;
+                if (s.toLowerCase().indexOf('#ff0000') !== -1) return true;
+                return false;
+            };
+
+            const all = document.querySelectorAll('body *');
+            all.forEach(el => {
+                try {
+                    // don't lock the merch circle's border colors - it uses animation for blinking
+                    if (el.classList && el.classList.contains('merch-circle')) return;
+                    const cs = window.getComputedStyle(el);
+                    const bg = cs.backgroundColor || '';
+                    const btop = cs.borderTopColor || '';
+                    const bleft = cs.borderLeftColor || '';
+                    const bright = cs.borderRightColor || '';
+                    const bbottom = cs.borderBottomColor || '';
+
+                    if (isRedRgb(bg) || isRedRgb(btop) || isRedRgb(bleft) || isRedRgb(bright) || isRedRgb(bbottom)) {
+                        if (bg && isRedRgb(bg)) el.style.setProperty('background-color', bg, 'important');
+                        if (btop && isRedRgb(btop)) el.style.setProperty('border-top-color', btop, 'important');
+                        if (bleft && isRedRgb(bleft)) el.style.setProperty('border-left-color', bleft, 'important');
+                        if (bright && isRedRgb(bright)) el.style.setProperty('border-right-color', bright, 'important');
+                        if (bbottom && isRedRgb(bbottom)) el.style.setProperty('border-bottom-color', bbottom, 'important');
+                        const color = cs.color || '';
+                        if (isRedRgb(color)) el.style.setProperty('color', color, 'important');
+                        el.classList.add('preserve-red');
+                    }
+                } catch(e) {}
+            });
+        }
 
         /* ------------------ Rotating inline banner ads (banad1/2/3) ------------------ */
         // banner ad pool (updated with newly added files)
         const banadFiles = [
             'images/banad1.gif','images/banad2.gif','images/banad3.gif','images/banad4.gif',
-            'images/banad5.gif','images/banad6.gif','images/banad7.gif','images/banad8.gif','images/banad9.gif'
+            'images/banad5.gif','images/banad6.gif','images/banad7.gif','images/banad8.gif','images/banad9.gif','images/banad10.gif'
         ];
         // also support an oddly named file with a space if present
         try { if (typeof window !== 'undefined') {} } catch(e) {}
 
-        // vertical/side ad pool
-        const sideAdFiles = ['images/ad1.gif','images/ad2.gif','images/ad3.gif','images/ad4.gif'];
+    // vertical/side ad pool (includes newly added ad5.gif)
+    const sideAdFiles = ['images/ad1.gif','images/ad2.gif','images/ad3.gif','images/ad4.gif','images/ad5.gif'];
         let currentBannerAds = []; // track created ad nodes
         let bannerRotateIntervalId = null;
 
@@ -1177,6 +1302,16 @@
                 out.push(copy.splice(idx,1)[0]);
             }
             return out;
+        }
+
+        // Shuffle utility (Fisher-Yates) - used to pick unique images
+        function shuffle(arr) {
+            const a = arr.slice();
+            for (let i = a.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [a[i], a[j]] = [a[j], a[i]];
+            }
+            return a;
         }
 
         function clearBannerAds() {
@@ -1191,58 +1326,89 @@
             if (bannerPlacementLock) return; // prevent re-entrancy
             bannerPlacementLock = true;
             clearBannerAds();
-            // potential insertion points: after each .section element
-            const sections = Array.from(document.querySelectorAll('.section'));
-            // always create exactly 3 banner slots
-            const slots = 3;
 
-            // choose up to 3 distinct sections at random for placement
-            const chosenSections = pickRandom(sections, Math.min(slots, sections.length));
-
-            // choose exactly 3 distinct ad images by shuffling and taking first 3
-            function shuffle(arr) {
-                const a = arr.slice();
-                for (let i = a.length - 1; i > 0; i--) {
-                    const j = Math.floor(Math.random() * (i + 1));
-                    [a[i], a[j]] = [a[j], a[i]];
-                }
-                return a;
+            // do not place banners in boring-mode
+            if (document.body && document.body.classList && document.body.classList.contains('boring-mode')) {
+                bannerPlacementLock = false;
+                return;
             }
-            const chosenImages = shuffle(banadFiles).slice(0, slots);
 
-            for (let i = 0; i < slots; i++) {
-                const sec = chosenSections[i] || document.querySelector('.container');
-                const imgSrc = chosenImages[i] || banadFiles[i % banadFiles.length];
+            const container = document.querySelector('.container');
+            if (!container) {
+                bannerPlacementLock = false;
+                return;
+            }
 
-                const adImg = document.createElement('img');
-                adImg.className = 'banner-ad-img';
-                adImg.src = imgSrc;
-                adImg.alt = 'banner ad';
+            // Use top-level children of .container as blocks. We'll place banners after these blocks (i.e. in the gaps between them)
+            const blocks = Array.from(container.children).filter(c => c.nodeType === 1 && c.tagName.toLowerCase() !== 'script' && getComputedStyle(c).display !== 'none');
 
-                const link = document.createElement('a');
-                // clicking redirects to merch placeholder in same tab
-                link.href = 'https://example.com/store';
-                link.appendChild(adImg);
+            // compute candidate anchors = blocks[i] for gaps between blocks[i] and blocks[i+1]
+            const docHeight = Math.max(document.documentElement.scrollHeight || 0, document.body.scrollHeight || 0);
+            const bottomThreshold = docHeight - window.innerHeight - 20; // keep at least ~20px above bottom
+            const candidates = [];
+            for (let i = 0; i < Math.max(0, blocks.length - 1); i++) {
+                const anchor = blocks[i];
+                try {
+                    const rect = anchor.getBoundingClientRect();
+                    const topY = rect.top + window.scrollY;
+                    // prefer anchors that are not too close to the bottom of the page
+                    if (topY <= bottomThreshold) candidates.push(anchor);
+                } catch (e) {
+                    // ignore measurement errors
+                    candidates.push(anchor);
+                }
+            }
+
+            // Ensure we always try to place exactly 3 banners. If there are fewer "preferred" candidates, expand to earlier anchors.
+            const needed = 3;
+            if (candidates.length < needed) {
+                for (let i = 0; i < Math.max(0, blocks.length - 1) && candidates.length < needed; i++) {
+                    const anchor = blocks[i];
+                    if (!candidates.includes(anchor)) candidates.push(anchor);
+                }
+            }
+
+            // If still not enough anchors, bail out (can't safely place 3 unique banners)
+            if (candidates.length < needed) {
+                bannerPlacementLock = false;
+                return;
+            }
+
+            // pick exactly 3 distinct anchors and 3 distinct images
+            const chosenAnchors = pickRandom(candidates, needed);
+            const chosenImages = shuffle(banadFiles).slice(0, needed);
+
+            for (let i = 0; i < needed; i++) {
+                const anchor = chosenAnchors[i];
+                const imgSrc = chosenImages[i];
+                if (!anchor || !anchor.parentNode) continue;
 
                 const wrapper = document.createElement('div');
                 wrapper.className = 'inline-banner-ad';
+
+                const link = document.createElement('a');
+                link.href = 'https://example.com/store';
+
+                const img = document.createElement('img');
+                img.className = 'banner-ad-img';
+                img.src = imgSrc;
+                img.alt = 'banner ad';
+
+                link.appendChild(img);
                 wrapper.appendChild(link);
 
-                // insert after the chosen section (or append to container if no section)
-                if (sec && sec.parentNode) {
-                    sec.parentNode.insertBefore(wrapper, sec.nextSibling);
-                } else {
-                    const container = document.querySelector('.container') || document.body;
-                    container.appendChild(wrapper);
-                }
-
-                // track the node so we can remove later
-                currentBannerAds.push({ node: wrapper, section: sec });
+                anchor.parentNode.insertBefore(wrapper, anchor.nextSibling);
+                currentBannerAds.push({ node: wrapper, anchor: anchor, src: imgSrc });
             }
+
             bannerPlacementLock = false;
         }
 
         function startBannerRotation() {
+            // if boring-mode is active, do not place or rotate banner/side ads
+            if (document.body && document.body.classList && document.body.classList.contains('boring-mode')) {
+                return;
+            }
             // initial placement
             placeBannerAds();
             // also initialize side ads from the updated pool
@@ -1250,13 +1416,17 @@
             // rotate every 30s
             if (bannerRotateIntervalId) clearInterval(bannerRotateIntervalId);
             bannerRotateIntervalId = setInterval(() => {
+                // do not place banners if boring-mode is active
+                if (document.body.classList.contains('boring-mode')) return;
                 placeBannerAds();
-                try { updateSideAds(); } catch(e) {}
+                // NOTE: side ads should remain fixed until a full page refresh per user's request.
+                // updateSideAds() is intentionally not called here to avoid changing vertical ads on rotation.
             }, 30000);
         }
 
         // Update the left/right side ads by picking images from sideAdFiles (unique where possible)
         function updateSideAds() {
+            if (document.body && document.body.classList && document.body.classList.contains('boring-mode')) return;
             const sideImgs = Array.from(document.querySelectorAll('#left-ads img.side-ad, #right-ads img.side-ad'));
             if (!sideImgs.length) return;
             // Create a shuffled copy of the pool
@@ -1281,15 +1451,15 @@
                     imgEl.style.display = '';
                     imgEl.parentNode.style.display = ''; // show anchor wrapper too
                     // Randomize vertical spacing by setting margin-top; keep them within reasonable bounds
-                    // greatly increase vertical spacing range so ads can be spaced widely down the gutter
-                    // set min 100px and maximum total up to 2000px
-                    const minSpace = 100; // px
-                    const maxExtra = 1901; // so min + maxExtra = 2001 - we will clamp below
-                    const extra = Math.floor(Math.random() * maxExtra);
-                    let mt = minSpace + extra;
-                    // clamp to 2000px maximum just in case
-                    if (mt > 2000) mt = 2000;
+                    // Prevent ads from being positioned far below the top of the container/visitor area
+                    // random spacing between 100px and 1000px
+                    const minSpace = 100;
+                    const maxSpace = 1000;
+                    const mt = Math.floor(Math.random() * (maxSpace - minSpace + 1)) + minSpace;
+                    // Apply marginTop, then make a best-effort clamp so the ad does not sit below the visitor counter
                     imgEl.style.marginTop = mt + 'px';
+                    // No clamp: side ads are allowed below the eaten counter per updated requirement.
+                    // We still keep randomized spacing between 100 and 1000px (mt already applied).
                 } else {
                     // hide extra img slots to avoid duplicates
                     imgEl.style.display = 'none';
