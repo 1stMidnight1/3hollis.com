@@ -29,7 +29,7 @@
         .blink {
             animation: blink 0.7s infinite;
         }
-        
+
         @keyframes blink {
             0% { opacity: 1; }
             50% { opacity: 0; }
@@ -392,7 +392,7 @@
             transform: translate(-50%, -50%);
             width: 320px;
             height: 320px;
-            border: 5px solid #ff0000;
+            border: 10px solid #ff0000; /* doubled thickness */
             border-radius: 50%;
             animation: blinkBorder 0.8s infinite;
             z-index: 2;
@@ -419,6 +419,70 @@
             text-align: center;
             margin: 12px 0 20px 0;
         }
+
+        /* Mode toggle button */
+        .mode-toggle {
+            position: fixed;
+            left: 12px;
+            top: 12px;
+            width: 120px;
+            height: 120px;
+            background: #00cc44; /* green by default */
+            color: #ffffff;
+            font-family: 'Impact', 'Arial Black', sans-serif;
+            font-size: 22px; /* larger text */
+            border: 4px solid #004400;
+            border-radius: 0; /* square corners */
+            z-index: 4000;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 6px;
+        }
+        .mode-toggle.boring {
+            background: #cc2222; /* red when boring */
+            border-color: #440000;
+        }
+
+        /* boring-mode helper: stop animations and hide hover highlights */
+        .boring-mode * {
+            animation: none !important;
+            transition: none !important;
+        }
+        .boring-mode .popup-window,
+        .boring-mode .random-image-placement,
+        .boring-mode .inline-banner-ad,
+        .boring-mode #left-ads,
+        .boring-mode #right-ads {
+            display: none !important;
+        }
+        .boring-mode a:hover { text-decoration: none !important; }
+
+        /* darken the tiled background with an overlay when boring mode is active */
+        body.boring-mode::before {
+            content: '';
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.55);
+            z-index: 3499; /* below the toggle button */
+            pointer-events: none;
+        }
+
+        /* hide animated gifs and marquees explicitly */
+        .boring-mode img[src$=".gif"],
+        .boring-mode img[src*=".gif"] {
+            visibility: hidden !important;
+            opacity: 0 !important;
+        }
+        .boring-mode marquee { display: none !important; }
+
+        /* grayscale borders and force black text */
+        .boring-mode * { filter: grayscale(100%) !important; color: #000000 !important; border-color: #000000 !important; }
 
         .web1-banner img {
             display: inline-block;
@@ -506,6 +570,9 @@
     </style>
 </head>
 <body>
+    <!-- Mode toggle button: left of header -->
+    <button id="modeToggle" class="mode-toggle" aria-pressed="false">headache mode: on</button>
+
     <!-- Left and right sidebar ads (will be positioned into page gutters via JS) -->
     <div id="left-ads" aria-hidden="false">
         <a href="https://example.com/store" target="_blank"><img src="images/ad1.gif" alt="Ad 1" class="side-ad"></a>
@@ -531,7 +598,7 @@
             <h2 class="section-title neon-text">UNOFFICIAL MERCH</h2>
             <h3 style="text-align: center; color: #000000; font-family: 'Arial Black', sans-serif; font-size: 1.6em;">you paid 50 for a gildan tee with &lt;2 on it</h3>
             <div style="text-align: center; display: flex; align-items: center; justify-content: center;">
-                <span class="merch-text"><span class="merch-arrow">&gt;&gt;&gt;</span> CLICK TO BUY</span>
+                <span class="merch-text">CLICK TO BUY <span class="merch-arrow">&gt;&gt;&gt;</span></span>
                 <div class="merch-image-container">
                     <a href="https://example.com/store">
                         <img src="images/merch.webp" alt="Merch Tee" class="merch-image" style="max-width:350px;">
@@ -539,7 +606,7 @@
                     <img src="images/arrowspin.gif" alt="Buy Arrow" class="merch-arrow-gif">
                     <div class="merch-circle"></div>
                 </div>
-                <span class="merch-text">CLICK TO BUY <span class="merch-arrow">&lt;&lt;&lt;</span></span>
+                <span class="merch-text"><span class="merch-arrow">&lt;&lt;&lt;</span> CLICK TO BUY</span>
             </div>
             <p class="incoherent">hollister cropped boxy tee <span class="highlight-text">100% cotton</span> super soft so cozy wow and its heavy quality not that thin gildan garbage DTG printing looks good lasts 4ever</p>
         </div>
@@ -987,14 +1054,68 @@
             }, 2000);
             
             // Create popups every 3-8 seconds
-            setInterval(createPopup, 3000 + Math.random() * 5000);
+                popupIntervalId = setInterval(createPopup, 3000 + Math.random() * 5000);
             
             // Reposition random images and sparkles every 10 seconds
-            setInterval(() => {
+            randomImagesIntervalId = setInterval(() => {
                 placeRandomImages();
                 placeSparkles();
             }, 10000);
         };
+
+    // Track interval ids so we can toggle them on/off for boring mode
+    let popupIntervalId = null;
+    let randomImagesIntervalId = null;
+
+        // Helper to enter boring mode
+        function setBoringMode(on) {
+            const body = document.body;
+            const toggle = document.getElementById('modeToggle');
+            if (on) {
+                // add class to body to disable animations via CSS
+                body.classList.add('boring-mode');
+                if (toggle) { toggle.classList.add('boring'); toggle.textContent = 'boring mode on :/'; toggle.setAttribute('aria-pressed','true'); }
+                // clear intervals
+                if (popupIntervalId) { clearInterval(popupIntervalId); popupIntervalId = null; }
+                if (randomImagesIntervalId) { clearInterval(randomImagesIntervalId); randomImagesIntervalId = null; }
+                if (bannerRotateIntervalId) { clearInterval(bannerRotateIntervalId); bannerRotateIntervalId = null; }
+                // remove any existing popups and random images immediately
+                document.querySelectorAll('.popup-window, .random-image-placement, .inline-banner-ad').forEach(el => el.remove());
+                // hide side ads
+                const left = document.getElementById('left-ads');
+                const right = document.getElementById('right-ads');
+                if (left) left.style.display = 'none';
+                if (right) right.style.display = 'none';
+                // remove hover effects by disabling pointer events where appropriate
+                document.querySelectorAll('a').forEach(a => a.style.pointerEvents = 'none');
+            } else {
+                // exit boring mode
+                body.classList.remove('boring-mode');
+                if (toggle) { toggle.classList.remove('boring'); toggle.textContent = 'headache mode: on'; toggle.setAttribute('aria-pressed','false'); }
+                // restore side ads
+                const left = document.getElementById('left-ads');
+                const right = document.getElementById('right-ads');
+                if (left) left.style.display = '';
+                if (right) right.style.display = '';
+                // restore pointer events
+                document.querySelectorAll('a').forEach(a => a.style.pointerEvents = '');
+                // restart intervals
+                if (!popupIntervalId) popupIntervalId = setInterval(createPopup, 3000 + Math.random() * 5000);
+                if (!randomImagesIntervalId) randomImagesIntervalId = setInterval(() => { placeRandomImages(); placeSparkles(); }, 10000);
+                if (!bannerRotateIntervalId) startBannerRotation();
+            }
+        }
+
+        // Wire up the toggle button
+        document.addEventListener('DOMContentLoaded', function(){
+            const toggle = document.getElementById('modeToggle');
+            if (!toggle) return;
+            // default: headache mode on (boring mode off)
+            toggle.addEventListener('click', function(){
+                const isBoring = document.body.classList.contains('boring-mode');
+                setBoringMode(!isBoring);
+            });
+        });
 
         // Size the checkmark gif to match the height of the element that follows the rommulus text
         function sizeCheckmark() {
@@ -1035,7 +1156,16 @@
         document.addEventListener('DOMContentLoaded', randomizePageBorders);
 
         /* ------------------ Rotating inline banner ads (banad1/2/3) ------------------ */
-        const banadFiles = ['images/banad1.gif','images/banad2.gif','images/banad3.gif'];
+        // banner ad pool (updated with newly added files)
+        const banadFiles = [
+            'images/banad1.gif','images/banad2.gif','images/banad3.gif','images/banad4.gif',
+            'images/banad5.gif','images/banad6.gif','images/banad7.gif','images/banad8.gif','images/banad9.gif'
+        ];
+        // also support an oddly named file with a space if present
+        try { if (typeof window !== 'undefined') {} } catch(e) {}
+
+        // vertical/side ad pool
+        const sideAdFiles = ['images/ad1.gif','images/ad2.gif','images/ad3.gif','images/ad4.gif'];
         let currentBannerAds = []; // track created ad nodes
         let bannerRotateIntervalId = null;
 
@@ -1115,11 +1245,57 @@
         function startBannerRotation() {
             // initial placement
             placeBannerAds();
+            // also initialize side ads from the updated pool
+            try { updateSideAds(); } catch(e) {}
             // rotate every 30s
             if (bannerRotateIntervalId) clearInterval(bannerRotateIntervalId);
             bannerRotateIntervalId = setInterval(() => {
                 placeBannerAds();
+                try { updateSideAds(); } catch(e) {}
             }, 30000);
+        }
+
+        // Update the left/right side ads by picking images from sideAdFiles (unique where possible)
+        function updateSideAds() {
+            const sideImgs = Array.from(document.querySelectorAll('#left-ads img.side-ad, #right-ads img.side-ad'));
+            if (!sideImgs.length) return;
+            // Create a shuffled copy of the pool
+            const shuffledPool = (function(arr){
+                const a = arr.slice();
+                for (let i = a.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [a[i], a[j]] = [a[j], a[i]];
+                }
+                return a;
+            })(sideAdFiles);
+
+            // pick unique images up to the number of available img slots
+            const picks = shuffledPool.slice(0, Math.min(shuffledPool.length, sideImgs.length));
+
+            // If there are fewer unique images than slots, hide the extra slots
+            for (let i = 0; i < sideImgs.length; i++) {
+                const imgEl = sideImgs[i];
+                if (!imgEl) continue;
+                if (i < picks.length) {
+                    imgEl.src = picks[i];
+                    imgEl.style.display = '';
+                    imgEl.parentNode.style.display = ''; // show anchor wrapper too
+                    // Randomize vertical spacing by setting margin-top; keep them within reasonable bounds
+                    // greatly increase vertical spacing range so ads can be spaced widely down the gutter
+                    // set min 100px and maximum total up to 2000px
+                    const minSpace = 100; // px
+                    const maxExtra = 1901; // so min + maxExtra = 2001 - we will clamp below
+                    const extra = Math.floor(Math.random() * maxExtra);
+                    let mt = minSpace + extra;
+                    // clamp to 2000px maximum just in case
+                    if (mt > 2000) mt = 2000;
+                    imgEl.style.marginTop = mt + 'px';
+                } else {
+                    // hide extra img slots to avoid duplicates
+                    imgEl.style.display = 'none';
+                    if (imgEl.parentNode) imgEl.parentNode.style.display = 'none';
+                }
+            }
         }
 
         // start rotating on DOMContentLoaded (after sections exist)
