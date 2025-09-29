@@ -358,6 +358,15 @@
             margin: 0 20px;
             font-family: 'Arial Black', sans-serif;
         }
+
+        .merch-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 24px;
+            text-align: center;
+            flex-wrap: wrap;
+        }
         
         .merch-arrow {
             color: #ff0000;
@@ -381,11 +390,14 @@
             position: relative;
             display: inline-block;
             z-index: 1;
+            text-align: center;
         }
         
         .merch-image {
             max-width: 300px;
             border: 5px solid #0000ff;
+            display: block;
+            margin: 0 auto;
         }
         
         .merch-circle {
@@ -419,6 +431,11 @@
             pointer-events: none;
         }
         
+        .merch-link {
+            display: inline-block;
+            position: relative;
+        }
+
         @keyframes blinkBorder {
             0% { border-color: #ff0000; }
             50% { border-color: transparent; }
@@ -647,7 +664,6 @@
                 }
                 marquee {
                     font-size: 1.2em; /* smaller marquee */
-                    scrollamount: 10; /* slower scroll */
                 }
                 .disclaimer {
                     font-size: 0.9em; /* smaller disclaimer */
@@ -666,6 +682,14 @@
                 .highlight-text {
                     font-size: 1.1em;
                 }
+                .section {
+                    margin: 18px auto;
+                    padding: 14px 16px;
+                    border-width: 3px;
+                }
+                .section-title {
+                    font-size: 1.3em;
+                }
                 table {
                     font-size: 0.9em; /* smaller table text */
                     border: 2px solid #000000; /* simple border */
@@ -681,12 +705,27 @@
                     border: none; /* remove inner borders at this breakpoint */
                 }
                 .merch-image {
-                    max-width: 250px; /* smaller merch image */
+                    max-width: min(260px, 80vw); /* smaller merch image */
                     display: block;
                     margin: 0 auto; /* center merch image */
                 }
                 .merch-text {
                     display: none; /* hide click to buy text on mobile */
+                }
+                .merch-row {
+                    flex-direction: column;
+                    gap: 14px;
+                }
+                .merch-circle {
+                    width: clamp(180px, 60vw, 260px);
+                    height: clamp(180px, 60vw, 260px);
+                    border-width: 6px;
+                }
+                .merch-arrow-gif {
+                    display: block;
+                    margin: 8px auto 0;
+                    left: 0;
+                    top: 0;
                 }
                 .large-text {
                     font-size: 1.2em; /* smaller large text */
@@ -703,12 +742,10 @@
                 /* Center mode toggle on mobile */
                 .mode-toggle {
                     position: static; /* remove fixed positioning */
-                    display: block;
-                    margin: 10px auto;
-                    width: auto;
-                    height: auto;
-                    font-size: 18px;
-                    padding: 8px 16px;
+                    display: none; /* hide toggle entirely on mobile */
+                }
+                .hit-counter, .eaten-counter {
+                    display: none !important; /* hide counters */
                 }
                 /* Reset any random shifts and ensure centering on mobile */
                 .section, .section-title {
@@ -809,14 +846,14 @@
         <div class="section">
             <h2 class="section-title neon-text">UNOFFICIAL MERCH</h2>
             <h3 style="text-align: center; color: #000000; font-family: 'Arial Black', sans-serif; font-size: 1.6em;">you paid 50 for a gildan tee with &lt;2 on it</h3>
-            <div style="text-align: center; display: flex; align-items: center; justify-content: center;">
+            <div class="merch-row">
                 <span class="merch-text">CLICK TO BUY <span class="merch-arrow">&gt;&gt;&gt;</span></span>
                 <div class="merch-image-container">
-                    <a href="https://store.3hollis.com" style="display:inline-block; position:relative;">
-                        <img src="images/merch.webp" alt="Merch Tee" class="merch-image" style="max-width:350px; display:block;">
+                    <a href="https://store.3hollis.com" class="merch-link">
+                        <img src="images/merch.webp" alt="Merch Tee" class="merch-image">
                         <div class="merch-circle"></div>
                     </a>
-                    <img src="images/arrowspin.gif" alt="Buy Arrow" class="merch-arrow-gif" style="position:relative; left:6px; top:0;">
+                    <img src="images/arrowspin.gif" alt="Buy Arrow" class="merch-arrow-gif">
                 </div>
                 <span class="merch-text"><span class="merch-arrow">&lt;&lt;&lt;</span> CLICK TO BUY</span>
             </div>
@@ -1034,11 +1071,12 @@
         
         // Function to create floating random image placements (shifting around screen)
         function placeFloatingImages() {
-                    // Do not create floating images on mobile or in boring mode
-                    if (window.innerWidth < 900 || document.body.classList.contains('boring-mode')) return;
-            // Remove any existing random images
+            // Always clear existing floating images before deciding whether to add new ones
             const existingImages = document.querySelectorAll('.random-image-placement');
             existingImages.forEach(img => img.remove());
+
+            // Treat floating images like popups: never spawn them on mobile or in boring mode
+            if (window.innerWidth < 900 || document.body.classList.contains('boring-mode')) return;
             
             // Place 3-6 random images around the page (avoid header spam)
             const numImages = 3 + Math.floor(Math.random() * 4);
@@ -1386,7 +1424,35 @@
         // Wire up the toggle button and persist preference in localStorage
         document.addEventListener('DOMContentLoaded', function(){
             const toggle = document.getElementById('modeToggle');
-            if (!toggle) return;
+            const hitCounters = document.querySelectorAll('.hit-counter, .eaten-counter');
+
+            const applyMobileVisibility = () => {
+                const isMobile = window.innerWidth < 900;
+                if (toggle) {
+                    toggle.style.display = isMobile ? 'none' : '';
+                }
+                hitCounters.forEach(el => {
+                    el.style.display = isMobile ? 'none' : '';
+                });
+                if (isMobile) {
+                    if (popupIntervalId) { clearInterval(popupIntervalId); popupIntervalId = null; }
+                    if (floatingImagesIntervalId) { clearInterval(floatingImagesIntervalId); floatingImagesIntervalId = null; }
+                    document.querySelectorAll('.popup-window, .popup-overlay').forEach(el => { try { el.remove(); } catch(e) {} });
+                    document.querySelectorAll('.random-image-placement').forEach(el => { try { el.remove(); } catch(e) {} });
+                } else if (!document.body.classList.contains('boring-mode') && !popupIntervalId) {
+                    popupIntervalId = setInterval(createPopup, 3000 + Math.random() * 5000);
+                    if (!floatingImagesIntervalId) {
+                        floatingImagesIntervalId = setInterval(() => { placeFloatingImages(); placeSparkles(); }, 10000);
+                    }
+                }
+            };
+
+            applyMobileVisibility();
+            window.addEventListener('resize', applyMobileVisibility);
+
+            if (!toggle) {
+                return;
+            }
             // Position side ads in gutters centered between viewport edge and container
             try {
                 function debounce(func, wait) {
