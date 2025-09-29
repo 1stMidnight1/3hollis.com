@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>3HOLLIS OFFICIAL WEB 1.0 SITE</title>
     <style>
+        html {
+            overflow-x: hidden; /* prevent horizontal scrolling/panning on mobile */
+        }
         body {
             background-color: #ffffff;
             background-image: url('images/plus.jpeg');
@@ -459,9 +462,9 @@
             padding: 6px;
         }
         .mode-toggle.boring {
-            background: #ffffff; /* pure white when boring */
-            color: #00ff00; /* green text */
-            border-color: #00ff00;
+            background: #ff0000; /* red when boring mode ON */
+            color: #ffffff; /* white text for contrast */
+            border-color: #aa0000;
         }
 
         /* boring-mode helper: pause animations/transitions but keep site content visible and images colored */
@@ -492,32 +495,20 @@
 
         .boring-mode a:hover { text-decoration: none !important; }
 
-        /* Darken only the tiled background: add an overlay underneath the page content while keeping boxes white and opaque */
+        /* Removed previous forced white background and dark overlay in boring mode.
+           Boring mode now only pauses motion and programmatically (JS) sets previously colored / translucent boxes to opaque white. */
         body.boring-mode::before {
             content: '';
             position: fixed;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.55);
-            z-index: 1000; /* underneath the main content */
+            inset: 0;
+            background: rgba(0,0,0,0.35); /* subtle dim of tiled background */
+            z-index: 0;
             pointer-events: none;
-            mix-blend-mode: multiply;
         }
 
-        /* Ensure main content boxes are above the overlay and remain opaque white */
-        body.boring-mode .container,
-        body.boring-mode .section,
-        body.boring-mode table,
-        body.boring-mode .guestbook,
-        body.boring-mode .webring,
-        body.boring-mode .hit-counter {
-            position: relative;
-            z-index: 1100;
-            background-color: #ffffff !important;
-            opacity: 1 !important;
-        }
+        /* Reset motion side-effects: ensure transformed / blinking elements appear stable */
+        .boring-mode .rotate, .boring-mode .rotate-3d, .boring-mode .floating { transform: none !important; }
+        .boring-mode .blink { opacity: 1 !important; }
 
         /* Keep images colored and visible (do not grayscale or hide gifs) */
         .boring-mode img { filter: none !important; opacity: 1 !important; visibility: visible !important; }
@@ -607,7 +598,16 @@
                 gap: 24px; /* increased vertical spacing */
                 pointer-events: auto;
             }
-            .side-ad { width: 120px; border: none; background: #fff; padding: 6px; display:block; }
+            /* Safety: if a side ad column would overlap main container, allow JS to hide it by adding .hidden */
+            #left-ads.hidden, #right-ads.hidden { display: none !important; }
+            /* Responsive vertical ad sizing: scales with viewport width but capped, reduced by 15% */
+            .side-ad {
+                width: clamp(102px, 10.2vw, 153px); /* 15% smaller: min 102px (120*0.85), scale 10.2vw (12vw*0.85), max 153px (180*0.85) */
+                border: none;
+                background: #fff;
+                padding: 6px;
+                display: block;
+            }
 
             /* Inline rotating banner ads that appear between sections */
             .inline-banner-ad {
@@ -618,8 +618,8 @@
             }
             .inline-banner-ad a { display:inline-block; }
             .inline-banner-ad img.banner-ad-img {
-                max-width: 920px;
-                width: 90%;
+                max-width: 1196px; /* ~30% larger (920 -> 1196) */
+                width: 100%;
                 height: auto;
                 border: 4px solid #000000;
                 box-shadow: 0 6px 12px rgba(0,0,0,0.25);
@@ -627,12 +627,157 @@
                 display:block;
             }
             @media (max-width: 900px) {
-                .inline-banner-ad img.banner-ad-img { width: 96%; max-width: 480px; }
+                .inline-banner-ad img.banner-ad-img { width: 98%; max-width: 624px; }
             }
 
             /* hide on small screens */
             @media (max-width: 900px) {
                 #left-ads, #right-ads { display: none; }
+            }
+
+            /* Mobile optimizations for better viewability */
+            @media (max-width: 768px) {
+                body {
+                    padding: 10px; /* reduce padding */
+                    font-size: 14px; /* smaller base font */
+                }
+                .container {
+                    width: 95%; /* wider on small screens */
+                    max-width: none; /* remove max-width for full width */
+                }
+                marquee {
+                    font-size: 1.2em; /* smaller marquee */
+                    scrollamount: 10; /* slower scroll */
+                }
+                .disclaimer {
+                    font-size: 0.9em; /* smaller disclaimer */
+                    padding: 6px 8px;
+                    text-align: center; /* center disclaimer */
+                }
+                .section-title {
+                    font-size: 1.4em; /* smaller titles */
+                    text-align: center; /* center titles */
+                }
+                .incoherent {
+                    font-size: 0.9em; /* smaller text */
+                    line-height: 1.3;
+                    text-align: center; /* center incoherent text */
+                }
+                .highlight-text {
+                    font-size: 1.1em;
+                }
+                table {
+                    font-size: 0.9em; /* smaller table text */
+                    border: 2px solid #000000; /* simple border */
+                    border-collapse: separate;
+                    border-spacing: 0; /* prevent gaps */
+                    margin: 0 auto; /* center table */
+                    background-color: rgba(255, 255, 255, 0.95);
+                }
+                td {
+                    padding: 12px; /* slightly more padding for breathing room */
+                    vertical-align: top;
+                    text-align: center; /* center text in table cells */
+                    border: none; /* remove inner borders at this breakpoint */
+                }
+                .merch-image {
+                    max-width: 250px; /* smaller merch image */
+                    display: block;
+                    margin: 0 auto; /* center merch image */
+                }
+                .merch-text {
+                    display: none; /* hide click to buy text on mobile */
+                }
+                .large-text {
+                    font-size: 1.2em; /* smaller large text */
+                    text-align: center;
+                }
+                .ascii-art {
+                    font-size: 0.6em; /* smaller ascii */
+                    text-align: center;
+                }
+                .popup-window {
+                    width: 90%; /* smaller popups, but since hidden, optional */
+                    max-width: 90%;
+                }
+                /* Center mode toggle on mobile */
+                .mode-toggle {
+                    position: static; /* remove fixed positioning */
+                    display: block;
+                    margin: 10px auto;
+                    width: auto;
+                    height: auto;
+                    font-size: 18px;
+                    padding: 8px 16px;
+                }
+                /* Reset any random shifts and ensure centering on mobile */
+                .section, .section-title {
+                    position: static !important;
+                    left: auto !important;
+                    top: auto !important;
+                    text-align: center;
+                }
+                /* Stack table columns vertically on very small screens */
+                @media (max-width: 600px) {
+                    table {
+                        display: block;
+                        width: 100%;
+                        border: none; /* remove outer border to avoid double edges */
+                        background: transparent;
+                        padding: 0;
+                    }
+                    tr {
+                        display: block;
+                        width: 100%;
+                    }
+                    td {
+                        display: block;
+                        width: 100%;
+                        text-align: center;
+                        margin: 0 0 18px 0;
+                        padding: 14px 12px;
+                        border: 2px solid #000000;
+                        border-radius: 10px;
+                        box-sizing: border-box;
+                        background-color: rgba(255, 255, 255, 0.98);
+                        box-shadow: 0 6px 14px rgba(0, 0, 0, 0.18);
+                    }
+                    td:last-child {
+                        margin-bottom: 0;
+                    }
+                    .starcar-wrap img {
+                        max-width: 100%;
+                        display: block;
+                        margin: 0 auto; /* center images */
+                    }
+                    .merch-image-container {
+                        text-align: center; /* center merch */
+                    }
+                    .hit-counter {
+                        text-align: center;
+                        margin: 10px auto;
+                    }
+                    .ascii-art {
+                        text-align: center;
+                        margin: 10px 0;
+                    }
+                    .guestbook form {
+                        text-align: center;
+                    }
+                    .midi-player {
+                        text-align: center;
+                    }
+                    /* Ensure images don't overflow */
+                    img {
+                        max-width: 100%;
+                        height: auto;
+                    }
+                    /* Adjust button sizes */
+                    button, input[type="submit"] {
+                        font-size: 16px; /* prevent zoom on iOS */
+                        padding: 8px 12px;
+                    }
+                }
             }
     </style>
 </head>
@@ -642,14 +787,14 @@
 
     <!-- Left and right sidebar ads (will be positioned into page gutters via JS) -->
     <div id="left-ads" aria-hidden="false">
-        <a href="https://example.com/store" target="_blank"><img src="images/ad1.gif" alt="Ad 1" class="side-ad"></a>
-        <a href="https://example.com/store" target="_blank"><img src="images/ad2.gif" alt="Ad 2" class="side-ad"></a>
-        <a href="https://example.com/store" target="_blank"><img src="images/ad3.gif" alt="Ad 3" class="side-ad"></a>
+    <a href="https://store.3hollis.com"><img src="images/ad1.gif" alt="Ad 1" class="side-ad"></a>
+    <a href="https://store.3hollis.com"><img src="images/ad2.gif" alt="Ad 2" class="side-ad"></a>
+    <a href="https://store.3hollis.com"><img src="images/ad3.gif" alt="Ad 3" class="side-ad"></a>
     </div>
     <div id="right-ads" aria-hidden="false">
-        <a href="https://example.com/store" target="_blank"><img src="images/ad1.gif" alt="Ad 1" class="side-ad"></a>
-        <a href="https://example.com/store" target="_blank"><img src="images/ad2.gif" alt="Ad 2" class="side-ad"></a>
-        <a href="https://example.com/store" target="_blank"><img src="images/ad3.gif" alt="Ad 3" class="side-ad"></a>
+    <a href="https://store.3hollis.com"><img src="images/ad1.gif" alt="Ad 1" class="side-ad"></a>
+    <a href="https://store.3hollis.com"><img src="images/ad2.gif" alt="Ad 2" class="side-ad"></a>
+    <a href="https://store.3hollis.com"><img src="images/ad3.gif" alt="Ad 3" class="side-ad"></a>
     </div>
     <div class="container">
         <!-- Banner header replaces ASCII art -->
@@ -667,7 +812,7 @@
             <div style="text-align: center; display: flex; align-items: center; justify-content: center;">
                 <span class="merch-text">CLICK TO BUY <span class="merch-arrow">&gt;&gt;&gt;</span></span>
                 <div class="merch-image-container">
-                    <a href="https://example.com/store" style="display:inline-block; position:relative;">
+                    <a href="https://store.3hollis.com" style="display:inline-block; position:relative;">
                         <img src="images/merch.webp" alt="Merch Tee" class="merch-image" style="max-width:350px; display:block;">
                         <div class="merch-circle"></div>
                     </a>
@@ -887,8 +1032,10 @@
                 style="transform: rotate(${randomRotation}deg);">`;
         }
         
-        // Function to create random image placements
-        function placeRandomImages() {
+        // Function to create floating random image placements (shifting around screen)
+        function placeFloatingImages() {
+                    // Do not create floating images on mobile or in boring mode
+                    if (window.innerWidth < 900 || document.body.classList.contains('boring-mode')) return;
             // Remove any existing random images
             const existingImages = document.querySelectorAll('.random-image-placement');
             existingImages.forEach(img => img.remove());
@@ -1018,6 +1165,8 @@
         
         // Function to create popup windows
         function createPopup() {
+                    // Do not create new popups on mobile or in boring mode
+                    if (window.innerWidth < 900 || document.body.classList.contains('boring-mode')) return;
             const type = Math.random();
             let contentType;
             if (type < 0.4) {
@@ -1126,9 +1275,9 @@
             // Create popups every 3-8 seconds
                 popupIntervalId = setInterval(createPopup, 3000 + Math.random() * 5000);
             
-            // Reposition random images and sparkles every 10 seconds
-            randomImagesIntervalId = setInterval(() => {
-                placeRandomImages();
+            // Reposition floating images and sparkles every 10 seconds
+            floatingImagesIntervalId = setInterval(() => {
+                placeFloatingImages();
                 placeSparkles();
             }, 10000);
 
@@ -1149,22 +1298,58 @@
 
     // Track interval ids so we can toggle them on/off for boring mode
     let popupIntervalId = null;
-    let randomImagesIntervalId = null;
+    let floatingImagesIntervalId = null;
 
         // Helper to enter boring mode
         function setBoringMode(on) {
             const body = document.body;
             const toggle = document.getElementById('modeToggle');
+            // Elements we will manipulate for background whitening and marquee freezing
+            const BOX_SELECTOR = ['.section','table','.guestbook','.webring','.hit-counter','.midi-player','.large-text','.disclaimer','.alien-img','.ascii-art'];
+            // Keep state on body dataset for restoration
+            if (!body._boringState) body._boringState = { marquees: [], whitened: [] };
             if (on) {
                 // add class to body to apply boring-mode CSS (pauses animations, hides merch CTA and eaten counter)
                 body.classList.add('boring-mode');
                 if (toggle) { toggle.classList.add('boring'); toggle.textContent = 'boring mode on :/'; toggle.setAttribute('aria-pressed','true'); }
-                // clear intervals to freeze dynamic JS behavior (popups, random image re-placement, banner rotation)
+                // clear intervals to freeze dynamic JS behavior (popups, floating image re-placement, banner rotation)
                 if (popupIntervalId) { clearInterval(popupIntervalId); popupIntervalId = null; }
-                if (randomImagesIntervalId) { clearInterval(randomImagesIntervalId); randomImagesIntervalId = null; }
+                if (floatingImagesIntervalId) { clearInterval(floatingImagesIntervalId); floatingImagesIntervalId = null; }
                 if (bannerRotateIntervalId) { clearInterval(bannerRotateIntervalId); bannerRotateIntervalId = null; }
+                // Remove any existing popups / overlays immediately so none remain visible
+                const removePopups = () => document.querySelectorAll('.popup-window, .popup-overlay, .popup, [class*="popup"], [id*="popup"], .random-image-placement').forEach(el => { try { el.remove(); } catch(e) {} });
+                removePopups();
+                // Run a second pass after a short delay in case something was mid-insert
+                setTimeout(removePopups, 100);
                 // Do NOT remove GIFs or hide side ads; CSS ensures visuals are preserved but animations are paused.
                 try { localStorage.setItem('boringMode', '1'); } catch(e) {}
+
+                // Freeze marquees: replace each <marquee> with a static div containing its current textContent.
+                body._boringState.marquees = [];
+                document.querySelectorAll('marquee').forEach(mq => {
+                    const placeholder = document.createElement('div');
+                    placeholder.className = 'marquee-frozen';
+                    placeholder.style.fontSize = window.getComputedStyle(mq).fontSize;
+                    placeholder.style.fontFamily = window.getComputedStyle(mq).fontFamily;
+                    placeholder.style.color = window.getComputedStyle(mq).color;
+                    placeholder.textContent = mq.textContent || '';
+                    body._boringState.marquees.push({ original: mq, frozen: placeholder, parent: mq.parentNode, next: mq.nextSibling });
+                    mq.replaceWith(placeholder);
+                });
+
+                // Whiten translucent / colored boxes without creating a full page white background.
+                body._boringState.whitened = [];
+                BOX_SELECTOR.forEach(sel => {
+                    document.querySelectorAll(sel).forEach(el => {
+                        const cs = window.getComputedStyle(el);
+                        const bg = cs.backgroundColor;
+                        // decide if it's translucent or obviously colored (not already pure white)
+                        if (bg && bg !== 'rgb(255, 255, 255)') {
+                            body._boringState.whitened.push({ el, prev: el.style.backgroundColor });
+                            el.style.backgroundColor = '#ffffff';
+                        }
+                    });
+                });
             } else {
                 // exit boring mode: remove class and restart intervals
                 body.classList.remove('boring-mode');
@@ -1172,8 +1357,29 @@
                 try { localStorage.setItem('boringMode', '0'); } catch(e) {}
                 // restart intervals
                 if (!popupIntervalId) popupIntervalId = setInterval(createPopup, 3000 + Math.random() * 5000);
-                if (!randomImagesIntervalId) randomImagesIntervalId = setInterval(() => { placeRandomImages(); placeSparkles(); }, 10000);
+                if (!floatingImagesIntervalId) floatingImagesIntervalId = setInterval(() => { placeFloatingImages(); placeSparkles(); }, 10000);
                 if (!bannerRotateIntervalId) startBannerRotation();
+
+                // Restore marquees
+                if (body._boringState && body._boringState.marquees) {
+                    body._boringState.marquees.forEach(m => {
+                        if (m.parent && m.original) {
+                            if (m.frozen && m.frozen.parentNode === m.parent) {
+                                m.frozen.replaceWith(m.original);
+                            } else if (m.next) {
+                                m.parent.insertBefore(m.original, m.next);
+                            } else {
+                                m.parent.appendChild(m.original);
+                            }
+                        }
+                    });
+                }
+                // Restore whitened backgrounds
+                if (body._boringState && body._boringState.whitened) {
+                    body._boringState.whitened.forEach(item => {
+                        if (item.el) item.el.style.backgroundColor = item.prev || '';
+                    });
+                }
             }
         }
 
@@ -1181,6 +1387,48 @@
         document.addEventListener('DOMContentLoaded', function(){
             const toggle = document.getElementById('modeToggle');
             if (!toggle) return;
+            // Position side ads in gutters centered between viewport edge and container
+            try {
+                function debounce(func, wait) {
+                    let timeout;
+                    return function executedFunction(...args) {
+                        const later = () => {
+                            clearTimeout(timeout);
+                            func(...args);
+                        };
+                        clearTimeout(timeout);
+                        timeout = setTimeout(later, wait);
+                    };
+                }
+                function layoutSideAds() {
+                    const table = document.querySelector('table'); // main content table with dotted border
+                    const leftAds = document.getElementById('left-ads');
+                    const rightAds = document.getElementById('right-ads');
+                    if (!table || !leftAds || !rightAds) return;
+                    const rect = table.getBoundingClientRect();
+                    const vw = window.innerWidth;
+                    const gutterLeftWidth = rect.left; // space from 0 to table left border
+                    const gutterRightWidth = vw - rect.right; // space from table right border to viewport edge
+                    // Use fixed estimate for ad width to avoid getBoundingClientRect during resize glitches
+                    const colWidth = 160; // approximate max width including padding
+                    // Center each column in its gutter: leftX = (gutterLeftWidth - colWidth)/2, rightX = rect.right + (gutterRightWidth - colWidth)/2
+                    if (gutterLeftWidth >= colWidth + 20) {
+                        leftAds.classList.remove('hidden');
+                        leftAds.style.left = Math.max(0, Math.round((gutterLeftWidth - colWidth)/2)) + 'px';
+                    } else {
+                        leftAds.classList.add('hidden');
+                    }
+                    if (gutterRightWidth >= colWidth + 20) {
+                        rightAds.classList.remove('hidden');
+                        rightAds.style.left = Math.round(rect.right + (gutterRightWidth - colWidth)/2) + 'px';
+                    } else {
+                        rightAds.classList.add('hidden');
+                    }
+                }
+                const debouncedLayout = debounce(layoutSideAds, 100); // debounce 100ms
+                window.addEventListener('resize', debouncedLayout);
+                layoutSideAds(); // initial call
+            } catch(e) {}
             // Apply stored preference (if present) BEFORE starting banner rotation/intervals
             try {
                 const stored = localStorage.getItem('boringMode');
@@ -1387,7 +1635,7 @@
                 wrapper.className = 'inline-banner-ad';
 
                 const link = document.createElement('a');
-                link.href = 'https://example.com/store';
+                link.href = 'https://store.3hollis.com';
 
                 const img = document.createElement('img');
                 img.className = 'banner-ad-img';
@@ -1503,8 +1751,9 @@
         window.addEventListener('load', positionSideAds);
         window.addEventListener('scroll', positionSideAds);
         
-        // Make elements move around randomly
+        // Make elements move around randomly (disabled on mobile)
         setInterval(function() {
+            if (window.innerWidth < 768) return; // disable on mobile/tablet
             const elements = document.querySelectorAll('.section, .section-title');
             elements.forEach(el => {
                 if (Math.random() > 0.7) {
