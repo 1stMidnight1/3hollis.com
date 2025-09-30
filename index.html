@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>3HOLLIS OFFICIAL WEB 1.0 SITE</title>
+    <link rel="icon" href="images/favicon.png" type="image/png">
     <style>
         html {
             overflow-x: hidden; /* prevent horizontal scrolling/panning on mobile */
@@ -123,6 +124,63 @@
             margin-top: 12px; /* small gap between header and disclaimer */
             letter-spacing: 0.5px;
         }
+
+        .header-band {
+            display: grid;
+            grid-template-columns: auto minmax(0, 1fr) auto;
+            align-items: flex-start;
+            gap: 32px;
+            width: 100%;
+            padding: 0 0 16px 0;
+            box-sizing: border-box;
+        }
+
+        .header-main {
+            text-align: center;
+            justify-self: center;
+            max-width: 1200px;
+            width: 90%;
+        }
+
+        .header-banner {
+            max-width: 100%;
+            height: auto;
+            border: 6px solid #000000;
+            display: block;
+        }
+
+        .header-spacer {
+            width: 120px;
+            height: 1px;
+            visibility: hidden;
+        }
+
+        /* Multicolored tab menu */
+        .tab-menu {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        .tab-button {
+            color: #ffffff;
+            border: 3px solid #000000;
+            padding: 10px 20px;
+            margin: 0 5px;
+            font-family: 'Impact', 'Arial Black', sans-serif;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: transform 0.2s;
+        }
+        .tab-button:hover {
+            transform: scale(1.05);
+        }
+        .home-tab { background: #ff0000; } /* Red */
+        .store-tab { background: #ff8000; } /* Orange */
+        .about-tab { background: #ffff00; color: #000000; } /* Yellow with black text */
+        .contact-tab { background: #00ff00; } /* Green */
 
         .alien-img { width: 260px; border: 3px solid #006600; padding: 6px; background:#ffffff; display:block; margin:0; }
         
@@ -459,9 +517,7 @@
 
         /* Mode toggle button */
         .mode-toggle {
-            position: fixed;
-            left: 12px;
-            top: 12px;
+            position: static;
             width: 120px;
             height: 120px;
             background: #00ff00; /* pure green */
@@ -472,11 +528,15 @@
             border-radius: 0; /* square corners */
             z-index: 4000;
             cursor: pointer;
-            display: flex;
+            display: inline-flex;
             align-items: center;
             justify-content: center;
             text-align: center;
             padding: 6px;
+            margin: 0;
+            box-sizing: border-box;
+            justify-self: start;
+            align-self: start;
         }
         .mode-toggle.boring {
             background: #ff0000; /* red when boring mode ON */
@@ -609,7 +669,7 @@
             /* Side ads base styles */
             #left-ads, #right-ads {
                 position: absolute; /* absolute so they scroll with the page */
-                z-index: 1500;
+                z-index: 500;
                 display: flex;
                 flex-direction: column;
                 gap: 24px; /* increased vertical spacing */
@@ -632,6 +692,8 @@
                 margin: 18px auto;
                 width: 100%;
                 display: block;
+                position: relative;
+                z-index: 500;
             }
             .inline-banner-ad a { display:inline-block; }
             .inline-banner-ad img.banner-ad-img {
@@ -661,6 +723,19 @@
                 .container {
                     width: 95%; /* wider on small screens */
                     max-width: none; /* remove max-width for full width */
+                    margin: 0 auto;
+                }
+                .header-band {
+                    grid-template-columns: 1fr;
+                    justify-items: center;
+                    gap: 12px;
+                    padding: 16px 0;
+                }
+                .header-spacer {
+                    display: none;
+                }
+                .header-main {
+                    width: 100%;
                 }
                 marquee {
                     font-size: 1.2em; /* smaller marquee */
@@ -739,10 +814,12 @@
                     width: 90%; /* smaller popups, but since hidden, optional */
                     max-width: 90%;
                 }
-                /* Center mode toggle on mobile */
+                /* Mode toggle on mobile */
                 .mode-toggle {
-                    position: static; /* remove fixed positioning */
-                    display: none; /* hide toggle entirely on mobile */
+                    width: 80px;
+                    height: 80px;
+                    font-size: 16px;
+                    justify-self: center;
                 }
                 .hit-counter, .eaten-counter {
                     display: none !important; /* hide counters */
@@ -819,9 +896,6 @@
     </style>
 </head>
 <body>
-    <!-- Mode toggle button: left of header -->
-    <button id="modeToggle" class="mode-toggle" aria-pressed="false">awesome mode: on :3</button>
-
     <!-- Left and right sidebar ads (will be positioned into page gutters via JS) -->
     <div id="left-ads" aria-hidden="false">
     <a href="https://store.3hollis.com"><img src="images/ad1.gif" alt="Ad 1" class="side-ad"></a>
@@ -833,11 +907,24 @@
     <a href="https://store.3hollis.com"><img src="images/ad2.gif" alt="Ad 2" class="side-ad"></a>
     <a href="https://store.3hollis.com"><img src="images/ad3.gif" alt="Ad 3" class="side-ad"></a>
     </div>
-    <div class="container">
-        <!-- Banner header replaces ASCII art -->
-        <div style="text-align:center;">
-            <img src="images/banner.jpg" alt="3HOLLIS Banner" style="max-width:100%;height:auto;border:6px solid #000000;">
+
+    <div class="header-band">
+        <button id="modeToggle" class="mode-toggle" aria-pressed="false">awesome mode: on :3</button>
+        <div class="header-main">
+            <img src="images/banner.jpg" alt="3HOLLIS Banner" class="header-banner">
             <div class="disclaimer">not affiliated with or endorsed by 2hollis i"m not sure who that is? this is 3hollis, anyways if you need help <a href="mailto:support@3hollis.com" style="color:#0000ee;text-decoration:underline;font-style:italic;">support@3hollis.com</a></div>
+        </div>
+        <div class="header-spacer" aria-hidden="true"></div>
+    </div>
+
+    <div class="container">
+
+        <!-- Multicolored tab menu -->
+        <div class="tab-menu">
+            <button class="tab-button home-tab">Home</button>
+            <button class="tab-button store-tab">Store</button>
+            <button class="tab-button about-tab">About</button>
+            <button class="tab-button contact-tab">Contact</button>
         </div>
 
         <!-- Web1 GIF banner removed per user request -->
@@ -1829,6 +1916,38 @@
                 }
             });
         }, 3000);
+        
+        // Animate the title bar with capitalizing letters back and forth
+        const titles = [
+            "uh.com",
+            "onlyonly.com",
+            "onlytrust2godspeeds.com",
+            "uh.com",
+            "lovemeloveme.com",
+            "yyoumakeitfartooeasy.com",
+            "i.com",
+            "seeseesee.com",
+            "um.com",
+            "topoftreeits3.com",
+            "yeah.com",
+            "putyourbodyonmyjeans.com",
+            "putchobanionmyjeans.com",
+            "3hollis.com",
+            "3hollis.com",
+            "3hollis.com",
+            "3hollis.com",
+            "3hollis.com",
+            "3hollis.com",
+            "3hollis.com",
+            "3hollis.com",
+            "3hollis.com",
+            "3hollis.com",
+        ];
+        let titleIndex = 0;
+        setInterval(() => {
+            document.title = titles[titleIndex];
+            titleIndex = (titleIndex + 1) % titles.length;
+        }, 1000); // Change every 1000ms for smooth animation
     </script>
 </body>
 </html>
