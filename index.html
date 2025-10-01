@@ -5,13 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>3HOLLIS OFFICIAL WEB 1.0 SITE</title>
     <link rel="icon" href="images/favicon.png" type="image/png">
+    <link rel="stylesheet" href="styles/shared.css">
     <style>
-        html {
-            overflow-x: hidden; /* prevent horizontal scrolling/panning on mobile */
-        }
+        /* additional page-specific styles remain below; shared layout rules live in styles/shared.css */
         body {
             background-color: #ffffff;
-            background-image: url('images/plus.jpeg');
+            background-image: url('/images/plus.jpeg');
             background-repeat: repeat;
             background-size: 100px 100px;
             font-family: 'Verdana', sans-serif;
@@ -113,74 +112,16 @@
             margin-left: 14px;
             vertical-align: middle;
         }
-        .disclaimer {
-            background: #ffff00;
-            color: #000000;
-            font-family: 'Impact', 'Arial Black', sans-serif;
-            text-align: center;
-            padding: 8px 12px;
-            border: 3px solid #000000;
-            font-size: 1.05em;
-            margin-top: 12px; /* small gap between header and disclaimer */
-            letter-spacing: 0.5px;
+        @media (max-width: 900px) {
+            .tab-menu {
+                grid-template-columns: repeat(2, 1fr);
+                width: 100%;
+            }
+            .tab-button {
+                font-size: 1.1em;
+                padding: 12px 16px;
+            }
         }
-
-        .header-band {
-            display: grid;
-            grid-template-columns: auto minmax(0, 1fr) auto;
-            align-items: flex-start;
-            gap: 32px;
-            width: 100%;
-            padding: 0 0 16px 0;
-            box-sizing: border-box;
-        }
-
-        .header-main {
-            text-align: center;
-            justify-self: center;
-            max-width: 1200px;
-            width: 90%;
-        }
-
-        .header-banner {
-            max-width: 100%;
-            height: auto;
-            border: 6px solid #000000;
-            display: block;
-        }
-
-        .header-spacer {
-            width: 120px;
-            height: 1px;
-            visibility: hidden;
-        }
-
-        /* Multicolored tab menu */
-        .tab-menu {
-            display: flex;
-            justify-content: center;
-            margin: 20px 0;
-            flex-wrap: wrap;
-        }
-        .tab-button {
-            color: #ffffff;
-            border: 3px solid #000000;
-            padding: 10px 20px;
-            margin: 0 5px;
-            font-family: 'Impact', 'Arial Black', sans-serif;
-            font-size: 1.2em;
-            font-weight: bold;
-            cursor: pointer;
-            border-radius: 5px;
-            transition: transform 0.2s;
-        }
-        .tab-button:hover {
-            transform: scale(1.05);
-        }
-        .home-tab { background: #ff0000; } /* Red */
-        .store-tab { background: #ff8000; } /* Orange */
-        .about-tab { background: #ffff00; color: #000000; } /* Yellow with black text */
-        .contact-tab { background: #00ff00; } /* Green */
 
         .alien-img { width: 260px; border: 3px solid #006600; padding: 6px; background:#ffffff; display:block; margin:0; }
         
@@ -516,82 +457,6 @@
         }
 
         /* Mode toggle button */
-        .mode-toggle {
-            position: static;
-            width: 120px;
-            height: 120px;
-            background: #00ff00; /* pure green */
-            color: #ffffff;
-            font-family: 'Impact', 'Arial Black', sans-serif;
-            font-size: 22px; /* larger text */
-            border: 4px solid #00aa00;
-            border-radius: 0; /* square corners */
-            z-index: 4000;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 6px;
-            margin: 0;
-            box-sizing: border-box;
-            justify-self: start;
-            align-self: start;
-        }
-        .mode-toggle.boring {
-            background: #ff0000; /* red when boring mode ON */
-            color: #ffffff; /* white text for contrast */
-            border-color: #aa0000;
-        }
-
-        /* boring-mode helper: pause animations/transitions but keep site content visible and images colored */
-        .boring-mode * {
-            transition: none !important;
-        }
-
-        /* Pause common CSS animations by overriding animation properties for known animated classes */
-        .boring-mode .neon-text,
-        .boring-mode .blink,
-        .boring-mode .rotate,
-        .boring-mode .rotate-3d,
-        .boring-mode .floating,
-        .boring-mode .merch-text,
-        .boring-mode .merch-arrow,
-        .boring-mode .merch-arrow-gif,
-        .boring-mode .merch-circle,
-        .boring-mode .popup-window,
-        .boring-mode .inline-banner-ad,
-        .boring-mode .random-image-placement {
-            animation-play-state: paused !important;
-            animation: none !important;
-        }
-
-    /* When boring mode is active, remove inline banners and vertical side ads */
-    .boring-mode .inline-banner-ad { display: none !important; }
-    .boring-mode #left-ads, .boring-mode #right-ads { display: none !important; }
-
-        .boring-mode a:hover { text-decoration: none !important; }
-
-        /* Removed previous forced white background and dark overlay in boring mode.
-           Boring mode now only pauses motion and programmatically (JS) sets previously colored / translucent boxes to opaque white. */
-        body.boring-mode::before {
-            content: '';
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.35); /* subtle dim of tiled background */
-            z-index: 0;
-            pointer-events: none;
-        }
-
-        /* Reset motion side-effects: ensure transformed / blinking elements appear stable */
-        .boring-mode .rotate, .boring-mode .rotate-3d, .boring-mode .floating { transform: none !important; }
-        .boring-mode .blink { opacity: 1 !important; }
-
-        /* Keep images colored and visible (do not grayscale or hide gifs) */
-        .boring-mode img { filter: none !important; opacity: 1 !important; visibility: visible !important; }
-
-        /* Desaturate borders and force black text for non-image elements (images keep color) */
-        body.boring-mode :not(img) { color: #000000 !important; border-color: #000000 !important; }
 
         /* Strip most text effects while in boring mode: remove text-shadow, neon glow and blinking for plain readability.
            Allow bold (<b>), italic (<i>) and underline (<u>) to remain as semantic emphasis. */
@@ -613,11 +478,17 @@
         .boring-mode u { text-decoration: underline !important; }
 
         /* Hide merch circle and merch CTA text in boring mode */
-        .boring-mode .merch-circle { display: none !important; }
+        .boring-mode .merch-circle,
         .boring-mode .merch-text { display: none !important; }
 
-    /* Hide the eaten counter in boring mode (matches JS id "eatenCount") */
-    .boring-mode #eatenCount, .boring-mode .eaten-counter { display: none !important; }
+        /* Hide the eaten counter in boring mode (matches JS id "eatenCount") */
+        .boring-mode #eatenCount,
+        .boring-mode .eaten-counter { display: none !important; }
+
+        .web1-banner {
+            text-align: center;
+            margin: 12px 0 20px;
+        }
 
         .web1-banner img {
             display: inline-block;
@@ -628,11 +499,6 @@
             border: 3px solid #000000;
             background: #ffffff;
             padding: 6px;
-        }
-        .merch-arrow-gif {
-            width: 56px;
-            margin-left: 10px;
-            vertical-align: middle;
         }
 
         .starcar-wrap {
@@ -652,7 +518,32 @@
             0% { transform: scale(1); }
             100% { transform: scale(1.2); }
         }
-        /* Responsive adjustments */
+
+        .inline-banner-ad {
+            text-align: center;
+            margin: 18px auto;
+            width: 100%;
+            display: block;
+            position: relative;
+            z-index: 500;
+        }
+
+        .inline-banner-ad a { display: inline-block; }
+
+        .inline-banner-ad img.banner-ad-img {
+            max-width: 1196px;
+            width: 100%;
+            height: auto;
+            border: 4px solid #000000;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.25);
+            background: #ffffff;
+            display: block;
+        }
+
+        @media (max-width: 900px) {
+            .inline-banner-ad img.banner-ad-img { width: 98%; max-width: 624px; }
+        }
+
         @media (max-width: 600px) {
             .web1-banner img { width: 96px; margin: 0 6px; }
             .sparkle { width: 48px; height: 48px; }
@@ -660,258 +551,25 @@
             .merch-image { max-width: 200px; }
             .merch-arrow-gif { width: 44px; }
         }
-            /* Sidebar ads styles (inline images use inline styles for placement) */
-            #sidebar-ads a img:hover { transform: translateY(-4px); box-shadow: 0 6px 12px rgba(0,0,0,0.3); }
-            @media (max-width: 900px) {
-                #sidebar-ads { display: none; }
-            }
-
-            /* Side ads base styles */
-            #left-ads, #right-ads {
-                position: absolute; /* absolute so they scroll with the page */
-                z-index: 500;
-                display: flex;
-                flex-direction: column;
-                gap: 24px; /* increased vertical spacing */
-                pointer-events: auto;
-            }
-            /* Safety: if a side ad column would overlap main container, allow JS to hide it by adding .hidden */
-            #left-ads.hidden, #right-ads.hidden { display: none !important; }
-            /* Responsive vertical ad sizing: scales with viewport width but capped, reduced by 15% */
-            .side-ad {
-                width: clamp(102px, 10.2vw, 153px); /* 15% smaller: min 102px (120*0.85), scale 10.2vw (12vw*0.85), max 153px (180*0.85) */
-                border: none;
-                background: #fff;
-                padding: 6px;
-                display: block;
-            }
-
-            /* Inline rotating banner ads that appear between sections */
-            .inline-banner-ad {
-                text-align: center;
-                margin: 18px auto;
-                width: 100%;
-                display: block;
-                position: relative;
-                z-index: 500;
-            }
-            .inline-banner-ad a { display:inline-block; }
-            .inline-banner-ad img.banner-ad-img {
-                max-width: 1196px; /* ~30% larger (920 -> 1196) */
-                width: 100%;
-                height: auto;
-                border: 4px solid #000000;
-                box-shadow: 0 6px 12px rgba(0,0,0,0.25);
-                background: #ffffff;
-                display:block;
-            }
-            @media (max-width: 900px) {
-                .inline-banner-ad img.banner-ad-img { width: 98%; max-width: 624px; }
-            }
-
-            /* hide on small screens */
-            @media (max-width: 900px) {
-                #left-ads, #right-ads { display: none; }
-            }
-
-            /* Mobile optimizations for better viewability */
-            @media (max-width: 768px) {
-                body {
-                    padding: 10px; /* reduce padding */
-                    font-size: 14px; /* smaller base font */
-                }
-                .container {
-                    width: 95%; /* wider on small screens */
-                    max-width: none; /* remove max-width for full width */
-                    margin: 0 auto;
-                }
-                .header-band {
-                    grid-template-columns: 1fr;
-                    justify-items: center;
-                    gap: 12px;
-                    padding: 16px 0;
-                }
-                .header-spacer {
-                    display: none;
-                }
-                .header-main {
-                    width: 100%;
-                }
-                marquee {
-                    font-size: 1.2em; /* smaller marquee */
-                }
-                .disclaimer {
-                    font-size: 0.9em; /* smaller disclaimer */
-                    padding: 6px 8px;
-                    text-align: center; /* center disclaimer */
-                }
-                .section-title {
-                    font-size: 1.4em; /* smaller titles */
-                    text-align: center; /* center titles */
-                }
-                .incoherent {
-                    font-size: 0.9em; /* smaller text */
-                    line-height: 1.3;
-                    text-align: center; /* center incoherent text */
-                }
-                .highlight-text {
-                    font-size: 1.1em;
-                }
-                .section {
-                    margin: 18px auto;
-                    padding: 14px 16px;
-                    border-width: 3px;
-                }
-                .section-title {
-                    font-size: 1.3em;
-                }
-                table {
-                    font-size: 0.9em; /* smaller table text */
-                    border: 2px solid #000000; /* simple border */
-                    border-collapse: separate;
-                    border-spacing: 0; /* prevent gaps */
-                    margin: 0 auto; /* center table */
-                    background-color: rgba(255, 255, 255, 0.95);
-                }
-                td {
-                    padding: 12px; /* slightly more padding for breathing room */
-                    vertical-align: top;
-                    text-align: center; /* center text in table cells */
-                    border: none; /* remove inner borders at this breakpoint */
-                }
-                .merch-image {
-                    max-width: min(260px, 80vw); /* smaller merch image */
-                    display: block;
-                    margin: 0 auto; /* center merch image */
-                }
-                .merch-text {
-                    display: none; /* hide click to buy text on mobile */
-                }
-                .merch-row {
-                    flex-direction: column;
-                    gap: 14px;
-                }
-                .merch-circle {
-                    width: clamp(180px, 60vw, 260px);
-                    height: clamp(180px, 60vw, 260px);
-                    border-width: 6px;
-                }
-                .merch-arrow-gif {
-                    display: block;
-                    margin: 8px auto 0;
-                    left: 0;
-                    top: 0;
-                }
-                .large-text {
-                    font-size: 1.2em; /* smaller large text */
-                    text-align: center;
-                }
-                .ascii-art {
-                    font-size: 0.6em; /* smaller ascii */
-                    text-align: center;
-                }
-                .popup-window {
-                    width: 90%; /* smaller popups, but since hidden, optional */
-                    max-width: 90%;
-                }
-                /* Mode toggle on mobile */
-                .mode-toggle {
-                    width: 80px;
-                    height: 80px;
-                    font-size: 16px;
-                    justify-self: center;
-                }
-                .hit-counter, .eaten-counter {
-                    display: none !important; /* hide counters */
-                }
-                /* Reset any random shifts and ensure centering on mobile */
-                .section, .section-title {
-                    position: static !important;
-                    left: auto !important;
-                    top: auto !important;
-                    text-align: center;
-                }
-                /* Stack table columns vertically on very small screens */
-                @media (max-width: 600px) {
-                    table {
-                        display: block;
-                        width: 100%;
-                        border: none; /* remove outer border to avoid double edges */
-                        background: transparent;
-                        padding: 0;
-                    }
-                    tr {
-                        display: block;
-                        width: 100%;
-                    }
-                    td {
-                        display: block;
-                        width: 100%;
-                        text-align: center;
-                        margin: 0 0 18px 0;
-                        padding: 14px 12px;
-                        border: 2px solid #000000;
-                        border-radius: 10px;
-                        box-sizing: border-box;
-                        background-color: rgba(255, 255, 255, 0.98);
-                        box-shadow: 0 6px 14px rgba(0, 0, 0, 0.18);
-                    }
-                    td:last-child {
-                        margin-bottom: 0;
-                    }
-                    .starcar-wrap img {
-                        max-width: 100%;
-                        display: block;
-                        margin: 0 auto; /* center images */
-                    }
-                    .merch-image-container {
-                        text-align: center; /* center merch */
-                    }
-                    .hit-counter {
-                        text-align: center;
-                        margin: 10px auto;
-                    }
-                    .ascii-art {
-                        text-align: center;
-                        margin: 10px 0;
-                    }
-                    .guestbook form {
-                        text-align: center;
-                    }
-                    .midi-player {
-                        text-align: center;
-                    }
-                    /* Ensure images don't overflow */
-                    img {
-                        max-width: 100%;
-                        height: auto;
-                    }
-                    /* Adjust button sizes */
-                    button, input[type="submit"] {
-                        font-size: 16px; /* prevent zoom on iOS */
-                        padding: 8px 12px;
-                    }
-                }
-            }
     </style>
 </head>
 <body>
     <!-- Left and right sidebar ads (will be positioned into page gutters via JS) -->
     <div id="left-ads" aria-hidden="false">
-    <a href="https://store.3hollis.com"><img src="images/ad1.gif" alt="Ad 1" class="side-ad"></a>
-    <a href="https://store.3hollis.com"><img src="images/ad2.gif" alt="Ad 2" class="side-ad"></a>
-    <a href="https://store.3hollis.com"><img src="images/ad3.gif" alt="Ad 3" class="side-ad"></a>
+    <a href="https://store.3hollis.com"><img src="/images/ad1.gif" alt="Ad 1" class="side-ad"></a>
+    <a href="https://store.3hollis.com"><img src="/images/ad2.gif" alt="Ad 2" class="side-ad"></a>
+    <a href="https://store.3hollis.com"><img src="/images/ad3.gif" alt="Ad 3" class="side-ad"></a>
     </div>
     <div id="right-ads" aria-hidden="false">
-    <a href="https://store.3hollis.com"><img src="images/ad1.gif" alt="Ad 1" class="side-ad"></a>
-    <a href="https://store.3hollis.com"><img src="images/ad2.gif" alt="Ad 2" class="side-ad"></a>
-    <a href="https://store.3hollis.com"><img src="images/ad3.gif" alt="Ad 3" class="side-ad"></a>
+    <a href="https://store.3hollis.com"><img src="/images/ad1.gif" alt="Ad 1" class="side-ad"></a>
+    <a href="https://store.3hollis.com"><img src="/images/ad2.gif" alt="Ad 2" class="side-ad"></a>
+    <a href="https://store.3hollis.com"><img src="/images/ad3.gif" alt="Ad 3" class="side-ad"></a>
     </div>
 
     <div class="header-band">
         <button id="modeToggle" class="mode-toggle" aria-pressed="false">awesome mode: on :3</button>
         <div class="header-main">
-            <img src="images/banner.jpg" alt="3HOLLIS Banner" class="header-banner">
+            <img src="/images/banner.jpg" alt="3HOLLIS Banner" class="header-banner">
             <div class="disclaimer">not affiliated with or endorsed by 2hollis i"m not sure who that is? this is 3hollis, anyways if you need help <a href="mailto:support@3hollis.com" style="color:#0000ee;text-decoration:underline;font-style:italic;">support@3hollis.com</a></div>
         </div>
         <div class="header-spacer" aria-hidden="true"></div>
@@ -920,12 +578,12 @@
     <div class="container">
 
         <!-- Multicolored tab menu -->
-        <div class="tab-menu">
-            <button class="tab-button home-tab">Home</button>
-            <button class="tab-button store-tab">Store</button>
-            <button class="tab-button about-tab">About</button>
-            <button class="tab-button contact-tab">Contact</button>
-        </div>
+        <nav class="tab-menu" aria-label="Primary">
+            <a class="tab-button home-tab active" href="/">Home</a>
+            <a class="tab-button store-tab" href="https://store.3hollis.com">Store</a>
+            <a class="tab-button about-tab" href="/about/">About</a>
+            <a class="tab-button contact-tab" href="https://store.3hollis.com/contact-us">Contact</a>
+        </nav>
 
         <!-- Web1 GIF banner removed per user request -->
 
@@ -1067,6 +725,7 @@
         </div>
     </div>
 
+    <script src="/scripts/shared.js"></script>
     <script>
         // Array of 3hollis image URLs
         const imageUrls = [
@@ -1430,7 +1089,7 @@
             const body = document.body;
             const toggle = document.getElementById('modeToggle');
             // Elements we will manipulate for background whitening and marquee freezing
-            const BOX_SELECTOR = ['.section','table','.guestbook','.webring','.hit-counter','.midi-player','.large-text','.disclaimer','.alien-img','.ascii-art'];
+            const BOX_SELECTOR = ['.section','table','.guestbook','.webring','.hit-counter','.midi-player','.large-text','.alien-img','.ascii-art'];
             // Keep state on body dataset for restoration
             if (!body._boringState) body._boringState = { marquees: [], whitened: [] };
             if (on) {
@@ -1690,8 +1349,19 @@
         // also support an oddly named file with a space if present
         try { if (typeof window !== 'undefined') {} } catch(e) {}
 
-    // vertical/side ad pool (includes newly added ad5.gif)
-    const sideAdFiles = ['images/ad1.gif','images/ad2.gif','images/ad3.gif','images/ad4.gif','images/ad5.gif'];
+        const sharedUtils = window.ThreeHollisShared || null;
+        const shuffle = sharedUtils ? sharedUtils.shuffle : function(arr) {
+            if (!Array.isArray(arr)) return [];
+            const copy = arr.slice();
+            for (let i = copy.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [copy[i], copy[j]] = [copy[j], copy[i]];
+            }
+            return copy;
+        };
+
+        // vertical/side ad pool (includes newly added ad5.gif)
+        const sideAdFiles = sharedUtils ? sharedUtils.defaultSideAdFiles.slice() : ['/images/ad1.gif','/images/ad2.gif','/images/ad3.gif','/images/ad4.gif','/images/ad5.gif'];
         let currentBannerAds = []; // track created ad nodes
         let bannerRotateIntervalId = null;
 
@@ -1703,16 +1373,6 @@
                 out.push(copy.splice(idx,1)[0]);
             }
             return out;
-        }
-
-        // Shuffle utility (Fisher-Yates) - used to pick unique images
-        function shuffle(arr) {
-            const a = arr.slice();
-            for (let i = a.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [a[i], a[j]] = [a[j], a[i]];
-            }
-            return a;
         }
 
         function clearBannerAds() {
@@ -1827,46 +1487,29 @@
 
         // Update the left/right side ads by picking images from sideAdFiles (unique where possible)
         function updateSideAds() {
+            if (sharedUtils && typeof sharedUtils.updateSideAds === 'function') {
+                sharedUtils.updateSideAds({ sideAdFiles: sideAdFiles, body: document.body });
+                return;
+            }
             if (document.body && document.body.classList && document.body.classList.contains('boring-mode')) return;
             const sideImgs = Array.from(document.querySelectorAll('#left-ads img.side-ad, #right-ads img.side-ad'));
             if (!sideImgs.length) return;
-            // Create a shuffled copy of the pool
-            const shuffledPool = (function(arr){
-                const a = arr.slice();
-                for (let i = a.length - 1; i > 0; i--) {
-                    const j = Math.floor(Math.random() * (i + 1));
-                    [a[i], a[j]] = [a[j], a[i]];
-                }
-                return a;
-            })(sideAdFiles);
-
-            // pick unique images up to the number of available img slots
-            const picks = shuffledPool.slice(0, Math.min(shuffledPool.length, sideImgs.length));
-
-            // If there are fewer unique images than slots, hide the extra slots
-            for (let i = 0; i < sideImgs.length; i++) {
-                const imgEl = sideImgs[i];
-                if (!imgEl) continue;
+            const picks = shuffle(sideAdFiles).slice(0, Math.min(sideAdFiles.length, sideImgs.length));
+            sideImgs.forEach((imgEl, i) => {
+                if (!imgEl) return;
                 if (i < picks.length) {
                     imgEl.src = picks[i];
                     imgEl.style.display = '';
-                    imgEl.parentNode.style.display = ''; // show anchor wrapper too
-                    // Randomize vertical spacing by setting margin-top; keep them within reasonable bounds
-                    // Prevent ads from being positioned far below the top of the container/visitor area
-                    // random spacing between 100px and 1000px
+                    if (imgEl.parentNode) imgEl.parentNode.style.display = '';
                     const minSpace = 100;
                     const maxSpace = 1000;
                     const mt = Math.floor(Math.random() * (maxSpace - minSpace + 1)) + minSpace;
-                    // Apply marginTop, then make a best-effort clamp so the ad does not sit below the visitor counter
                     imgEl.style.marginTop = mt + 'px';
-                    // No clamp: side ads are allowed below the eaten counter per updated requirement.
-                    // We still keep randomized spacing between 100 and 1000px (mt already applied).
                 } else {
-                    // hide extra img slots to avoid duplicates
                     imgEl.style.display = 'none';
                     if (imgEl.parentNode) imgEl.parentNode.style.display = 'none';
                 }
-            }
+            });
         }
 
         // start rotating on DOMContentLoaded (after sections exist)
@@ -1878,24 +1521,25 @@
 
         // Position side ads centered in the gutters between the page edge and the main .container
         function positionSideAds() {
+            if (sharedUtils && typeof sharedUtils.positionSideAds === 'function') {
+                sharedUtils.positionSideAds({ adWidth: 132, topOffset: 120 });
+                return;
+            }
             const container = document.querySelector('.container');
             const leftAds = document.getElementById('left-ads');
             const rightAds = document.getElementById('right-ads');
             if (!container || !leftAds || !rightAds) return;
 
             const rect = container.getBoundingClientRect();
-            const adWidth = 120 + 12; // image + padding/border
-            // compute center of left gutter (edge -> container.left)
+            const adWidth = 132;
             const leftGutterCenter = rect.left / 2;
             const rightGutterCenter = window.innerWidth - (window.innerWidth - rect.right) / 2;
 
-            // place ads so they're horizontally centered in the gutters
-            leftAds.style.left = Math.max(8, leftGutterCenter - adWidth/2) + 'px';
-            rightAds.style.left = Math.min(window.innerWidth - adWidth - 8, rightGutterCenter - adWidth/2) + 'px';
+            leftAds.style.left = Math.max(8, leftGutterCenter - adWidth / 2) + 'px';
+            rightAds.style.left = Math.min(window.innerWidth - adWidth - 8, rightGutterCenter - adWidth / 2) + 'px';
 
-            // compute absolute top so the ads sit relative to the document and will scroll away
             const containerTop = window.scrollY + rect.top;
-            const topOffset = 120; // px down from top of container area
+            const topOffset = 120;
             leftAds.style.top = (containerTop + topOffset) + 'px';
             rightAds.style.top = (containerTop + topOffset) + 'px';
         }

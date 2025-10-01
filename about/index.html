@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>About 3HOLLIS</title>
+	<link rel="icon" href="/images/favicon.png" type="image/png">
+	<link rel="stylesheet" href="/styles/shared.css">
+	<style>
+		/* additional page-specific styles remain below; shared layout rules live in styles/shared.css */
+		body {
+			background-color: #ffffff;
+			background-image: url('/images/plus.jpeg');
+			background-repeat: repeat;
+			background-size: 100px 100px;
+			font-family: 'Verdana', sans-serif;
+			color: #000000;
+			margin: 0;
+			padding: 20px;
+			overflow-x: hidden;
+			position: relative;
+		}
+		.container {
+			width: 90%;
+			margin: 0 auto;
+			max-width: 1200px;
+			position: relative;
+			z-index: 1;
+		}
+
+		a {
+			color: #ff0000;
+			text-decoration: none;
+			font-family: 'Verdana', sans-serif;
+		}
+
+		a:hover {
+			color: #0000ff;
+			text-decoration: underline overline;
+		}
+
+		/* Strip most text effects while in boring mode: remove text-shadow, neon glow and blinking for plain readability.
+		   Allow bold (<b>), italic (<i>) and underline (<u>) to remain as semantic emphasis. */
+		.boring-mode .ascii-art, .boring-mode .large-text, .boring-mode .incoherent, .boring-mode .section-title, .boring-mode .highlight-text, .boring-mode marquee {
+			text-shadow: none !important;
+			color: #000000 !important;
+			background: transparent !important;
+			animation: none !important;
+		}
+				/* General stripping of decorative typography in boring-mode */
+		.boring-mode * {
+			text-shadow: none !important;
+			letter-spacing: normal !important;
+			font-family: Arial, Helvetica, sans-serif !important;
+		}
+				/* Preserve typographic emphasis for bold/italic/underline */
+		.boring-mode b, .boring-mode strong { font-weight: bold !important; }
+		.boring-mode i, .boring-mode em { font-style: italic !important; }
+		.boring-mode u { text-decoration: underline !important; }
+
+		/* Hide merch circle and merch CTA text in boring mode */
+		.boring-mode .merch-circle,
+		.boring-mode .merch-text { display: none !important; }
+
+		/* Hide the eaten counter in boring mode (matches JS id "eatenCount") */
+		.boring-mode #eatenCount,
+		.boring-mode .eaten-counter { display: none !important; }
+
+
+		marquee {
+			font-size: 1.8em;
+			color: #ff0000;
+			margin: 10px 0;
+			font-family: 'Arial Black', sans-serif;
+		}
+
+		.section {
+			margin: 30px 0;
+			padding: 15px;
+			border: 2px solid #000000;
+			background-color: rgba(255, 255, 255, 0.8);
+		}
+
+		.section-title {
+			color: #ffffff;
+			background: linear-gradient(90deg, #cc0000, #ff3333);
+			padding: 8px;
+			margin: 0 0 10px 0;
+			font-family: 'Arial Black', sans-serif;
+			font-size: 2em;
+		}
+
+		.neon-text {
+			animation: neonGlow 2s infinite alternate;
+			text-shadow: 0 0 10px #00ff00, 0 0 20px #ff00ff;
+		}
+
+		@keyframes neonGlow {
+			0% { color: #ff00ff; text-shadow: 0 0 10px #00ff00, 0 0 20px #ff00ff; }
+			100% { color: #00ff00; text-shadow: 0 0 10px #ff00ff, 0 0 20px #00ff00; }
+		}
+
+		.incoherent {
+			font-size: 1em;
+			line-height: 1.4;
+			margin: 5px 0;
+			color: #000099;
+			text-shadow: 0 0 2px #ffffff;
+			transition: color 0.3s ease;
+			font-family: 'Verdana', sans-serif;
+		}
+
+		.incoherent:hover {
+			color: #ff00ff;
+		}
+
+		.highlight-text {
+			font-family: 'Impact', sans-serif;
+			font-size: 1.2em;
+			color: #00ff00;
+			text-shadow: 0 0 5px #000000;
+		}
+
+		.about-grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+			gap: 16px;
+		}
+
+		.about-card {
+			border: 3px dashed #ff00ff;
+			padding: 16px;
+			background: rgba(255, 255, 255, 0.85);
+			text-align: center;
+		}
+
+		.about-card h3 {
+			font-family: 'Arial Black', sans-serif;
+			margin: 0 0 10px;
+		}
+
+		.pixel-list {
+			list-style: none;
+			padding: 0;
+			margin: 0;
+		}
+
+		.pixel-list li {
+			margin: 8px 0;
+			padding: 8px 12px;
+			border: 2px dotted #000000;
+			background-color: rgba(255, 255, 0, 0.8);
+			font-family: 'Courier New', monospace;
+		}
+
+		figure {
+			margin: 12px auto;
+			text-align: center;
+		}
+
+		figure img {
+			max-width: 100%;
+			border: 5px ridge #ff0000;
+			background: #ffffff;
+			padding: 6px;
+		}
+
+		figure figcaption {
+			font-family: 'Impact', sans-serif;
+			margin-top: 8px;
+			color: #ff00ff;
+		}
+
+		footer {
+			text-align: center;
+			margin-top: 60px;
+			font-family: 'Courier New', monospace;
+			font-size: 0.95em;
+		}
+	</style>
+</head>
+<body>
+	<div id="left-ads" aria-hidden="false">
+	<a href="https://store.3hollis.com"><img src="/images/ad1.gif" alt="Ad 1" class="side-ad"></a>
+	<a href="https://store.3hollis.com"><img src="/images/ad2.gif" alt="Ad 2" class="side-ad"></a>
+	<a href="https://store.3hollis.com"><img src="/images/ad3.gif" alt="Ad 3" class="side-ad"></a>
+	</div>
+	<div id="right-ads" aria-hidden="false">
+	<a href="https://store.3hollis.com"><img src="/images/ad1.gif" alt="Ad 1" class="side-ad"></a>
+	<a href="https://store.3hollis.com"><img src="/images/ad2.gif" alt="Ad 2" class="side-ad"></a>
+	<a href="https://store.3hollis.com"><img src="/images/ad3.gif" alt="Ad 3" class="side-ad"></a>
+	</div>
+
+	<div class="header-band">
+		<button id="modeToggle" class="mode-toggle" aria-pressed="false">awesome mode: on :3</button>
+		<div class="header-main">
+			<img src="/images/banner.jpg" alt="3HOLLIS Banner" class="header-banner">
+			<div class="disclaimer">not affiliated with or endorsed by 2hollis i"m not sure who that is? this is 3hollis, anyways if you need help <a href="mailto:support@3hollis.com" style="color:#0000ee;text-decoration:underline;font-style:italic;">support@3hollis.com</a></div>
+		</div>
+		<div class="header-spacer" aria-hidden="true"></div>
+	</div>
+
+	<div class="container">
+		<nav class="tab-menu" aria-label="Primary">
+			<a class="tab-button home-tab" href="/">Home</a>
+			<a class="tab-button store-tab" href="https://store.3hollis.com">Store</a>
+			<a class="tab-button about-tab active" href="/about/">About</a>
+			<a class="tab-button contact-tab" href="https://store.3hollis.com/contact-us">Contact</a>
+		</nav>
+
+		<marquee behavior="alternate" direction="left" scrollamount="13">NOW ENTERING BIO ZONE *** 3HOLLIS LORE HAS ARRIVED *** KEEP YOUR HANDS INSIDE THE TIMELINE AT ALL TIMES</marquee>
+
+		<section class="section">
+			<h1 class="section-title neon-text">WHO EVEN IS 3HOLLIS?</h1>
+			<p class="incoherent">3hollis is a frequency, a future echo, a little blip on your timeline that refuses to stay quiet. Born from the chaotic static left behind by <span class="highlight-text">2hollis</span>, the triple iteration adds an extra dimension of shimmer, sincerity, and a suspicious amount of green. This site is the official archive of that energy: music ideas, visual experiments, digital glitter, all packed into one web 1.0 inspired temple.</p>
+			<p class="incoherent">If you hear a synth squeal at 333hz while a blinking gif nods in approval, that's probably us. If you see a merch drop that feels like it time-traveled from 1998, also us. The goal is simple: make the future feel handmade, loud, and a little too earnest. You're invited to poke around, leave a guestbook scribble, and remember that the weird corner of the internet is thriving.</p>
+			<figure>
+				<img src="/images/3holist.png" alt="3hollis collage">
+				<figcaption>artifact 003: visual proof that 3hollis is real &amp; holographic</figcaption>
+			</figure>
+		</section>
+
+		<section class="section">
+			<h2 class="section-title">THE 3HOLLIS TIMELINE</h2>
+			<ul class="pixel-list">
+				<li>2017 &mdash; 2hollis whispers about the future. we take notes.</li>
+				<li>2023 &mdash; the third iteration boots up in a bedroom full of synth cables.</li>
+				<li>2024 &mdash; launch of 3hollis.com, featuring blinking everything and rotating star cars.</li>
+				<li>2025 &mdash; merch store goes live with tees that feel like time capsules.</li>
+				<li>Right now &mdash; you're reading this page, which makes you part of the lore.</li>
+			</ul>
+		</section>
+
+		<section class="section">
+			<h2 class="section-title neon-text">MISSION CONTROL</h2>
+			<div class="about-grid">
+				<div class="about-card">
+					<h3>Sound</h3>
+					<p class="incoherent">Glitch pop, dreamy noise, karaoke for parallel universes. Coming soon to a speaker near you the very moment it's finished rendering.</p>
+				</div>
+				<div class="about-card">
+					<h3>Visuals</h3>
+					<p class="incoherent">Web 1.0 aesthetics dialed to eleven. Animations blink because they're alive. Every gif has a job.</p>
+				</div>
+				<div class="about-card">
+					<h3>Community</h3>
+					<p class="incoherent">Guestbook scribbles, secret discount codes, and mutual admiration for neon typography.</p>
+				</div>
+				<div class="about-card">
+					<h3>Values</h3>
+					<p class="incoherent">Stay weird, stay kind, ship art that feels like a friend DM'd it at 3AM with too many exclamation points.</p>
+				</div>
+			</div>
+		</section>
+
+		<section class="section">
+			<h2 class="section-title">HOW TO REACH THE MOTHERSHIP</h2>
+			<p class="incoherent">Need help with an order, have a cosmic question, or want to send a playlist swap? The inbox is open.</p>
+			<p class="incoherent">📮 <a href="mailto:support@3hollis.com">support@3hollis.com</a></p>
+			<p class="incoherent">🛒 <a href="https://store.3hollis.com" target="_blank" rel="noopener">store.3hollis.com</a></p>
+			<p class="incoherent">🗒️ scribble in the <a href="/">guestbook back on the home page</a> once you're done here.</p>
+		</section>
+
+		<section class="section" style="background-color: #d8ffd8; border-color: #00aa00;">
+			<h2 class="section-title" style="background: linear-gradient(90deg,#00aa00,#66ff66);">FACTS THEY DON'T WANT YOU TO KNOW</h2>
+			<p class="incoherent" style="color:#004400;">&bull; 3hollis can spot VHS static in 4K. &bull; prefers synth patches labeled "mystery". &bull; keeps a secret stash of glittering midi files. &bull; is probably thinking about star cars right now.</p>
+		</section>
+
+		<footer>
+			&copy; <span id="year"></span> 3hollis. made with 333% enthusiasm.
+		</footer>
+	</div>
+
+	<script src="/scripts/shared.js"></script>
+	<script>
+		(function(shared) {
+			if (!shared) return;
+			const sideAdFiles = shared.defaultSideAdFiles;
+			shared.initBoringMode({
+				boringOnText: 'boring mode on :/',
+				boringOffText: 'awesome mode: on :3'
+			});
+
+			const updateSideAds = () => shared.updateSideAds({ sideAdFiles });
+			const positionSideAds = () => shared.positionSideAds({ adWidth: 132, topOffset: 120 });
+
+			updateSideAds();
+			positionSideAds();
+			window.addEventListener('resize', positionSideAds);
+			window.addEventListener('scroll', positionSideAds);
+			window.addEventListener('load', positionSideAds);
+			window.addEventListener('load', updateSideAds);
+
+			const yearEl = document.getElementById('year');
+			if (yearEl) {
+				yearEl.textContent = new Date().getFullYear();
+			}
+		})(window.ThreeHollisShared);
+	</script>
+</body>
+</html>
