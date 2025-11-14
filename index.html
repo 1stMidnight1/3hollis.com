@@ -3,1595 +3,210 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3HOLLIS OFFICIAL WEB 1.0 SITE</title>
-    <link rel="icon" href="images/favicon.png" type="image/png">
-    <link rel="stylesheet" href="styles/shared.css">
+    <title>3HOLLIS</title>
     <style>
-        /* additional page-specific styles remain below; shared layout rules live in styles/shared.css */
-        body {
-            background-color: #ffffff;
-            background-image: url('/images/plus.jpeg');
-            background-repeat: repeat;
-            background-size: 100px 100px;
-            font-family: 'Verdana', sans-serif;
-            color: #000000;
+        :root {
+            --header-height: 10vh;
+            --side-margin: 40px;
+            --insta-size: calc(var(--header-height) * 15 / 28);
+        }
+
+        html, body {
+            height: 100%;
             margin: 0;
-            padding: 20px;
+            background: #000;
             overflow-x: hidden;
-            position: relative;
-        }
-        
-        .container {
-            width: 90%;
-            margin: 0 auto;
-            max-width: 1200px;
-            position: relative;
-            z-index: 1;
-        }
-        
-        .blink {
-            animation: blink 0.7s infinite;
         }
 
-        @keyframes blink {
-            0% { opacity: 1; }
-            50% { opacity: 0; }
-            100% { opacity: 1; }
-        }
-        
-        .rotate {
-            animation: rotate 5s infinite linear;
-            display: inline-block;
-        }
-        
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-        
-        .rotate-3d {
-            animation: rotate3d 6s infinite linear;
-            perspective: 1000px;
-        }
-        
-        @keyframes rotate3d {
-            0% { transform: rotateY(0deg); }
-            100% { transform: rotateY(360deg); }
-        }
-        
-        marquee {
-            font-size: 1.8em;
-            color: #ff0000;
-            margin: 10px 0;
-            font-family: 'Arial Black', sans-serif;
-        }
-        
-        table {
-            border: 8px dotted #000000;
-            margin: 10px auto;
-            background-color: rgba(255, 255, 255, 0.9);
-            width: 100%;
-            animation: colorChangeBorder 5s infinite;
-        }
-        
-        @keyframes colorChangeBorder {
-            0% { border-color: #ff0000; }
-            33% { border-color: #00ff00; }
-            66% { border-color: #0000ff; }
-            100% { border-color: #ff0000; }
-        }
-        
-        td {
-            vertical-align: top;
-            padding: 15px;
-            border: 3px dashed #000000;
-            font-family: 'Verdana', sans-serif;
-        }
-        
-        .ascii-art {
-            font-family: 'Courier New', monospace;
-            color: #ff0000;
-            text-align: center;
-            font-size: 0.8em;
-            line-height: 1;
-            margin: 20px 0;
-            text-shadow: 0 0 8px #00ffff;
-            white-space: pre;
-            animation: glitch 0.8s linear infinite;
-            background: rgba(255, 255, 255, 0.85);
-            padding: 10px;
-            border: 2px solid #000000;
-            display: inline-block;
-        }
-        
-        .com-text {
-            font-family: 'Courier New', monospace;
-            color: #ff0000;
-            font-size: 2.4em; /* larger flashing .com */
-            animation: blink 1s infinite;
-            margin-left: 14px;
-            vertical-align: middle;
-        }
-        @media (max-width: 900px) {
-            .tab-menu {
-                grid-template-columns: repeat(2, 1fr);
-                width: 100%;
-            }
-            .tab-button {
-                font-size: 1.1em;
-                padding: 12px 16px;
-            }
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            margin: 0;
         }
 
-        .alien-img { width: 260px; border: 3px solid #006600; padding: 6px; background:#ffffff; display:block; margin:0; }
-        
-        @keyframes glitch {
-            2%, 64% { transform: translate(2px, 0) skew(0deg); }
-            4%, 60% { transform: translate(-2px, 0) skew(0deg); }
-            62% { transform: translate(0, 0) skew(5deg); }
-        }
-        
-        .pixel-font {
-            font-family: 'Courier New', monospace;
-            font-size: 1.4em;
-        }
-        
-        .random-image {
-            border: 5px ridge #00ff00;
-            margin: 10px;
-            max-width: 100%;
-        }
-        
-        a {
-            color: #ff0000;
-            text-decoration: none;
-            font-family: 'Verdana', sans-serif;
-        }
-        
-        a:hover {
-            color: #0000ff;
-            text-decoration: underline overline;
-        }
-        
-        .hit-counter {
-            border: 2px solid #ff0000;
-            padding: 5px;
-            display: inline-block;
-            margin-top: 20px;
-            background-color: #ffffff;
-            font-family: 'Courier New', monospace;
-        }
-
-        /* Large Impact-style eaten counter (updates live) */
-        .eaten-counter {
-            font-family: 'Impact', 'Arial Black', sans-serif;
-            font-size: 2.6em;
-            color: #00ff00;
-            text-shadow: 0 0 6px #000000;
-            display: inline-block;
-            margin-left: 12px;
-            vertical-align: middle;
-        }
-        
-        .floating {
-            animation: float 3s infinite ease-in-out;
-        }
-        
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(0px); }
-        }
-        
-        .incoherent {
-            font-size: 1em;
-            line-height: 1.4;
-            margin: 5px 0;
-            color: #000099;
-            text-shadow: 0 0 2px #ffffff;
-            transition: color 0.3s ease;
-            font-family: 'Verdana', sans-serif;
-        }
-        
-        .incoherent:hover {
-            color: #ff00ff;
-        }
-        
-        .highlight-text {
-            font-family: 'Impact', sans-serif;
-            font-size: 1.2em;
-            color: #00ff00;
-            text-shadow: 0 0 5px #000000;
-        }
-        
-        .star-car {
-            width: 200px;
-            height: 200px;
-            background: repeating-linear-gradient(
-                45deg,
-                #0000ff,
-                #0000ff 10px,
-                #ffffff 10px,
-                #ffffff 20px
-            );
-            margin: 20px auto;
-            border: 5px solid #ff0000;
-            position: relative;
-            transform-style: preserve-3d;
-            animation: rotate3d 6s infinite linear;
-        }
-        
-        .star-car:after {
-            content: "STAR CAR";
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: #ffffff;
-            font-weight: bold;
-            text-shadow: 2px 2px 0 #000000;
-            font-family: 'Arial Black', sans-serif;
-        }
-        
-        .guestbook {
-            background-color: #00ff00;
-            padding: 10px;
-            border: 4px double #ff00ff;
-            margin: 10px auto;
-            width: 80%;
-        }
-        
-        .construction {
-            border: 8px ridge #0000ff;
-            padding: 5px;
-            background-color: #ffff00;
-            color: #ff0000;
-            font-weight: bold;
-            text-align: center;
-            margin: 10px 0;
-            font-family: 'Impact', sans-serif;
-            font-size: 1.5em;
-        }
-        
-        .midi-player {
-            background-color: #ffffff; /* background forced to white */
-            border: 3px dotted #0000ff;
-            padding: 5px;
-            margin: 10px auto;
-            width: 80%;
-            text-align: center;
-        }
-        
-        .section {
-            margin: 30px 0;
-            padding: 15px;
-            border: 2px solid #000000;
-            background-color: rgba(255, 255, 255, 0.8);
-        }
-        
-        .section-title {
-            color: #ffffff;
-            background: linear-gradient(90deg, #cc0000, #ff3333);
-            padding: 8px;
-            margin: 0 0 10px 0;
-            font-family: 'Arial Black', sans-serif;
-            font-size: 2em;
-        }
-        
-        .neon-text {
-            animation: neonGlow 2s infinite alternate;
-            text-shadow: 0 0 10px #00ff00, 0 0 20px #ff00ff;
-        }
-        
-        @keyframes neonGlow {
-            0% { color: #ff00ff; text-shadow: 0 0 10px #00ff00, 0 0 20px #ff00ff; }
-            100% { color: #00ff00; text-shadow: 0 0 10px #ff00ff, 0 0 20px #00ff00; }
-        }
-        
-        .random-image-placement {
-            position: absolute;
-            z-index: 2;
-            border: 3px solid #0000ff;
-            max-width: 150px;
-            height: auto;
-            cursor: pointer;
-        }
-        
-        .popup-window {
-            position: fixed;
-            z-index: 1000;
-            background-color: #00ff00;
-            border: 5px ridge #ffff00;
-            padding: 10px;
-            box-shadow: 0 0 20px #0000ff;
-            animation: popup 2s forwards;
-        }
-        
-        @keyframes popup {
-            0% { opacity: 0; transform: scale(0.5); }
-            20% { opacity: 1; transform: scale(1); }
-            80% { opacity: 1; transform: scale(1); }
-            100% { opacity: 0; transform: scale(0.5); }
-        }
-        
-        .popup-image {
-            max-width: 200px;
-            max-height: 200px;
-            border: 2px solid #ff00ff;
-        }
-        
-        .popup-quote {
-            color: #ffff00;
-            font-size: 1.3em;
-            text-align: center;
-            padding: 10px;
-            background-color: #0000ff;
-            border: 2px dashed #ff0000;
-            font-family: 'Impact', sans-serif;
-        }
-        
-        .webring {
-            border: 3px solid #0000ff;
-            padding: 5px;
-            margin: 10px;
-            background-color: #ffffff;
-            text-align: center;
-            font-family: 'Verdana', sans-serif;
-        }
-        
-        .large-text {
-            font-size: 3em;
-            color: #ff0000;
-            font-weight: bold;
-            text-align: center;
-            margin: 20px 0;
-            font-family: 'Impact', sans-serif;
-        }
-        
-        .merch-text {
-            display: inline-block;
-            font-size: 1.5em;
-            color: #ff00ff;
-            font-weight: bold;
-            animation: pulse 1.2s infinite;
-            margin: 0 20px;
-            font-family: 'Arial Black', sans-serif;
-        }
-
-        .merch-row {
+        .page-header {
+            flex: 0 0 var(--header-height);
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 24px;
-            text-align: center;
-            flex-wrap: wrap;
-        }
-        
-        .merch-arrow {
-            color: #ff0000;
-            animation: flashArrow 0.5s infinite;
-            font-size: 1.8em;
-        }
-        
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.15); }
-            100% { transform: scale(1); }
-        }
-        
-        @keyframes flashArrow {
-            0% { opacity: 1; }
-            50% { opacity: 0.3; }
-            100% { opacity: 1; }
-        }
-        
-        .merch-image-container {
-            position: relative;
-            display: inline-block;
-            z-index: 1;
-            text-align: center;
-        }
-        
-        .merch-image {
-            max-width: 300px;
-            border: 5px solid #0000ff;
-            display: block;
-            margin: 0 auto;
-        }
-        
-        .merch-circle {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            /* size will be clamped relative to the merch image to keep it centered */
-            width: 320px;
-            height: 320px;
-            border: 10px solid #ff0000; /* doubled thickness */
-            border-radius: 50%;
-            animation: blinkBorder 0.8s infinite;
-            z-index: 2;
-            pointer-events: none;
+            padding: 0 var(--side-margin);
+            box-sizing: border-box;
         }
 
-        /* Ensure the merch-circle scales down on small merch images and doesn't push layout */
-        .merch-image-container a .merch-circle {
-            /* match circle to image size with a max cap */
-            width: calc(min(320px, 1.15 * var(--merch-image-width, 300px)));
-            height: calc(min(320px, 1.15 * var(--merch-image-width, 300px)));
-        }
-
-        .merch-arrow-gif {
-            position: relative;
-            z-index: 3;
-            width: 56px;
-            margin-left: 10px;
-            vertical-align: middle;
-            pointer-events: none;
-        }
-        
-        .merch-link {
-            display: inline-block;
-            position: relative;
-        }
-
-        @keyframes blinkBorder {
-            0% { border-color: #ff0000; }
-            50% { border-color: transparent; }
-            100% { border-color: #ff0000; }
-        }
-        
-        .sparkle {
-            position: absolute;
-            z-index: 3;
-            width: 80px;
-            height: 80px;
-            pointer-events: none;
-            animation: float 4s infinite ease-in-out, scaleSparkle 2s infinite alternate;
-        }
-
-        /* Web1 banner styles */
-        .web1-banner {
-            text-align: center;
-            margin: 12px 0 20px 0;
-        }
-
-        /* Mode toggle button */
-
-        /* Strip most text effects while in boring mode: remove text-shadow, neon glow and blinking for plain readability.
-           Allow bold (<b>), italic (<i>) and underline (<u>) to remain as semantic emphasis. */
-        .boring-mode .ascii-art, .boring-mode .large-text, .boring-mode .incoherent, .boring-mode .section-title, .boring-mode .highlight-text, .boring-mode marquee {
-            text-shadow: none !important;
-            color: #000000 !important;
-            background: transparent !important;
-            animation: none !important;
-        }
-        /* General stripping of decorative typography in boring-mode */
-        .boring-mode * {
-            text-shadow: none !important;
-            letter-spacing: normal !important;
-            font-family: Arial, Helvetica, sans-serif !important;
-        }
-        /* Preserve typographic emphasis for bold/italic/underline */
-        .boring-mode b, .boring-mode strong { font-weight: bold !important; }
-        .boring-mode i, .boring-mode em { font-style: italic !important; }
-        .boring-mode u { text-decoration: underline !important; }
-
-        /* Hide merch circle and merch CTA text in boring mode */
-        .boring-mode .merch-circle,
-        .boring-mode .merch-text { display: none !important; }
-
-        /* Hide the eaten counter in boring mode (matches JS id "eatenCount") */
-        .boring-mode #eatenCount,
-        .boring-mode .eaten-counter { display: none !important; }
-
-        .web1-banner {
-            text-align: center;
-            margin: 12px 0 20px;
-        }
-
-        .web1-banner img {
-            display: inline-block;
-            margin: 0 10px;
-            vertical-align: middle;
-            width: 140px;
-            height: auto;
-            border: 3px solid #000000;
-            background: #ffffff;
-            padding: 6px;
-        }
-
-        .starcar-wrap {
-            position: relative;
-            display: block;
+        .page-header img {
+            max-height: calc(var(--header-height) * 5 / 7);
+            width: auto;
             max-width: 100%;
-        }
-
-        .starcar-wrap img.star-sparkle {
-            position: absolute;
-            width: 64px;
-            pointer-events: none;
-            transform: translate(-50%, -50%);
-        }
-        
-        @keyframes scaleSparkle {
-            0% { transform: scale(1); }
-            100% { transform: scale(1.2); }
-        }
-
-        .inline-banner-ad {
-            text-align: center;
-            margin: 18px auto;
-            width: 100%;
             display: block;
+        }
+
+        .bottom-block {
+            flex: 1 1 auto;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .image-strip {
             position: relative;
-            z-index: 500;
+            display: flex;
+            align-items: stretch;
+            justify-content: center;
+            box-sizing: border-box;
+            width: 100%;
+            max-width: 100vw;
+            height: min(
+                90vh,
+                calc(((100vw - (2 * var(--side-margin))) / 3) * 1.7142857143),
+                calc(100vh - var(--header-height))
+            );
         }
 
-        .inline-banner-ad a { display: inline-block; }
-
-        .inline-banner-ad img.banner-ad-img {
-            max-width: 1196px;
+        .image-strip__top-line {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
-            height: auto;
-            border: 4px solid #000000;
-            box-shadow: 0 6px 12px rgba(0,0,0,0.25);
-            background: #ffffff;
+            height: 1px;
+            background: #fff;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        .image-strip__side {
+            position: relative;
+            flex: 1 1 var(--side-margin);
+            min-width: var(--side-margin);
+            height: 100%;
+            background-image: url("images/background.png");
+            background-repeat: no-repeat;
+            background-size: 100vw 100%;
+            z-index: 0;
+        }
+
+        .image-strip__side--left {
+            background-position: left center;
+        }
+
+        .image-strip__side--right {
+            background-position: right center;
+        }
+
+        .image-strip__cards {
+            position: relative;
+            flex: 0 0 auto;
+            display: inline-flex;
+            align-items: stretch;
+            z-index: 1;
+        }
+
+        .insta-link {
+            position: absolute;
+            top: calc(-1 * var(--header-height) / 2);
+            left: 0;
+            transform: translate(-50%, -50%);
+            display: block;
+            height: var(--insta-size);
+            z-index: 6;
+        }
+
+        .insta-link img {
+            display: block;
+            height: 100%;
+            width: auto;
+        }
+
+        .image-card {
+            position: relative;
+            flex: 0 1 auto;
+            height: 100%;
+            display: inline-flex;
+            align-items: stretch;
+            text-decoration: none;
+            color: inherit;
+            cursor: pointer;
+            z-index: 1;
+        }
+
+        .image-card + .image-card {
+            margin-left: -1px;
+        }
+
+        .image-card img {
             display: block;
         }
 
-        @media (max-width: 900px) {
-            .inline-banner-ad img.banner-ad-img { width: 98%; max-width: 624px; }
+        .image-card .base-image {
+            height: 100%;
+            width: auto;
+            border: 1px solid #fff;
+            box-sizing: border-box;
         }
 
-        @media (max-width: 600px) {
-            .web1-banner img { width: 96px; margin: 0 6px; }
-            .sparkle { width: 48px; height: 48px; }
-            .starcar-wrap img.star-sparkle { width: 40px; }
-            .merch-image { max-width: 200px; }
-            .merch-arrow-gif { width: 44px; }
+        .image-card .text-overlay,
+        .image-card .hover-overlay {
+            position: absolute;
+            inset: 0;
+            height: 100%;
+            width: 100%;
+            object-fit: contain;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .image-card .text-overlay {
+            opacity: 1;
+            transition: opacity 120ms ease-in-out;
+        }
+
+        .image-card .hover-overlay {
+            opacity: 0;
+            transition: opacity 150ms ease-in-out;
+            z-index: 3;
+        }
+
+        .image-card:hover .hover-overlay {
+            opacity: 1;
+        }
+
+        .image-card:hover .text-overlay {
+            opacity: 0;
         }
     </style>
 </head>
 <body>
-    <!-- Left and right sidebar ads (will be positioned into page gutters via JS) -->
-    <div id="left-ads" aria-hidden="false">
-    <a href="https://store.3hollis.com"><img src="/images/ad1.gif" alt="Ad 1" class="side-ad"></a>
-    <a href="https://store.3hollis.com"><img src="/images/ad2.gif" alt="Ad 2" class="side-ad"></a>
-    <a href="https://store.3hollis.com"><img src="/images/ad3.gif" alt="Ad 3" class="side-ad"></a>
-    </div>
-    <div id="right-ads" aria-hidden="false">
-    <a href="https://store.3hollis.com"><img src="/images/ad1.gif" alt="Ad 1" class="side-ad"></a>
-    <a href="https://store.3hollis.com"><img src="/images/ad2.gif" alt="Ad 2" class="side-ad"></a>
-    <a href="https://store.3hollis.com"><img src="/images/ad3.gif" alt="Ad 3" class="side-ad"></a>
-    </div>
-
-    <div class="header-band">
-        <button id="modeToggle" class="mode-toggle" aria-pressed="false">awesome mode: on :3</button>
-        <div class="header-main">
-            <img src="/images/banner.jpg" alt="3HOLLIS Banner" class="header-banner">
-            <div class="disclaimer">not affiliated with or endorsed by 2hollis i"m not sure who that is? this is 3hollis, anyways if you need help <a href="mailto:support@3hollis.com" style="color:#0000ee;text-decoration:underline;font-style:italic;">support@3hollis.com</a></div>
-        </div>
-        <div class="header-spacer" aria-hidden="true"></div>
-    </div>
-
-    <div class="container">
-
-        <!-- Multicolored tab menu -->
-        <nav class="tab-menu" aria-label="Primary">
-            <a class="tab-button home-tab active" href="/">Home</a>
-            <a class="tab-button store-tab" href="https://store.3hollis.com">Store</a>
-            <a class="tab-button about-tab" href="/about/">About</a>
-            <a class="tab-button contact-tab" href="https://store.3hollis.com/contact-us">Contact</a>
-        </nav>
-
-        <!-- Web1 GIF banner removed per user request -->
-
-        <!-- Unofficial Merch Section -->
-        <div class="section">
-            <h2 class="section-title neon-text">UNOFFICIAL MERCH</h2>
-            <h3 style="text-align: center; color: #000000; font-family: 'Arial Black', sans-serif; font-size: 1.6em;">you paid 50 for a gildan tee with &lt;2 on it</h3>
-            <div class="merch-row">
-                <span class="merch-text">CLICK TO BUY <span class="merch-arrow">&gt;&gt;&gt;</span></span>
-                <div class="merch-image-container">
-                    <a href="https://store.3hollis.com" class="merch-link">
-                        <img src="images/merch.webp" alt="Merch Tee" class="merch-image">
-                        <div class="merch-circle"></div>
-                    </a>
-                    <img src="images/arrowspin.gif" alt="Buy Arrow" class="merch-arrow-gif">
-                </div>
-                <span class="merch-text"><span class="merch-arrow">&lt;&lt;&lt;</span> CLICK TO BUY</span>
+    <header class="page-header">
+        <img src="images/headerimage.png" alt="3HOLLIS header">
+    </header>
+    <main class="bottom-block">
+        <div class="image-strip">
+            <span class="image-strip__top-line" aria-hidden="true"></span>
+            <div class="image-strip__side image-strip__side--left"></div>
+            <div class="image-strip__cards">
+                <a class="image-card" href="https://couture.3hollis.com/">
+                    <img class="base-image" src="images/couturebackground.png" alt="Couture background">
+                    <img class="text-overlay" src="images/couturetext.png" alt="" aria-hidden="true">
+                    <img class="hover-overlay" src="images/coutureoverlay.png" alt="" aria-hidden="true">
+                </a>
+                <a class="image-card" href="https://spo.3hollis.com/">
+                    <img class="base-image" src="images/spobackground.png" alt="Spo background">
+                    <img class="text-overlay" src="images/spotext.png" alt="" aria-hidden="true">
+                    <img class="hover-overlay" src="images/spooverlay.png" alt="" aria-hidden="true">
+                </a>
+                <a class="image-card" href="https://elite.3hollis.com/">
+                    <img class="base-image" src="images/elitebackground.png" alt="Elite background">
+                    <img class="text-overlay" src="images/elitetext.png" alt="" aria-hidden="true">
+                    <img class="hover-overlay" src="images/eliteoverlay.png" alt="" aria-hidden="true">
+                </a>
             </div>
-            <p class="incoherent">hollister cropped boxy tee <span class="highlight-text">100% cotton</span> super soft so cozy wow and its heavy quality not that thin gildan garbage DTG printing looks good lasts 4ever</p>
-        </div>
-        
-    <!-- Random Large Text (updated per request) -->
-    <div class="large-text" id="rommulusText">is rommulas still in boylife?: <img src="images/checkmark.gif" id="rommulasCheck" alt="check"></div>
-        
-        <!-- Multiple animated elements removed (use Web1 banner above for GIFs) -->
-        
-        <!-- Multiple marquees -->
-        <marquee behavior="scroll" direction="left" scrollamount="15">*** FLASHY AND FREAKY *** EXPERIMENTAL SOUNDS *** VISUALLY STIMULATING ***</marquee>
-        <marquee behavior="alternate" direction="right" scrollamount="20">UNDER CONSTRUCTION *** VISITORS SINCE 1997: <span id="hitCount">00001</span> ***</marquee>
-        
-        <!-- Webring -->
-        <div class="webring">
-            <a href="#">&lt;&lt; PREV 5</a> | 
-            <a href="#">3HOLLIS WEBRING</a> | 
-            <a href="#">NEXT 5 &gt;&gt;</a>
-        </div>
-        
-        <!-- Main content table -->
-        <table cellspacing="10" cellpadding="10">
-            <tr>
-                <td width="50%">
-                    <!-- Left Column: Bio -->
-                    <h2 class="section-title neon-text">ABOUT 3HOLLIS</h2>
-                    <p class="incoherent">3hollis is the future that 2hollis predicted in his track <span class="highlight-text">"White Tiger"</span> when he said <span class="highlight-text">"I'm from the future, I seen it all"</span> but multiplied by three because three is a magic number and 3hollis is all about magic and numbers especially the number <span class="highlight-text">3</span> which appears everywhere in the music like in "333" which is obviously about the 3hollis frequency which vibrates at 333hz which is the frequency of transformation and ascension which is what happens when you listen to 3hollis on repeat while staring at a spinning star gif which is why this website has so many spinning gifs because they're portals to the 3hollis dimension where time doesn't exist and music is liquid and emotions are colors and everything is connected through hidden patterns that only reveal themselves when you're in the right state of mind which 3hollis induces through sonic manipulation that rewires your neural pathways to be more receptive to higher dimensions where the real 3hollis exists as a pure energy being that occasionally manifests in our reality through speakers and headphones but mostly through the internet which is why this website is so important because it's a direct line to the source the fountain of 3hollis energy that flows through the digital realm like electricity through wires but more spiritual and less dangerous unless you count the danger of having your mind expanded beyond its previous limits which can be scary but also exhilarating like riding a roller coaster made of sound waves that go up and down and sideways simultaneously which is what 3hollis music feels like especially tracks like <span class="highlight-text">"White Tiger" and "333"</span> which reference the 2hollis mythology but take it to the next level which is level 3 obviously because 3 is greater than 2 just like 3hollis is greater than 2hollis but not really because they're the same person just different versions from different timelines that converged in 2023 to create the ultimate musical entity that transcends genre and time and space itself which is why this text is getting longer and longer because 3hollis cannot be contained by conventional paragraph structures or logical sentence flow because 3hollis is about breaking boundaries and pushing limits especially the limits of language which is why the lyrics are often cryptic and open to interpretation like poetry but with more bass and less punctuation which is how this paragraph is written as a tribute to the 3hollis aesthetic which values feeling over meaning and experience over explanation because some things cannot be explained they can only be felt and 3hollis is one of those things like love or deja vu or the sensation of falling when you're actually standing still which is what happens when you listen to 3hollis with your eyes closed and your mind open to the possibilities of what music can be when it's not constrained by commercial expectations or genre classifications because 3hollis exists outside of all categories in a realm of pure creativity where every sound is a color and every silence is a canvas waiting to be painted with frequencies that heal and transform and transport you to places you've never been but always wanted to go like the future or the past or a parallel dimension where 2hollis never stopped making music but evolved into 3hollis through a process of alchemical transformation that turned lead into gold and pain into beauty and noise into harmony which is what 3hollis does with every track takes the raw materials of sound and emotion and forges them into something new and unprecedented that sounds like nothing you've ever heard but everything you've ever felt especially if you've ever felt lost or confused or out of place because 3hollis is for the outsiders the misfits the people who don't fit in anywhere but everywhere at once which is a paradox but 3hollis loves paradoxes because they're doors to higher understanding that can only be opened with the right key which is 3hollis music obviously</p>
-                </td>
-                <td width="50%">
-                    <!-- Right Column: Random Image Container -->
-                    <h2 class="section-title">RANDOM 3HOLLIS IMAGE ZONE</h2>
-                    <div id="randomImageContainer" style="text-align: center;">
-                        <!-- Image will be loaded here by JavaScript -->
-                    </div>
-                    <p style="text-align: center;"><a href="javascript:void(0);" onclick="loadRandomImage()">[ CLICK 4 NEW IMAGE ]</a></p>
-                    
-                    <!-- Star car section -->
-                    <h2 class="section-title neon-text">WHAT IF STAR WAS A CAR STAR CAR</h2>
-                    <div class="starcar-wrap">
-                        <img src="images/starcar.jpg" alt="Star Car" style="display:block;max-width:100%;margin:0 auto 10px auto;border:5px solid #ff0000;">
-                        <img src="images/2hollis-hollis.gif" alt="2hollis rotating" class="rotate" style="position:absolute;top:8%;right:6%;width:96px;border-color:#ff0000;">
-                    </div>
-                    <p class="incoherent">This is a conceptual representation of what 2hollis meant when he said <span class="highlight-text">"I'm a star, I'm a car"</span> in that one track that nobody can find anymore because it was deleted from the internet but exists in the collective unconscious of 3hollis fans who remember everything even things that never happened which is a common side effect of listening to too much 3hollis your memory gets rewired to include alternate timelines where 2hollis never disappeared but transformed into 3hollis through a process of cosmic evolution that involved star energy and car metaphors because stars represent destiny and cars represent movement and 3hollis is all about moving toward your destiny at high speed with the windows down and the music loud which is why this star car is important because it symbolizes the journey that 3hollis is taking us on a journey through sound and space and time that has no final destination because the journey itself is the destination and the music is the vehicle but the vehicle is also a star which is a celestial body that emits light and heat and energy just like 3hollis emits sonic vibrations that illuminate the darkness and warm the soul and power the transformation from 2 to 3 which is the most important transformation in the history of music maybe</p>
-                </td>
-            </tr>
-        </table>
-        
-        <!-- 2hollis lyrics section -->
-        <div class="section">
-            <h2 class="section-title">2HOLLIS LYRICS & REFERENCES</h2>
-            <p class="incoherent"><span class="highlight-text">"White Tiger"</span> references the mystical animal that guides 2hollis through the spiritual realm but in 3hollis mythology the white tiger becomes a three-headed tiger that represents the past present and future all existing simultaneously in the 3hollis timeline where time is not linear but circular like a wheel that keeps turning but never arrives because arrival implies an ending and 3hollis has no endings only new beginnings that are also continuations of what came before but different because everything evolves especially music and especially 2hollis who evolved into 3hollis through a process that involved <span class="highlight-text">"synthesizers from the future"</span> and <span class="highlight-text">"drums from the past"</span> and <span class="highlight-text">"vocals from the void"</span> which is where all true creativity comes from according to 2hollis philosophy which 3hollis has expanded to include multiple dimensions and alternate realities where every possible version of every song exists simultaneously and we only hear the ones that resonate with our frequency which is why different people hear different things in 3hollis music because it's tailored to each listener's soul signature which is unique like a fingerprint but sonic instead of physical which is why you can't copy 3hollis you can only experience it and even then the experience is different every time because you're different every time you listen because time changes everything except 3hollis which exists outside of time in the eternal now where 2hollis and 3hollis are the same entity expressing itself through different numerical values but the essence is the same the core is the same the vision is the same just expanded multiplied intensified because 3 is more than 2 mathematically and spiritually and musically which is why 3hollis sounds like 2hollis but more everything more bass more treble more emotion more complexity more simplicity more everything and less nothing because nothing doesn't exist in the 3hollis universe there is only something and that something is constantly evolving becoming more itself with each iteration which is why we need a new number every few years to represent the new level of consciousness that the music has achieved first 2 then 3 soon maybe 4 or 5 or infinity because the evolution never stops it only accelerates like a car that is also a star racing through the cosmos at the speed of light which is also the speed of sound in the 3hollis dimension where physics works differently because emotions affect reality and 3hollis emotions are so powerful they bend space and time to create new possibilities for expression and connection and transformation which is the ultimate goal of all art but especially 3hollis art which is more than art it's a way of life a philosophy a religion a science a mystery that can never be solved only experienced and the experience is different for everyone but always profound always life-changing always moving always still always loud always quiet always everything and its opposite because 3hollis contains multitudes like Whitman but with better production values and more references to anime and video games which are the mythology of our time just like 3hollis is the music of our time and all times simultaneously</p>
-        </div>
-        
-        <!-- Guestbook section -->
-        <div class="guestbook">
-            <!-- Moved ASCII art with larger .com flashing text -->
-            <div style="text-align:center;margin-bottom:8px;">
-                <div class="ascii-art" style="display:inline-block;">
- /$$$$$$  /$$   /$$  /$$$$$$  /$$       /$$       /$$$$$$  /$$$$$$ 
- /$$__  $$| $$  | $$ /$$__  $$| $$      | $$      |_  $$_/ /$$__  $$
-|__/  \ $$| $$  | $$| $$  \ $$| $$      | $$        | $$  | $$  \__/
- /$$$$$/| $$$$$$$$| $$  | $$| $$      | $$        | $$  |  $$$$$$
- |___  $$| $$__  $$| $$  | $$| $$      | $$        | $$   \____  $$
- /$$  \ $$| $$  | $$| $$  | $$| $$      | $$        | $$   /$$  \ $$
-|  $$$$$$/| $$  | $$|  $$$$$$/| $$$$$$$$| $$$$$$$$ /$$$$$$|  $$$$$$/
- \______/ |__/  |__/ \______/ |________/|________/|______/ \______/ 
-                </div>
-                <span class="com-text">.com</span>
-            </div>
-            <h2 class="section-title neon-text">OFFICIAL GUESTBOOK</h2>
-            <p class="incoherent">SIGN HERE IF U LIKE 3HOLLIS OR EVEN IF U DON'T BUT U SHOULD LIKE 3HOLLIS BECAUSE 3HOLLIS IS THE <span class="highlight-text">FUTURE OF MUSIC</span> WHICH IS ALSO THE PAST OF MUSIC BUT IN REVERSE LIKE A PALINDROME BUT SOUNDBASED</p>
-            <div style="text-align:center;margin-bottom:8px;">
-                <img src="images/m2-res_480p.gif" alt="guestbook gif" style="width:120px;border:3px solid #000000;background:#ffffff;padding:4px;">
-            </div>
-            <form style="text-align: center;">
-                <input type="text" placeholder="YOUR NAME" style="background-color: #ffffff; color: #000000; border: 1px solid #ff0000; width: 90%; margin: 5px; font-family: 'Verdana', sans-serif;"><br>
-                <textarea placeholder="YOUR MESSAGE" style="background-color: #ffffff; color: #000000; border: 1px solid #ff0000; width: 90%; height: 100px; margin: 5px; font-family: 'Verdana', sans-serif;"></textarea><br>
-                <input type="submit" value="SIGN GUESTBOOK" style="background-color: #ff00ff; color: #000000; border: 2px outset #ff00ff; font-weight: bold; font-family: 'Arial Black', sans-serif;">
-            </form>
-        </div>
-        
-        <!-- MIDI player -->
-        <div class="midi-player">
-            <h3 class="section-title">3HOLLIS MIDI PLAYER</h3>
-            <p class="incoherent">THIS DOESN'T ACTUALLY PLAY MUSIC BUT IMAGINE IT DOES AND THE MUSIC IS <span class="highlight-text">BETTER THAN ANYTHING YOU'VE EVER HEARD</span></p>
-            <img src="images/2hollis-hollis.png" alt="Play button" style="cursor: pointer; width:64px; vertical-align:middle;" onclick="alert('IMAGINARY 3HOLLIS TRACK PLAYING... PRETEND YOU CAN HEAR IT')">
-            <img src="images/mp3.gif" alt="Web 1.0 MP3 Icon" style="width:64px;vertical-align:middle;margin-left:8px;">
-            <span style="color: #ffff00; font-family: 'Impact', sans-serif;">PLAY</span>
-        </div>
-        
-        <!-- More incoherent ramblings -->
-        <div class="section">
-            <h2 class="section-title neon-text">MORE 3HOLLIS THOUGHTS</h2>
-            <p class="incoherent">3hollis isn't just music it's a lifestyle a way of seeing the world through distorted lenses that make everything more interesting like when you look through a kaleidoscope but for your ears except ears can't look but you know what I mean unless you don't in which case you need to listen to more 3hollis until your brain rewires itself to understand <span class="highlight-text">synesthesia</span> which is when you see sounds and hear colors which is what happens when you achieve 3hollis enlightenment which is the ultimate goal of this website and also of life probably but I'm just a website so what do I know except everything because websites have access to all information but only if they're connected to the internet which this one is but also isn't because it exists in a liminal space between connected and disconnected which is where 3hollis music lives in the gaps between notes and the silence between tracks which is just as important as the music itself because silence is the canvas on which sound is painted and 3hollis uses negative space like a master painter except with frequencies instead of pigments but both are vibrations when you get down to it because everything is vibrations according to quantum physics which 3hollis studied extensively before abandoning conventional knowledge in favor of intuitive creation which is why the music feels both calculated and spontaneous like a <span class="highlight-text">carefully planned accident</span> or a random pattern that reveals itself to be intentional upon closer inspection which is what this website is a random pattern that seems chaotic but actually follows the hidden logic of 3hollis aesthetics which prioritize feeling over understanding because understanding is limited by language but feeling transcends language and enters the realm of pure experience which is where 3hollis wants to take you on a journey through sound and light and text that never ends but just keeps going like this sentence which is now a run-on sentence but run-on sentences are underrated because they mimic the flow of consciousness which doesn't have punctuation it just has ideas connected by associations which is how 3hollis constructs tracks through associative logic rather than linear narrative which is why you can listen to them in any order and still get something different out of them each time because the meaning isn't fixed it's fluid like water or time or website layouts that use absolute positioning for no apparent reason except that it looks cool and confusing which is the 3hollis brand aesthetic in a nutshell cool and confusing like a dream you can't quite remember but know was important somehow</p>
-        </div>
-
-        <!-- Aliens section -->
-        <div class="section" style="background-color: #d8ffd8; border-color: #00aa00;">
-            <h2 class="section-title" style="background: linear-gradient(90deg,#00aa00,#66ff66);">ALIEN THOUGHTS</h2>
-            <div style="display:flex;align-items:flex-start;gap:18px;flex-wrap:wrap;">
-                <div style="flex:0 0 260px; text-align:center;">
-                    <img src="images/alien.png" alt="alien" class="alien-img">
-                </div>
-                <div style="flex:1; min-width:200px;">
-                    <p class="incoherent" style="color:#004400; margin:0;">gleeb gleeb vorp ouwawaeaw</p>
-                </div>
+            <div class="image-strip__side image-strip__side--right">
+                <a class="insta-link" href="https://www.instagram.com/ashcordisco/">
+                    <img src="images/insta.png" alt="Ash Cordisco on Instagram">
+                </a>
             </div>
         </div>
-        
-        <!-- Eaten counter (now above the visitor counter) -->
-        <div style="text-align:center; width:100%;">
-            <!-- Eaten Counter (live, updated when floating images are removed) -->
-            <div style="margin-bottom:10px;">
-                <span class="eaten-counter">3HOLLISES EATEN: <span id="eatenCount">0</span></span>
-            </div>
-            <!-- Visitor Counter -->
-            <div class="hit-counter" style="text-align: center; width: 100%;">
-                <img src="images/2hollis-2hollis-twt.gif" alt="counter"> 
-                <img src="images/counter2.gif" alt="Web 1.0 Counter" style="width:96px;vertical-align:middle;margin-left:6px;"> 
-                <span class="pixel-font">VISITORS: <span id="hitCount2">00001</span></span>
-            </div>
-        </div>
-    </div>
-
-    <script src="/scripts/shared.js"></script>
-    <script>
-        // Array of 3hollis image URLs
-        const imageUrls = [
-            'images/1405971.avif',
-            'images/2bef21db38f8a9589083a81c996223a8.jpg',
-            'images/2hollis-2.gif',
-            'images/2hollis-2hollis-side-eye.gif',
-            'images/2hollis-2hollis-twt.gif',
-            'images/2hollis-hollis (1).gif',
-            'images/2hollis-hollis (1).png',
-            'images/2hollis-hollis.gif',
-            'images/2hollis-hollis.png',
-            'images/2hollis-love.gif',
-            'images/2hollis-natesib.gif',
-            'images/2hollis-running.gif',
-            'images/2hollis-water-bottle.gif',
-            'images/2hollis.webp',
-            'images/619d2cb970d50eca1e4fb3e6ea57d930.jpg',
-            'images/Hollis-8.webp',
-            'images/ab6761610000517472fc776152db631108cea265.jpeg',
-            'images/ab6761610000e5eb18485167774ff4a73bd2b0bd.jpeg',
-            'images/hq720.jpg',
-            'images/im-salivating-wtf-v0-vw5lmbbt7zje1.webp',
-            'images/it04zbfig4ce1.gif',
-            'images/m2-res_480p.gif',
-            'images/missu2-2hollis.gif',
-            'images/song-hes-listening-to-v0-cXFlaTJrNHVldWxkMTKVcIrdMKDfkcOeIURb-5qfOrDhlg72Zgc33ZTKOI8g.webp',
-            'images/tea7car-2hollis.gif'
-        ];
-        
-        // Array of quotes
-        const quotes = [
-            "I'm from the future, I seen it all",
-            "White tiger guiding me through the spiritual realm",
-            "333 is the frequency of transformation",
-            "Synthesizers from the future, drums from the past",
-            "I'm a star, I'm a car",
-            "The void is where true creativity comes from",
-            "Music is liquid, emotions are colors",
-            "3 is greater than 2 mathematically and spiritually",
-            "Breaking boundaries, pushing limits",
-            "The journey is the destination",
-            "Sound waves that go up and down and sideways simultaneously",
-            "A carefully planned accident",
-            "The 3hollis dimension where time doesn't exist",
-            "Portals to higher understanding",
-            "Sonic vibrations that illuminate the darkness"
-        ];
-        
-        // Array of animated GIFs for popups
-        const gifUrls = [
-            'images/2hollis-2hollis-side-eye.gif',
-            'images/2hollis-love.gif',
-            'images/tea7car-2hollis.gif'
-        ];
-
-        // Recent popup history to avoid immediate duplicates
-        const recentPopups = [];
-        function chooseUnique(arr) {
-            if (!arr || arr.length === 0) return null;
-            let attempts = 0;
-            let candidate = null;
-            do {
-                candidate = arr[Math.floor(Math.random() * arr.length)];
-                attempts++;
-            } while (recentPopups.includes(candidate) && attempts < 12);
-            // push the chosen candidate into recent history
-            if (candidate !== null) {
-                recentPopups.push(candidate);
-                if (recentPopups.length > 12) recentPopups.shift();
-            }
-            return candidate;
-        }
-        
-        // Function to load a random image
-        function loadRandomImage() {
-            const randomIndex = Math.floor(Math.random() * imageUrls.length);
-            const selectedImageUrl = imageUrls[randomIndex];
-            
-            // Display the image in the container with random sizing and rotation
-            const randomSize = 200 + Math.floor(Math.random() * 150);
-            const randomRotation = -5 + Math.floor(Math.random() * 10);
-            
-            document.getElementById('randomImageContainer').innerHTML = 
-                `<img src="${selectedImageUrl}" alt="Random 3hollis Image" class="random-image" 
-                width="${randomSize}" height="${randomSize}" 
-                style="transform: rotate(${randomRotation}deg);">`;
-        }
-        
-        // Function to create floating random image placements (shifting around screen)
-        function placeFloatingImages() {
-            // Always clear existing floating images before deciding whether to add new ones
-            const existingImages = document.querySelectorAll('.random-image-placement');
-            existingImages.forEach(img => img.remove());
-
-            // Treat floating images like popups: never spawn them on mobile or in boring mode
-            if (window.innerWidth < 900 || document.body.classList.contains('boring-mode')) return;
-            
-            // Place 3-6 random images around the page (avoid header spam)
-            const numImages = 3 + Math.floor(Math.random() * 4);
-            
-            for (let i = 0; i < numImages; i++) {
-                const img = document.createElement('img');
-                img.className = 'random-image-placement';
-                img.src = imageUrls[Math.floor(Math.random() * imageUrls.length)];
-                img.alt = '3hollis';
-                
-                // Random position
-                const left = Math.random() * 80 + 5; // 5-85%
-                const top = 300 + Math.random() * Math.max(200, document.body.scrollHeight - 400); // Start placing well below header
-                
-                img.style.left = left + '%';
-                img.style.top = top + 'px';
-                
-                // Random rotation
-                img.style.transform = `rotate(${Math.random() * 360}deg)`;
-                // Allow clicking to remove the floating image (and track clicks for discount)
-                img.addEventListener('click', (e) => {
-                    // prevent the event from bubbling to the document-level delegated handler
-                    e.stopPropagation();
-                    img.remove();
-                    incrementRemoveCounter();
-                });
-                
-                document.body.appendChild(img);
-            }
-        }
-
-        // Delegated fallback: if any random-image-placement is clicked, remove it (and track)
-        document.addEventListener('click', function(e) {
-            const target = e.target;
-            if (target && target.classList && target.classList.contains('random-image-placement')) {
-                // ensure the element is still in the document (defensive) before removing
-                if (document.body.contains(target)) {
-                    target.remove();
-                    incrementRemoveCounter();
-                }
-            }
-        });
-
-        // Discount tracking and popup (in-memory, resets on refresh)
-        // Clear any previously persisted discount keys to ensure reset behavior
-        try { localStorage.removeItem('three33_remove_count'); localStorage.removeItem('three33_discount_shown'); } catch (e) {}
-        let removeCount = 0;
-        let discountShown = false;
-        // timestamp of last increment (ms) to avoid accidental double-counts
-        let lastIncrementAt = 0;
-        function incrementRemoveCounter() {
-            const now = Date.now();
-            if (now - lastIncrementAt < 150) {
-                // ignore duplicate/double events within 150ms window
-                return;
-            }
-            lastIncrementAt = now;
-            removeCount = (removeCount || 0) + 1;
-            // Update the visible eaten counter whenever a floating image is removed
-            updateEatenCounterDisplay();
-            // when hits 13 show popup once per page load
-            if (removeCount >= 13 && !discountShown) {
-                discountShown = true;
-                showDiscountPopup();
-            }
-        }
-
-        function showDiscountPopup() {
-            // overlay
-            const overlay = document.createElement('div');
-            overlay.id = 'discount-overlay';
-            overlay.style.position = 'fixed';
-            overlay.style.left = 0;
-            overlay.style.top = 0;
-            overlay.style.width = '100%';
-            overlay.style.height = '100%';
-            overlay.style.background = 'rgba(0,0,0,0.6)';
-            overlay.style.zIndex = 3000;
-            overlay.style.display = 'flex';
-            overlay.style.alignItems = 'center';
-            overlay.style.justifyContent = 'center';
-
-            const popup = document.createElement('div');
-            popup.className = 'discount-popup';
-            popup.style.width = '520px';
-            popup.style.maxWidth = '92%';
-            popup.style.background = '#000000';
-            popup.style.color = '#ffff00';
-            popup.style.border = '6px double #ffff00';
-            popup.style.padding = '22px';
-            popup.style.textAlign = 'center';
-            popup.style.boxShadow = '0 12px 40px rgba(0,0,0,0.8)';
-            popup.style.cursor = 'pointer';
-
-            popup.innerHTML = `
-                <div style="font-family: 'Impact', 'Arial Black', sans-serif; font-size:2em;">CONGRATS</div>
-                <div style="margin-top:12px;font-size:1.2em;">You removed 13 floating images — here's 3% off</div>
-                <div style="margin-top:14px;font-weight:bold;font-size:1.6em;">CODE: <span style='color:#00ff00'>333hollisoff</span></div>
-                <div style="margin-top:14px;font-size:1.1em;font-weight:bold;">claim now</div>
-                <div style="margin-top:18px;"><button id='close-discount' style='padding:10px 16px;font-weight:bold;font-size:1em;'>CLOSE</button></div>
-            `;
-
-            overlay.appendChild(popup);
-            document.body.appendChild(overlay);
-
-            // Only remove when the popup (or the close button) is clicked — do not auto-dismiss or close on overlay click
-            document.getElementById('close-discount').addEventListener('click', () => overlay.remove());
-            popup.addEventListener('click', () => overlay.remove());
-        }
-
-        // Update the big Impact-style eaten counter in the UI
-        function updateEatenCounterDisplay() {
-            const el = document.getElementById('eatenCount');
-            if (!el) return;
-            el.textContent = (removeCount || 0).toString();
-        }
-        
-        // Function to remove any existing sparkle GIFs (do not create new ones)
-        function placeSparkles() {
-            const existingSparkles = document.querySelectorAll('.sparkle');
-            existingSparkles.forEach(sparkle => sparkle.remove());
-            // intentionally do NOT create new sparkles
-        }
-        
-        // Function to create popup windows
-        function createPopup() {
-                    // Do not create new popups on mobile or in boring mode
-                    if (window.innerWidth < 900 || document.body.classList.contains('boring-mode')) return;
-            const type = Math.random();
-            let contentType;
-            if (type < 0.4) {
-                contentType = 'image';
-            } else if (type < 0.7) {
-                contentType = 'quote';
-            } else {
-                contentType = 'gif';
-            }
-            
-            const popup = document.createElement('div');
-            popup.className = 'popup-window';
-            
-            // Random position
-            const left = Math.random() * 70 + 10; // 10-80%
-            const top = Math.random() * 70 + 10; // 10-80%
-            
-            popup.style.left = left + '%';
-            popup.style.top = top + '%';
-            
-            if (contentType === 'image') {
-                // Image popup
-                const img = document.createElement('img');
-                img.className = 'popup-image';
-                img.src = chooseUnique(imageUrls) || imageUrls[Math.floor(Math.random() * imageUrls.length)];
-                img.alt = '3hollis';
-                // clicking the popup image should count as a removal
-                img.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    popup.remove();
-                    incrementRemoveCounter();
-                });
-                popup.appendChild(img);
-            } else if (contentType === 'quote') {
-                // Quote popup
-                const quote = document.createElement('div');
-                quote.className = 'popup-quote';
-                quote.textContent = chooseUnique(quotes) || quotes[Math.floor(Math.random() * quotes.length)];
-                popup.appendChild(quote);
-            } else {
-                // GIF popup
-                const gif = document.createElement('img');
-                gif.className = 'popup-image';
-                gif.src = chooseUnique(gifUrls) || gifUrls[Math.floor(Math.random() * gifUrls.length)];
-                gif.alt = '3hollis animation';
-                // clicking the popup gif counts as a removal
-                gif.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    popup.remove();
-                    incrementRemoveCounter();
-                });
-                popup.appendChild(gif);
-            }
-
-            // Random border color and thickness for variety
-            const colors = ['#ff0000', '#00ff00', '#0000ff', '#ff00ff', '#00ffff', '#ffff00', '#ff8800'];
-            const thickness = [2,3,4,5,6,8];
-            const color = colors[Math.floor(Math.random() * colors.length)];
-            const thick = thickness[Math.floor(Math.random() * thickness.length)];
-            popup.style.border = `${thick}px solid ${color}`;
-
-            document.body.appendChild(popup);
-            // close popup when clicked (non-image clicks)
-            popup.addEventListener('click', () => popup.remove());
-            // Remove popup after a random interval between 2s and 10s (do not count timeouts as removals)
-            const popupDuration = 2000 + Math.random() * 8000; // 2000ms to 10000ms
-            setTimeout(() => {
-                if (document.body.contains(popup)) popup.remove();
-            }, popupDuration);
-        }
-        
-        // Load a random image when the page first opens
-        window.onload = function() {
-            loadRandomImage();
-            placeRandomImages();
-            placeSparkles();
-            
-            // Simple hit counter simulation
-            let count = localStorage.getItem('hitCount');
-            if (count === null) {
-                count = 1;
-            } else {
-                count = parseInt(count) + 1;
-            }
-            localStorage.setItem('hitCount', count);
-            document.getElementById('hitCount').textContent = count.toString().padStart(5, '0');
-            document.getElementById('hitCount2').textContent = count.toString().padStart(5, '0');
-            // Initialize eaten counter display on load (reset on refresh per design)
-            updateEatenCounterDisplay();
-            // size the rommulas checkmark to match the next element's height
-            try { sizeCheckmark(); } catch(e) {}
-            
-            // Add more chaotic elements after page load
-            setTimeout(function() {
-                const newElement = document.createElement('div');
-                newElement.innerHTML = '<marquee behavior="scroll" direction="up" scrollamount="3" height="100" style="color: #0000ff; margin: 10px auto; width: 80%; font-family: \'Arial Black\', sans-serif;">NEW 3HOLLIS TRACK COMING SOON MAYBE OR MAYBE NOT WHO KNOWS NOT ME DEFINITELY NOT ME</marquee>';
-                // append the chaotic marquee to the webring area instead of body to reduce header clutter
-                const webring = document.querySelector('.webring');
-                if (webring) {
-                    webring.appendChild(newElement);
-                } else {
-                    document.body.appendChild(newElement);
-                }
-            }, 2000);
-            
-            // Create popups every 3-8 seconds
-                popupIntervalId = setInterval(createPopup, 3000 + Math.random() * 5000);
-            
-            // Reposition floating images and sparkles every 10 seconds
-            floatingImagesIntervalId = setInterval(() => {
-                placeFloatingImages();
-                placeSparkles();
-            }, 10000);
-
-            // Measure merch image width and expose as CSS variable for merch-circle sizing
-            try {
-                const merchImg = document.querySelector('.merch-image');
-                const merchContainer = document.querySelector('.merch-image-container');
-                if (merchImg && merchContainer) {
-                    const setVar = () => {
-                        const w = merchImg.offsetWidth || merchImg.naturalWidth || 300;
-                        merchContainer.style.setProperty('--merch-image-width', w + 'px');
-                    };
-                    setVar();
-                    window.addEventListener('resize', setVar);
-                }
-            } catch (e) {}
-        };
-
-    // Track interval ids so we can toggle them on/off for boring mode
-    let popupIntervalId = null;
-    let floatingImagesIntervalId = null;
-
-        // Helper to enter boring mode
-        function setBoringMode(on) {
-            const body = document.body;
-            const toggle = document.getElementById('modeToggle');
-            // Elements we will manipulate for background whitening and marquee freezing
-            const BOX_SELECTOR = ['.section','table','.guestbook','.webring','.hit-counter','.midi-player','.large-text','.alien-img','.ascii-art'];
-            // Keep state on body dataset for restoration
-            if (!body._boringState) body._boringState = { marquees: [], whitened: [] };
-            if (on) {
-                // add class to body to apply boring-mode CSS (pauses animations, hides merch CTA and eaten counter)
-                body.classList.add('boring-mode');
-                if (toggle) { toggle.classList.add('boring'); toggle.textContent = 'boring mode on :/'; toggle.setAttribute('aria-pressed','true'); }
-                // clear intervals to freeze dynamic JS behavior (popups, floating image re-placement, banner rotation)
-                if (popupIntervalId) { clearInterval(popupIntervalId); popupIntervalId = null; }
-                if (floatingImagesIntervalId) { clearInterval(floatingImagesIntervalId); floatingImagesIntervalId = null; }
-                if (bannerRotateIntervalId) { clearInterval(bannerRotateIntervalId); bannerRotateIntervalId = null; }
-                // Remove any existing popups / overlays immediately so none remain visible
-                const removePopups = () => document.querySelectorAll('.popup-window, .popup-overlay, .popup, [class*="popup"], [id*="popup"], .random-image-placement').forEach(el => { try { el.remove(); } catch(e) {} });
-                removePopups();
-                // Run a second pass after a short delay in case something was mid-insert
-                setTimeout(removePopups, 100);
-                // Do NOT remove GIFs or hide side ads; CSS ensures visuals are preserved but animations are paused.
-                try { localStorage.setItem('boringMode', '1'); } catch(e) {}
-
-                // Freeze marquees: replace each <marquee> with a static div containing its current textContent.
-                body._boringState.marquees = [];
-                document.querySelectorAll('marquee').forEach(mq => {
-                    const placeholder = document.createElement('div');
-                    placeholder.className = 'marquee-frozen';
-                    placeholder.style.fontSize = window.getComputedStyle(mq).fontSize;
-                    placeholder.style.fontFamily = window.getComputedStyle(mq).fontFamily;
-                    placeholder.style.color = window.getComputedStyle(mq).color;
-                    placeholder.textContent = mq.textContent || '';
-                    body._boringState.marquees.push({ original: mq, frozen: placeholder, parent: mq.parentNode, next: mq.nextSibling });
-                    mq.replaceWith(placeholder);
-                });
-
-                // Whiten translucent / colored boxes without creating a full page white background.
-                body._boringState.whitened = [];
-                BOX_SELECTOR.forEach(sel => {
-                    document.querySelectorAll(sel).forEach(el => {
-                        const cs = window.getComputedStyle(el);
-                        const bg = cs.backgroundColor;
-                        // decide if it's translucent or obviously colored (not already pure white)
-                        if (bg && bg !== 'rgb(255, 255, 255)') {
-                            body._boringState.whitened.push({ el, prev: el.style.backgroundColor });
-                            el.style.backgroundColor = '#ffffff';
-                        }
-                    });
-                });
-            } else {
-                // exit boring mode: remove class and restart intervals
-                body.classList.remove('boring-mode');
-                if (toggle) { toggle.classList.remove('boring'); toggle.textContent = 'awesome mode: on :3'; toggle.setAttribute('aria-pressed','false'); }
-                try { localStorage.setItem('boringMode', '0'); } catch(e) {}
-                // restart intervals
-                if (!popupIntervalId) popupIntervalId = setInterval(createPopup, 3000 + Math.random() * 5000);
-                if (!floatingImagesIntervalId) floatingImagesIntervalId = setInterval(() => { placeFloatingImages(); placeSparkles(); }, 10000);
-                if (!bannerRotateIntervalId) startBannerRotation();
-
-                // Restore marquees
-                if (body._boringState && body._boringState.marquees) {
-                    body._boringState.marquees.forEach(m => {
-                        if (m.parent && m.original) {
-                            if (m.frozen && m.frozen.parentNode === m.parent) {
-                                m.frozen.replaceWith(m.original);
-                            } else if (m.next) {
-                                m.parent.insertBefore(m.original, m.next);
-                            } else {
-                                m.parent.appendChild(m.original);
-                            }
-                        }
-                    });
-                }
-                // Restore whitened backgrounds
-                if (body._boringState && body._boringState.whitened) {
-                    body._boringState.whitened.forEach(item => {
-                        if (item.el) item.el.style.backgroundColor = item.prev || '';
-                    });
-                }
-            }
-        }
-
-        // Wire up the toggle button and persist preference in localStorage
-        document.addEventListener('DOMContentLoaded', function(){
-            const toggle = document.getElementById('modeToggle');
-            const hitCounters = document.querySelectorAll('.hit-counter, .eaten-counter');
-
-            const applyMobileVisibility = () => {
-                const isMobile = window.innerWidth < 900;
-                if (toggle) {
-                    toggle.style.display = isMobile ? 'none' : '';
-                }
-                hitCounters.forEach(el => {
-                    el.style.display = isMobile ? 'none' : '';
-                });
-                if (isMobile) {
-                    if (popupIntervalId) { clearInterval(popupIntervalId); popupIntervalId = null; }
-                    if (floatingImagesIntervalId) { clearInterval(floatingImagesIntervalId); floatingImagesIntervalId = null; }
-                    document.querySelectorAll('.popup-window, .popup-overlay').forEach(el => { try { el.remove(); } catch(e) {} });
-                    document.querySelectorAll('.random-image-placement').forEach(el => { try { el.remove(); } catch(e) {} });
-                } else if (!document.body.classList.contains('boring-mode') && !popupIntervalId) {
-                    popupIntervalId = setInterval(createPopup, 3000 + Math.random() * 5000);
-                    if (!floatingImagesIntervalId) {
-                        floatingImagesIntervalId = setInterval(() => { placeFloatingImages(); placeSparkles(); }, 10000);
-                    }
-                }
-            };
-
-            applyMobileVisibility();
-            window.addEventListener('resize', applyMobileVisibility);
-
-            if (!toggle) {
-                return;
-            }
-            // Position side ads in gutters centered between viewport edge and container
-            try {
-                function debounce(func, wait) {
-                    let timeout;
-                    return function executedFunction(...args) {
-                        const later = () => {
-                            clearTimeout(timeout);
-                            func(...args);
-                        };
-                        clearTimeout(timeout);
-                        timeout = setTimeout(later, wait);
-                    };
-                }
-                function layoutSideAds() {
-                    const table = document.querySelector('table'); // main content table with dotted border
-                    const leftAds = document.getElementById('left-ads');
-                    const rightAds = document.getElementById('right-ads');
-                    if (!table || !leftAds || !rightAds) return;
-                    const rect = table.getBoundingClientRect();
-                    const vw = window.innerWidth;
-                    const gutterLeftWidth = rect.left; // space from 0 to table left border
-                    const gutterRightWidth = vw - rect.right; // space from table right border to viewport edge
-                    // Use fixed estimate for ad width to avoid getBoundingClientRect during resize glitches
-                    const colWidth = 160; // approximate max width including padding
-                    // Center each column in its gutter: leftX = (gutterLeftWidth - colWidth)/2, rightX = rect.right + (gutterRightWidth - colWidth)/2
-                    if (gutterLeftWidth >= colWidth + 20) {
-                        leftAds.classList.remove('hidden');
-                        leftAds.style.left = Math.max(0, Math.round((gutterLeftWidth - colWidth)/2)) + 'px';
-                    } else {
-                        leftAds.classList.add('hidden');
-                    }
-                    if (gutterRightWidth >= colWidth + 20) {
-                        rightAds.classList.remove('hidden');
-                        rightAds.style.left = Math.round(rect.right + (gutterRightWidth - colWidth)/2) + 'px';
-                    } else {
-                        rightAds.classList.add('hidden');
-                    }
-                }
-                const debouncedLayout = debounce(layoutSideAds, 100); // debounce 100ms
-                window.addEventListener('resize', debouncedLayout);
-                layoutSideAds(); // initial call
-            } catch(e) {}
-            // Apply stored preference (if present) BEFORE starting banner rotation/intervals
-            try {
-                const stored = localStorage.getItem('boringMode');
-                if (stored === '1') {
-                    setBoringMode(true);
-                } else {
-                    setBoringMode(false);
-                }
-            } catch (e) {}
-
-            // Listen for user toggle and persist preference
-            toggle.addEventListener('click', function(){
-                const isBoring = document.body.classList.contains('boring-mode');
-                const next = !isBoring;
-                setBoringMode(next);
-                try { localStorage.setItem('boringMode', next ? '1' : '0'); } catch(e) {}
-            });
-        });
-
-        // Size the checkmark gif to match the height of the element that follows the rommulus text
-        function sizeCheckmark() {
-            const rom = document.getElementById('rommulusText');
-            if (!rom) return;
-            const check = document.getElementById('rommulasCheck');
-            if (!check) return;
-            // the next sibling element (skip text nodes)
-            let next = rom.nextElementSibling;
-            if (!next) {
-                // fallback - pick the first marquee if present
-                next = document.querySelector('marquee');
-            }
-            if (!next) return;
-            let targetHeight = next.offsetHeight || 32; // fallback height
-            // make checkmark 30% larger than the target element's height
-            targetHeight = Math.round(targetHeight * 1.3);
-            check.style.height = targetHeight + 'px';
-            check.style.verticalAlign = 'middle';
-        }
-
-        window.addEventListener('resize', function() { try { sizeCheckmark(); } catch(e) {} });
-
-        // Randomize borders for page elements to add variety
-        function randomizePageBorders() {
-            const borderColors = ['#ff0000', '#00ff00', '#0000ff', '#ff00ff', '#00ffff', '#ffff00', '#ff8800', '#8800ff'];
-            const borderStyles = ['solid','dashed','dotted','double','groove','ridge','inset','outset'];
-            const elements = document.querySelectorAll('table, .section, .guestbook, .webring, .hit-counter');
-            elements.forEach(el => {
-                const color = borderColors[Math.floor(Math.random()*borderColors.length)];
-                const style = borderStyles[Math.floor(Math.random()*borderStyles.length)];
-                const thickness = [2,3,4,5,6,8][Math.floor(Math.random()*6)];
-                el.style.border = `${thickness}px ${style} ${color}`;
-            });
-        }
-
-        // run border randomizer after DOM is ready, then preserve any red boxes so boring-mode won't neutralize them
-        document.addEventListener('DOMContentLoaded', function() {
-            randomizePageBorders();
-            try { preserveRedBoxes(); } catch(e) {}
-        });
-
-        // Detect elements with red backgrounds or red borders and lock their colors
-        // by applying inline styles with the computed color using !important. This
-        // prevents the boring-mode CSS (which uses !important) from neutralizing
-        // intentionally red boxes behind text.
-        function preserveRedBoxes() {
-            const isRedRgb = (s) => {
-                if (!s) return false;
-                s = s.replace(/\s+/g,'');
-                if (s.indexOf('rgb(255,0,0)') !== -1 || s.indexOf('rgba(255,0,0,1)') !== -1) return true;
-                if (s.toLowerCase().indexOf('#ff0000') !== -1) return true;
-                return false;
-            };
-
-            const all = document.querySelectorAll('body *');
-            all.forEach(el => {
-                try {
-                    // don't lock the merch circle's border colors - it uses animation for blinking
-                    if (el.classList && el.classList.contains('merch-circle')) return;
-                    const cs = window.getComputedStyle(el);
-                    const bg = cs.backgroundColor || '';
-                    const btop = cs.borderTopColor || '';
-                    const bleft = cs.borderLeftColor || '';
-                    const bright = cs.borderRightColor || '';
-                    const bbottom = cs.borderBottomColor || '';
-
-                    if (isRedRgb(bg) || isRedRgb(btop) || isRedRgb(bleft) || isRedRgb(bright) || isRedRgb(bbottom)) {
-                        if (bg && isRedRgb(bg)) el.style.setProperty('background-color', bg, 'important');
-                        if (btop && isRedRgb(btop)) el.style.setProperty('border-top-color', btop, 'important');
-                        if (bleft && isRedRgb(bleft)) el.style.setProperty('border-left-color', bleft, 'important');
-                        if (bright && isRedRgb(bright)) el.style.setProperty('border-right-color', bright, 'important');
-                        if (bbottom && isRedRgb(bbottom)) el.style.setProperty('border-bottom-color', bbottom, 'important');
-                        const color = cs.color || '';
-                        if (isRedRgb(color)) el.style.setProperty('color', color, 'important');
-                        el.classList.add('preserve-red');
-                    }
-                } catch(e) {}
-            });
-        }
-
-        /* ------------------ Rotating inline banner ads (banad1/2/3) ------------------ */
-        // banner ad pool (updated with newly added files)
-        const banadFiles = [
-            'images/banad1.gif','images/banad2.gif','images/banad3.gif','images/banad4.gif',
-            'images/banad5.gif','images/banad6.gif','images/banad7.gif','images/banad8.gif','images/banad9.gif','images/banad10.gif'
-        ];
-        // also support an oddly named file with a space if present
-        try { if (typeof window !== 'undefined') {} } catch(e) {}
-
-        const sharedUtils = window.ThreeHollisShared || null;
-        const shuffle = sharedUtils ? sharedUtils.shuffle : function(arr) {
-            if (!Array.isArray(arr)) return [];
-            const copy = arr.slice();
-            for (let i = copy.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [copy[i], copy[j]] = [copy[j], copy[i]];
-            }
-            return copy;
-        };
-
-        // vertical/side ad pool (includes newly added ad5.gif)
-        const sideAdFiles = sharedUtils ? sharedUtils.defaultSideAdFiles.slice() : ['/images/ad1.gif','/images/ad2.gif','/images/ad3.gif','/images/ad4.gif','/images/ad5.gif'];
-        let currentBannerAds = []; // track created ad nodes
-        let bannerRotateIntervalId = null;
-
-        function pickRandom(arr, n) {
-            const copy = arr.slice();
-            const out = [];
-            for (let i=0;i<Math.min(n, copy.length);i++) {
-                const idx = Math.floor(Math.random()*copy.length);
-                out.push(copy.splice(idx,1)[0]);
-            }
-            return out;
-        }
-
-        function clearBannerAds() {
-            currentBannerAds.forEach(item => {
-                if (item && item.node && item.node.parentNode) item.node.parentNode.removeChild(item.node);
-            });
-            currentBannerAds = [];
-        }
-
-        let bannerPlacementLock = false;
-        function placeBannerAds() {
-            if (bannerPlacementLock) return; // prevent re-entrancy
-            bannerPlacementLock = true;
-            clearBannerAds();
-
-            // do not place banners in boring-mode
-            if (document.body && document.body.classList && document.body.classList.contains('boring-mode')) {
-                bannerPlacementLock = false;
-                return;
-            }
-
-            const container = document.querySelector('.container');
-            if (!container) {
-                bannerPlacementLock = false;
-                return;
-            }
-
-            // Use top-level children of .container as blocks. We'll place banners after these blocks (i.e. in the gaps between them)
-            const blocks = Array.from(container.children).filter(c => c.nodeType === 1 && c.tagName.toLowerCase() !== 'script' && getComputedStyle(c).display !== 'none');
-
-            // compute candidate anchors = blocks[i] for gaps between blocks[i] and blocks[i+1]
-            const docHeight = Math.max(document.documentElement.scrollHeight || 0, document.body.scrollHeight || 0);
-            const bottomThreshold = docHeight - window.innerHeight - 20; // keep at least ~20px above bottom
-            const candidates = [];
-            for (let i = 0; i < Math.max(0, blocks.length - 1); i++) {
-                const anchor = blocks[i];
-                try {
-                    const rect = anchor.getBoundingClientRect();
-                    const topY = rect.top + window.scrollY;
-                    // prefer anchors that are not too close to the bottom of the page
-                    if (topY <= bottomThreshold) candidates.push(anchor);
-                } catch (e) {
-                    // ignore measurement errors
-                    candidates.push(anchor);
-                }
-            }
-
-            // Ensure we always try to place exactly 3 banners. If there are fewer "preferred" candidates, expand to earlier anchors.
-            const needed = 3;
-            if (candidates.length < needed) {
-                for (let i = 0; i < Math.max(0, blocks.length - 1) && candidates.length < needed; i++) {
-                    const anchor = blocks[i];
-                    if (!candidates.includes(anchor)) candidates.push(anchor);
-                }
-            }
-
-            // If still not enough anchors, bail out (can't safely place 3 unique banners)
-            if (candidates.length < needed) {
-                bannerPlacementLock = false;
-                return;
-            }
-
-            // pick exactly 3 distinct anchors and 3 distinct images
-            const chosenAnchors = pickRandom(candidates, needed);
-            const chosenImages = shuffle(banadFiles).slice(0, needed);
-
-            for (let i = 0; i < needed; i++) {
-                const anchor = chosenAnchors[i];
-                const imgSrc = chosenImages[i];
-                if (!anchor || !anchor.parentNode) continue;
-
-                const wrapper = document.createElement('div');
-                wrapper.className = 'inline-banner-ad';
-
-                const link = document.createElement('a');
-                link.href = 'https://store.3hollis.com';
-
-                const img = document.createElement('img');
-                img.className = 'banner-ad-img';
-                img.src = imgSrc;
-                img.alt = 'banner ad';
-
-                link.appendChild(img);
-                wrapper.appendChild(link);
-
-                anchor.parentNode.insertBefore(wrapper, anchor.nextSibling);
-                currentBannerAds.push({ node: wrapper, anchor: anchor, src: imgSrc });
-            }
-
-            bannerPlacementLock = false;
-        }
-
-        function startBannerRotation() {
-            // if boring-mode is active, do not place or rotate banner/side ads
-            if (document.body && document.body.classList && document.body.classList.contains('boring-mode')) {
-                return;
-            }
-            // initial placement
-            placeBannerAds();
-            // also initialize side ads from the updated pool
-            try { updateSideAds(); } catch(e) {}
-            // rotate every 30s
-            if (bannerRotateIntervalId) clearInterval(bannerRotateIntervalId);
-            bannerRotateIntervalId = setInterval(() => {
-                // do not place banners if boring-mode is active
-                if (document.body.classList.contains('boring-mode')) return;
-                placeBannerAds();
-                // NOTE: side ads should remain fixed until a full page refresh per user's request.
-                // updateSideAds() is intentionally not called here to avoid changing vertical ads on rotation.
-            }, 30000);
-        }
-
-        // Update the left/right side ads by picking images from sideAdFiles (unique where possible)
-        function updateSideAds() {
-            if (sharedUtils && typeof sharedUtils.updateSideAds === 'function') {
-                sharedUtils.updateSideAds({ sideAdFiles: sideAdFiles, body: document.body });
-                return;
-            }
-            if (document.body && document.body.classList && document.body.classList.contains('boring-mode')) return;
-            const sideImgs = Array.from(document.querySelectorAll('#left-ads img.side-ad, #right-ads img.side-ad'));
-            if (!sideImgs.length) return;
-            const picks = shuffle(sideAdFiles).slice(0, Math.min(sideAdFiles.length, sideImgs.length));
-            sideImgs.forEach((imgEl, i) => {
-                if (!imgEl) return;
-                if (i < picks.length) {
-                    imgEl.src = picks[i];
-                    imgEl.style.display = '';
-                    if (imgEl.parentNode) imgEl.parentNode.style.display = '';
-                    const minSpace = 100;
-                    const maxSpace = 1000;
-                    const mt = Math.floor(Math.random() * (maxSpace - minSpace + 1)) + minSpace;
-                    imgEl.style.marginTop = mt + 'px';
-                } else {
-                    imgEl.style.display = 'none';
-                    if (imgEl.parentNode) imgEl.parentNode.style.display = 'none';
-                }
-            });
-        }
-
-        // start rotating on DOMContentLoaded (after sections exist)
-        document.addEventListener('DOMContentLoaded', function(){
-            try { startBannerRotation(); } catch(e){}
-        });
-        // also restart on window.load to be safe
-        window.addEventListener('load', function(){ try { startBannerRotation(); } catch(e){} });
-
-        // Position side ads centered in the gutters between the page edge and the main .container
-        function positionSideAds() {
-            if (sharedUtils && typeof sharedUtils.positionSideAds === 'function') {
-                sharedUtils.positionSideAds({ adWidth: 132, topOffset: 120 });
-                return;
-            }
-            const container = document.querySelector('.container');
-            const leftAds = document.getElementById('left-ads');
-            const rightAds = document.getElementById('right-ads');
-            if (!container || !leftAds || !rightAds) return;
-
-            const rect = container.getBoundingClientRect();
-            const adWidth = 132;
-            const leftGutterCenter = rect.left / 2;
-            const rightGutterCenter = window.innerWidth - (window.innerWidth - rect.right) / 2;
-
-            leftAds.style.left = Math.max(8, leftGutterCenter - adWidth / 2) + 'px';
-            rightAds.style.left = Math.min(window.innerWidth - adWidth - 8, rightGutterCenter - adWidth / 2) + 'px';
-
-            const containerTop = window.scrollY + rect.top;
-            const topOffset = 120;
-            leftAds.style.top = (containerTop + topOffset) + 'px';
-            rightAds.style.top = (containerTop + topOffset) + 'px';
-        }
-
-        window.addEventListener('resize', positionSideAds);
-        window.addEventListener('load', positionSideAds);
-        window.addEventListener('scroll', positionSideAds);
-        
-        // Make elements move around randomly (disabled on mobile)
-        setInterval(function() {
-            if (window.innerWidth < 768) return; // disable on mobile/tablet
-            const elements = document.querySelectorAll('.section, .section-title');
-            elements.forEach(el => {
-                if (Math.random() > 0.7) {
-                    el.style.position = 'relative';
-                    el.style.left = (Math.random() * 20 - 10) + 'px';
-                    el.style.top = (Math.random() * 20 - 10) + 'px';
-                }
-            });
-        }, 3000);
-        
-        // Animate the title bar with capitalizing letters back and forth
-        const titles = [
-            "uh.com",
-            "onlyonly.com",
-            "onlytrust2godspeeds.com",
-            "uh.com",
-            "lovemeloveme.com",
-            "yyoumakeitfartooeasy.com",
-            "i.com",
-            "seeseesee.com",
-            "um.com",
-            "topoftreeits3.com",
-            "yeah.com",
-            "putyourbodyonmyjeans.com",
-            "putchobanionmyjeans.com",
-            "3hollis.com",
-            "3hollis.com",
-            "3hollis.com",
-            "3hollis.com",
-            "3hollis.com",
-            "3hollis.com",
-            "3hollis.com",
-            "3hollis.com",
-            "3hollis.com",
-            "3hollis.com",
-        ];
-        let titleIndex = 0;
-        setInterval(() => {
-            document.title = titles[titleIndex];
-            titleIndex = (titleIndex + 1) % titles.length;
-        }, 1000); // Change every 1000ms for smooth animation
-    </script>
+    </main>
 </body>
 </html>
